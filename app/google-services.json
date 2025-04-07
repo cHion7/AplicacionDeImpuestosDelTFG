@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "322269238228",
+    "project_id": "base-de-datos-del-tfg-1",
+    "storage_bucket": "base-de-datos-del-tfg-1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322269238228:android:90de023599f3f7f7157c41",
+        "android_client_info": {
+          "package_name": "com.example.aplicaciondeimpuestosdeltfg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCi97vgUzaR-TXpFvmv5vMKG7cdm7vNhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
