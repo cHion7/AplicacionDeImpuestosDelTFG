@@ -147,20 +147,10 @@ public class CalculatorFragment extends Fragment {
             if (drawerLayout != null && !drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.openDrawer(GravityCompat.START);
 
-                botonHipoteca.setOnClickListener(i -> {
-                    Intent intent = new Intent(view.getContext(), CalculatorFragment.class);
-                    // intent.putExtra("producto", producto);
-                });
+                botonHipoteca.setOnClickListener(i -> cargarFragment(new CalculatorFragment()));
+                botonImpuestos.setOnClickListener(i -> cargarFragment(new PrestamoFragment()));
+                botonOtros.setOnClickListener(i -> cargarFragment(new CriptoRiesgoFragment()));
 
-                botonImpuestos.setOnClickListener(i -> {
-                    Intent intent = new Intent(view.getContext(), CalculatorFragment.class);
-                    // intent.putExtra("producto", producto);
-                });
-
-                botonOtros.setOnClickListener(i -> {
-                    Intent intent = new Intent(view.getContext(), CalculatorFragment.class);
-                    // intent.putExtra("producto", producto);
-                });
             }
         });
 
@@ -218,6 +208,16 @@ public class CalculatorFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void cargarFragment(Fragment fragmentoCmabio) {
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_container, fragmentoCmabio)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     private void actualizarValores() {
