@@ -68,7 +68,7 @@
                 android:text="¿No tienes cuenta?" />
 
             <TextView
-                android:id="@+id/btRegistro"
+                android:id="@+id/btRegistroLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
