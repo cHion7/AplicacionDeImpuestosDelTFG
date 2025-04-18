@@ -217,13 +217,6 @@ public class PrestamoFragment extends Fragment {
                 actualizarValoresPrestamo();
             }
         });
-
-
-
-
-
-
-
         return view;
     }
 
