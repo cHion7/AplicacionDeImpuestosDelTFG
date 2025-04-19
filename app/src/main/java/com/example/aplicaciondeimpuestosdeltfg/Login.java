@@ -2,9 +2,7 @@ package com.example.aplicaciondeimpuestosdeltfg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +45,7 @@ public class Login extends AppCompatActivity {
         //Configuración de los listeners para los botones
         btIniciarSesionlogin.setOnClickListener(view -> signInWithEmail());
 
-        //Redirección a la pantalla de registro
+        // Redirección a la pantalla de registro
         tvRegistrarse.setOnClickListener(view -> {
             Intent intent = new Intent(Login.this, Registro.class);
             startActivity(intent);
