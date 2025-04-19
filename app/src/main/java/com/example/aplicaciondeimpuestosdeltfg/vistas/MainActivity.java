@@ -1,21 +1,19 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
    BottomNavigationView bottomNavigationView;
-   HomeFragment homeFragment = new HomeFragment();
+   HomePage homeFragment = new HomePage();
    AjustesFragment settings = new AjustesFragment();
    CalculatorFragment calculatorFragment = new CalculatorFragment();
 
