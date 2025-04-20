@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="60px"
+        android:layout_margin="30dp"
         android:orientation="vertical">
 
         <TextView
@@ -25,65 +25,71 @@
             android:id="@+id/tilNombreRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNombreReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre Completo" />
+                android:hint="Nombre Completo"
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilDNIReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDNIReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="DNI/NIE/Pasaporte" />
+                android:hint="DNI/NIE/Pasaporte"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFechaNacimeintoReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etfechaReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Fecha de nacimiento" />
+                android:hint="Fecha de nacimiento"
+                android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEstadoCivilReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEstadoReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado civil" />
+                android:hint="Estado civil"
+                android:inputType="text" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilDireccionReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDireccionReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Dirección Completa" />
+                android:hint="Dirección Completa"
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,20 +97,21 @@
             android:id="@+id/tilTelefonoReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px">
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTelefonoReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Teléfono" />
+                android:hint="Teléfono"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btSiguienteReg1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px"
+            android:layout_marginTop="20dp"
             android:text="Siguiente"
             android:textAlignment="center" />
 
@@ -112,7 +119,7 @@
             android:id="@+id/tilNacionalidadReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px"
+            android:layout_marginTop="20dp"
             android:visibility="invisible">
 
             <com.google.android.material.textfield.TextInputEditText

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,12 @@ public class Registro2 extends AppCompatActivity {
         String ingresosBrutos = etIngresosBrRegistro.getText().toString();
         String nomina = etNominaRegistro.getText().toString();
         String declaraciones = etDeclaracionRegistro.getText().toString();
+
+        //Validación de campo
+        if (empresa.isEmpty() || ingresosBrutos.isEmpty() || nomina.isEmpty() || declaraciones.isEmpty()) {
+            Toast.makeText(Registro2.this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //Guardamos los datos en el sharedPreference
         SharedPreferences sharedPreferences = getSharedPreferences("registro_usuario", Context.MODE_PRIVATE);

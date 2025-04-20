@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class Registro1 extends AppCompatActivity {
     }
 
     public void registrarDatos1(){
-    // Obtenemos los datos introducidos por el usuario
+        // Obtenemos los datos introducidos por el usuario
         String nombre = etNombreRegistro.getText().toString();
         String dni = etDNIRegistro.getText().toString();
         String fechaNacimiento = etfechaRegistro.getText().toString();
@@ -52,7 +53,13 @@ public class Registro1 extends AppCompatActivity {
         String direccion = etDireccionRegistro.getText().toString();
         String telefono = etTelefonoRegistro.getText().toString();
 
-    // Guardamos los datos en SharedPreferences
+        //Validación campos
+        if (nombre.isEmpty()||dni.isEmpty()||fechaNacimiento.isEmpty()||estadoCivil.isEmpty()||direccion.isEmpty()||telefono.isEmpty()){
+            Toast.makeText(Registro1.this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Guardamos los datos en SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("registro_usuario", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

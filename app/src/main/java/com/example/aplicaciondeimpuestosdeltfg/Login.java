@@ -71,7 +71,8 @@ public class Login extends AppCompatActivity {
         }
 
         //Iniciar sesión con email y password
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 Toast.makeText(Login.this, "Inicio de sesión exitoso. ", Toast.LENGTH_SHORT).show();
                 //Redirige a la página principal
