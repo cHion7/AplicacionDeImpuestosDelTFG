@@ -4,10 +4,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".vistas.MainActivity">
 
     <FrameLayout
-        android:id="@+id/frame_container"
+        android:id="@+id/mainPageFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"

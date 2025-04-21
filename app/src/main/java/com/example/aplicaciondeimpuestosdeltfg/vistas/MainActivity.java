@@ -1,21 +1,19 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
    BottomNavigationView bottomNavigationView;
-   HomeFragment homeFragment = new HomeFragment();
+   HomePage homeFragment = new HomePage();
    AjustesFragment settings = new AjustesFragment();
    CalculatorFragment calculatorFragment = new CalculatorFragment();
 
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Asegúrate que este layout tenga el BottomNavigationView y el FrameLayout con los IDs correctos
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainPageFragmentContainer,homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -33,17 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if (id == R.id.home) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame_container, homeFragment)
+                            .replace(R.id.mainPageFragmentContainer, homeFragment)
                             .commit();
                     return true;
                 } else if (id == R.id.ajustes) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame_container, settings)
+                            .replace(R.id.mainPageFragmentContainer, settings)
                             .commit();
                     return true;
                 } else if (id == R.id.calculadora) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame_container, calculatorFragment)
+                            .replace(R.id.mainPageFragmentContainer, calculatorFragment)
                             .commit();
                     return true;
                 }

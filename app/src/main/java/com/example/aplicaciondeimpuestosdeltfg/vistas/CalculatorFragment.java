@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.os.Bundle;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.aplicaciondeimpuestosdeltfg.R;
 
 public class CalculatorFragment extends Fragment {
 
