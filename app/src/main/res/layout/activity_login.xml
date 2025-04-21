@@ -86,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50px"
+            android:backgroundTint="#2C3E50"
             android:text="Iniciar Sesión" />
 
         <TextView
@@ -101,6 +102,7 @@
             android:id="@+id/GoogleLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#2C3E50"
             android:text="Google Login" />
 
     </LinearLayout>

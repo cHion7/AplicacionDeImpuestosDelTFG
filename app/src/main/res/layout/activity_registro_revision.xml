@@ -235,6 +235,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="#2C3E50"
                 android:text="Modificar"
                 android:textAlignment="center" />
 
@@ -242,6 +243,7 @@
                 android:id="@+id/btGuardarRegistro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#2C3E50"
                 android:text="Guardar" />
 
             <Button
@@ -249,6 +251,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="#2C3E50"
                 android:text="Registro"
                 android:textAlignment="center" />
         </LinearLayout>
