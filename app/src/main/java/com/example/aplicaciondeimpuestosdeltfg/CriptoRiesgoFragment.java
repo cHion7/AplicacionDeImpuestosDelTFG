@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment;
+
 import java.util.Locale;
 
 
@@ -97,7 +99,7 @@ public class CriptoRiesgoFragment extends Fragment {
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frame_container, fragmentIr)
+                    .replace(R.id.mainPageFragmentContainer, fragmentIr)
                     .addToBackStack(null)
                     .commit();
         }

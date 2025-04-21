@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.aplicaciondeimpuestosdeltfg.CriptoRiesgoFragment;
+import com.example.aplicaciondeimpuestosdeltfg.PrestamoFragment;
 import com.example.aplicaciondeimpuestosdeltfg.R;
 
 public class CalculatorFragment extends Fragment {
@@ -216,7 +218,7 @@ public class CalculatorFragment extends Fragment {
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frame_container, fragmentoCmabio)
+                    .replace(R.id.mainPageFragmentContainer, fragmentoCmabio)
                     .addToBackStack(null)
                     .commit();
         }

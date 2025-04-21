@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment;
+
 public class PrestamoFragment extends Fragment {
 
     private float capital = 0;
@@ -224,7 +226,7 @@ public class PrestamoFragment extends Fragment {
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frame_container, fragmentIr)
+                    .replace(R.id.mainPageFragmentContainer, fragmentIr)
                     .addToBackStack(null)
                     .commit();
         }
