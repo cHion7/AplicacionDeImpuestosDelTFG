@@ -13,11 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="61dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="46dp"
+        <ImageButton
+            android:id="@+id/ibMasEventosHomePage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
             android:src="@android:drawable/btn_plus" />
     </androidx.cardview.widget.CardView>
 

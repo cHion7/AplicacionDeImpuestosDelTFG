@@ -3,11 +3,15 @@ package com.example.aplicaciondeimpuestosdeltfg.vistas;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.CalendarManager;
@@ -27,6 +31,7 @@ import java.util.List;
 public class HomePage extends Fragment {
     private MaterialCalendarView calendarView;
     private ViewPager2 viewPager2;
+    private ImageButton addEventos;
     private List<Evento> listaEventos;
     private CalendarManager calendarManager = new CalendarManager();
 
@@ -103,6 +108,7 @@ public class HomePage extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         calendarView = view.findViewById(R.id.calendarHomePage);
         viewPager2 = view.findViewById(R.id.homePageMeses);
+        addEventos = view.findViewById(R.id.ibMasEventosHomePage);
 
         listaEventos = new ArrayList<>();
         listaEventos.add(new Evento(calendarManager.getCalendar(2025, 3, 18), Evento.Tipo.GASTO)); // 18 abril
@@ -112,6 +118,13 @@ public class HomePage extends Fragment {
 
         calendarConfiguration();
         viewPager2Configuration();
+        addEventos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddEvent fragmento = AddEvent.newInstance();
+                fragmento.show(((FragmentActivity) getContext()).getSupportFragmentManager(), fragmento.getTag());
+            }
+        });
         return view;
     }
 }

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Asegúrate que este layout tenga el BottomNavigationView y el FrameLayout con los IDs correctos
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainPageFragmentContainer,homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -31,17 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if (id == R.id.home) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame_container, homeFragment)
+                            .replace(R.id.mainPageFragmentContainer, homeFragment)
                             .commit();
                     return true;
                 } else if (id == R.id.ajustes) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame_container, settings)
+                            .replace(R.id.mainPageFragmentContainer, settings)
                             .commit();
                     return true;
                 } else if (id == R.id.calculadora) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frame_container, calculatorFragment)
+                            .replace(R.id.mainPageFragmentContainer, calculatorFragment)
                             .commit();
                     return true;
                 }
