@@ -13,13 +13,28 @@
         android:theme="@style/Theme.AplicacionDeImpuestosDelTFG"
         tools:targetApi="31">
         <activity
-            android:name=".vistas.MainActivity"
+            android:name=".RegistroRevision"
+            android:exported="false" />
+        <activity
+            android:name=".Registro2"
+            android:exported="false" />
+        <activity
+            android:name=".Registro1"
+            android:exported="false" />
+        <activity
+            android:name=".Registro"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
