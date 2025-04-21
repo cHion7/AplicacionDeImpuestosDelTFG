@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Evento {
     public enum Tipo { GASTO, COBRO }
-
+    private String categoria;
     private Calendar fecha;
     private Tipo tipo;
 

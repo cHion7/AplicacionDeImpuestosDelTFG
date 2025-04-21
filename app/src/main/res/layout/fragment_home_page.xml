@@ -11,19 +11,25 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="51dp">
+        android:layout_height="61dp">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="46dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:src="@android:drawable/btn_plus" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="349dp"
+        android:layout_height="403dp"
         android:layout_margin="20dp">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendarHomePage"
             android:layout_width="match_parent"
-            android:layout_height="335dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             app:mcv_dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
             app:mcv_firstDayOfWeek="monday"
@@ -36,7 +42,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardElevation="50dp" />
+        android:layout_height="match_parent" >
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/homePageMeses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
