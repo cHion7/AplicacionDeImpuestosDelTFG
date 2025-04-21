@@ -3,33 +3,299 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <!-- Contenido principal -->
-    <RelativeLayout
-        android:id="@+id/content_frame"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/btn_open_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="16dp"
+                android:contentDescription="Abrir menú"
+                android:padding="8dp"
+                android:src="@drawable/baseline_menu_24" />
+            <LinearLayout
+                android:id="@+id/layout_precio_inmueble"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_open_menu"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <Button
+                    android:id="@+id/botonInmuebleRestar"
+                    android:layout_width="63dp"
+                    android:layout_height="match_parent"
+                    android:text="-" />
+                <TextView
+                    android:id="@+id/text_precio_inmueble"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Precio de inmueble"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+                <Button
+                    android:id="@+id/botonInmuebleSumar"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:text="+" />
+            </LinearLayout>
+            <SeekBar
+                android:id="@+id/precioInmueble"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_precio_inmueble"
+                android:layout_marginHorizontal="16dp"
+                android:max="2000000"
+                android:progress="1000" />
+            <LinearLayout
+                android:id="@+id/layout_ahorro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/precioInmueble"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <Button
+                    android:id="@+id/botonAhorroRestar"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:text="-" />
+                <TextView
+                    android:id="@+id/text_ahorro_aportado"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Ahorro aportado"
+                    android:textSize="20sp" />
+                <Button
+                    android:id="@+id/botonAhorroSumar"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:text="+" />
+            </LinearLayout>
+            <SeekBar
+                android:id="@+id/ahorroAportado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_ahorro"
+                android:layout_marginHorizontal="16dp"
+                android:max="2000000"
+                android:progress="1000" />
+            <LinearLayout
+                android:id="@+id/layout_plazo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ahorroAportado"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <Button
+                    android:id="@+id/botonAnosRestar"
+                    android:layout_width="63dp"
+                    android:layout_height="wrap_content"
+                    android:text="-" />
+                <TextView
+                    android:id="@+id/text_plazo_prestamo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Plazo en años"
+                    android:textSize="20sp" />
+                <Button
+                    android:id="@+id/botonAnosSumar"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:text="+" />
+            </LinearLayout>
+            <SeekBar
+                android:id="@+id/plazoPrestamo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_plazo"
+                android:layout_marginTop="13dp"
+                android:layout_marginHorizontal="16dp"
+                android:max="40"
+                android:progress="1" />
+            <LinearLayout
+                android:id="@+id/nuevo_apartado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/plazoPrestamo"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/text_nuevo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="¿Qué eliges?"
+                    android:textSize="18sp" />
+                <CheckBox
+                    android:id="@+id/ImpuestoFijo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fijo" />
+                <CheckBox
+                    android:id="@+id/ImpuestoVariable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Variable" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calculator"
-            android:textSize="24sp"
-            android:layout_centerInParent="true" />
+            <LinearLayout
+                android:layout_width="268dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nuevo_apartado"
+                android:layout_marginHorizontal="90dp"
+                android:layout_marginTop="-11dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/btn_open_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_menu_24"
-            android:contentDescription="Abrir menú"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:padding="8dp"
-            android:layout_margin="16dp" />
-    </RelativeLayout>
+                <Button
+                    android:id="@+id/botonImpuestoRestar"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:text="-" />
 
-    <!-- Menú lateral derecho -->
+                <TextView
+                    android:id="@+id/ImpuestoValor"
+                    android:layout_width="69dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Valor"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/botonImpuestoSumar"
+                    android:layout_width="63dp"
+                    android:layout_height="wrap_content"
+                    android:text="+" />
+            </LinearLayout>
+            <TableLayout
+                android:id="@+id/tabla_azul"
+                android:layout_width="398dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nuevo_apartado"
+                android:layout_marginTop="67dp"
+                android:padding="16dp">
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Tu cuota mensual" />
+                    <TextView
+                        android:id="@+id/cuotaMnesual"
+                        android:gravity="end"
+                        android:text="2.681 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Importe hipoteca" />
+                    <TextView
+                        android:id="@+id/importeHipoteca"
+                        android:gravity="end"
+                        android:text="203.225 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Porcentaje de financiación" />
+                    <TextView
+                        android:id="@+id/porcentajeFinanciacion"
+                        android:gravity="end"
+                        android:text="102 %" />
+                </TableRow>
+            </TableLayout>
+            <TableLayout
+                android:id="@+id/tabla_gris"
+                android:layout_width="match_parent"
+                android:layout_height="209dp"
+                android:layout_below="@id/tabla_azul"
+                android:layout_marginTop="19dp"
+                android:padding="16dp">
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Precio del inmueble" />
+                    <TextView
+                        android:id="@+id/precioInmuebleResultado"
+                        android:gravity="end"
+                        android:text="200.000 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Impuestos y gastos de la compra" />
+                    <TextView
+                        android:id="@+id/impuestosGastosCompra"
+                        android:gravity="end"
+                        android:text="23.225 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Coste total del inmueble" />
+                    <TextView
+                        android:id="@+id/costeTotalInmueble"
+                        android:gravity="end"
+                        android:text="223.225 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Ahorro aportado" />
+                    <TextView
+                        android:id="@+id/ahorroAportadoResultado"
+                        android:gravity="end"
+                        android:text="20.000 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Importe hipoteca" />
+                    <TextView
+                        android:id="@+id/importeHipotecaResultado"
+                        android:gravity="end"
+                        android:text="203.225 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Interés hipoteca" />
+                    <TextView
+                        android:id="@+id/interesHipoteca"
+                        android:gravity="end"
+                        android:text="118.511 €" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="Coste total con hipoteca" />
+                    <TextView
+                        android:id="@+id/costeTotalConHipoteca"
+                        android:gravity="end"
+                        android:text="341.736 €" />
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+    </ScrollView>
     <LinearLayout
         android:id="@+id/right_drawer"
         android:layout_width="280dp"
@@ -38,27 +304,29 @@
         android:orientation="vertical"
         android:background="@android:color/darker_gray"
         android:padding="16dp">
-
-        <TextView
-            android:text="Opción 1"
-            android:textSize="18sp"
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="Opción 2"
-            android:textSize="18sp"
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="Cerrar Sesión"
-            android:textSize="18sp"
-            android:padding="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/boton1"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:text="OPCION 1"
+            android:background="@android:color/darker_gray"
+            android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/boton2"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:text="OPCION 2"
+            android:background="@android:color/darker_gray"
+            android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/boton3"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray"
+            android:text="OPCION 3"
+            android:textColor="@android:color/white" />
     </LinearLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>
