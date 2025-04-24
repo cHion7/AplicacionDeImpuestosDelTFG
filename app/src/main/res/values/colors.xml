@@ -7,4 +7,9 @@
     <color name= "green_normal">#044a42</color>
     <color name= "green_light">#3a9188</color>
     <color name= "green_light_2">#b8e1dd</color>
+
+    <color name="primary">#6200EE</color>
+    <color name="primaryDark">#3700B3</color>
+    <color name="primaryText">#212121</color>
+    <color name="cardBorder">#DADADA</color>
 </resources>

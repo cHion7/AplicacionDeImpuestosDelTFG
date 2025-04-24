@@ -1,26 +1,29 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F4F4F4">
 
-    <!-- Contenido principal -->
+    <!-- CONTENIDO PRINCIPAL -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Botón de menú -->
+        <!-- BOTÓN DE MENÚ -->
         <ImageView
             android:id="@+id/boton_abrir_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="16dp"
-            android:contentDescription="Abrir menú"
             android:padding="8dp"
-            android:src="@drawable/baseline_menu_24" />
 
-        <!-- Título a la derecha del botón -->
+            android:src="@drawable/baseline_menu_24"
+            android:contentDescription="Abrir menú" />
+
+        <!-- TÍTULO -->
         <TextView
             android:id="@+id/text_titulo"
             android:layout_width="wrap_content"
@@ -29,13 +32,12 @@
             android:layout_alignTop="@id/boton_abrir_menu"
             android:layout_marginStart="16dp"
             android:text="Calculadora de préstamos"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:gravity="center_vertical" />
+            android:textColor="#222222" />
 
-        <!-- Contenido desplazable -->
+        <!-- SCROLL CON SECCIONES -->
         <ScrollView
-            android:id="@+id/contenedor_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/boton_abrir_menu"
@@ -47,279 +49,265 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Capital Inicial -->
+                <!-- CAPITAL -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <Button
-                        android:id="@+id/botonCapitalRestar"
-                        android:layout_width="63dp"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="2dp">
 
                     <TextView
-                        android:id="@+id/text_capital_inicial"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Capital Inicial"
-                        android:gravity="center"
-                        android:textSize="20sp" />
+                        android:text="Capital inicial (€)"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
 
-                    <Button
-                        android:id="@+id/botonCapitalSumar"
-                        android:layout_width="55dp"
+                    <SeekBar
+                        android:id="@+id/seekbar_capital"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:progressTint="#2196F3"
+                        android:thumbTint="#2196F3" />/>
+
+                    <TextView
+                        android:id="@+id/text_capital"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 €"
+                        android:textColor="#666666" />
                 </LinearLayout>
 
-                <SeekBar
-                    android:id="@+id/seek_capital_inicial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="50000"
-                    android:progress="1000"
-                    android:layout_marginBottom="24dp" />
-
-                <!-- Plazo de Amortización -->
+                <!-- PLAZO -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <Button
-                        android:id="@+id/botonPlazoRestar"
-                        android:layout_width="63dp"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="2dp">
 
                     <TextView
-                        android:id="@+id/text_plazo_amortizacion"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Plazo de Amortización"
-                        android:gravity="center"
-                        android:textSize="20sp" />
+                        android:text="Plazo (años)"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
 
-                    <Button
-                        android:id="@+id/botonPlazoSumar"
-                        android:layout_width="55dp"
+                    <SeekBar
+                        android:id="@+id/seekbar_plazo"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:progressTint="#2196F3"
+                        android:thumbTint="#2196F3" />/>
+
+                    <TextView
+                        android:id="@+id/text_plazo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 años"
+                        android:textColor="#666666" />
                 </LinearLayout>
 
-                <SeekBar
-                    android:id="@+id/seek_plazo_amortizacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="40"
-                    android:progress="1"
-                    android:layout_marginBottom="24dp" />
-
-                <!-- Tipo de Interés -->
-                <TextView
-                    android:id="@+id/text_tipo_interes_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tipo de Interés"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="8dp" />
-
+                <!-- INTERÉS -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <Button
-                        android:id="@+id/botonTipoInteresRestar"
-                        android:layout_width="63dp"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="2dp">
 
                     <TextView
-                        android:id="@+id/text_tipo_interes"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="2.0 %"
-                        android:gravity="center"
-                        android:textSize="20sp" />
+                        android:text="Tipo de interés (%)"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
 
-                    <Button
-                        android:id="@+id/botonTipoInteresSumar"
-                        android:layout_width="55dp"
+                    <SeekBar
+                        android:id="@+id/seekbar_interes"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:progressTint="#2196F3"
+                        android:thumbTint="#2196F3" />/>
+
+                    <TextView
+                        android:id="@+id/text_interes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.0 %"
+                        android:textColor="#666666" />
                 </LinearLayout>
 
-                <!-- CheckBox Interés Posterior -->
+                <!-- CHECKBOX -->
                 <CheckBox
                     android:id="@+id/checkbox_interes_posterior"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Activar Interés Posterior"
-                    android:layout_marginBottom="24dp" />
-
-                <!-- Interés Posterior -->
-                <TextView
-                    android:id="@+id/text_interes_posterior_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Interés Posterior"
-                    android:textSize="20sp"
+                    android:textColor="#444444"
                     android:layout_marginBottom="8dp" />
 
+                <!-- INTERÉS POSTERIOR -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="2dp">
 
-                    <Button
-                        android:id="@+id/botonInteresPosteriorRestar"
-                        android:layout_width="63dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-" />
+                        android:text="Interés posterior (%)"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
+
+                    <SeekBar
+                        android:id="@+id/seekbar_interes_posterior"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:progressTint="#2196F3"
+                        android:thumbTint="#2196F3" />/>
 
                     <TextView
                         android:id="@+id/text_interes_posterior"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="3.0 %"
-                        android:textSize="20sp" />
-
-                    <Button
-                        android:id="@+id/botonInteresPosteriorSumar"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:text="0.0 %"
+                        android:textColor="#666666" />
                 </LinearLayout>
 
-                <!-- Año Cambio Tipo -->
+                <!-- AÑO CAMBIO TIPO -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <Button
-                        android:id="@+id/botonCambioAnioRestar"
-                        android:layout_width="63dp"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:elevation="2dp">
 
                     <TextView
-                        android:id="@+id/text_anio_cambio_tipo"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="Año de cambio de tipo"
-                        android:gravity="center"
-                        android:textSize="20sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
 
-                    <Button
-                        android:id="@+id/botonCambioAnioSumar"
-                        android:layout_width="55dp"
+                    <SeekBar
+                        android:id="@+id/seekbar_anio_cambio"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:progressTint="#2196F3"
+                        android:thumbTint="#2196F3" />/>
+
+                    <TextView
+                        android:id="@+id/text_anio_cambio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#666666" />
                 </LinearLayout>
 
-                <SeekBar
-                    android:id="@+id/seek_anio_cambio_tipo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="40"
-                    android:progress="1"
-                    android:enabled="false"
-                    android:layout_marginBottom="48dp" />
-
                 <!-- RESULTADOS -->
-                <TableLayout
-                    android:id="@+id/tabla_resultados"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:padding="16dp">
+                    android:orientation="vertical"
+                    android:background="#E3F2FD"
+                    android:padding="16dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="48dp">
 
-                    <TableRow>
-                        <TextView
-                            android:layout_weight="1"
-                            android:text="Mensualidad"
-                            android:textSize="16sp" />
-                        <TextView
-                            android:id="@+id/text_mensualidad"
-                            android:gravity="end"
-                            android:text="0,00 €"
-                            android:textSize="16sp" />
-                    </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mensualidad:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333" />
 
-                    <TableRow>
-                        <TextView
-                            android:layout_weight="1"
-                            android:text="Mensualidad posterior"
-                            android:textSize="16sp" />
-                        <TextView
-                            android:id="@+id/text_mensualidad_posterior"
-                            android:gravity="end"
-                            android:text="0,00 €"
-                            android:textSize="16sp" />
-                    </TableRow>
+                    <TextView
+                        android:id="@+id/text_mensualidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0,00 €"
+                        android:textColor="#004D40"
+                        android:textSize="16sp"
+                        android:gravity="end" />
 
-                </TableLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mensualidad posterior:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="16dp" />
+
+                    <TextView
+                        android:id="@+id/text_mensualidad_posterior"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0,00 €"
+                        android:textColor="#004D40"
+                        android:textSize="16sp"
+                        android:gravity="end" />
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
 
-    <!-- Menú lateral -->
+    <!-- PANEL LATERAL -->
     <LinearLayout
         android:id="@+id/right_drawer"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:orientation="vertical"
-        android:background="@android:color/darker_gray"
-        android:padding="16dp">
+        android:background="#FFFFFF"
+        android:padding="16dp"
+        android:elevation="8dp">
 
         <Button
             android:id="@+id/boton1"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
-            android:text="OPCION 1"
-            android:background="@android:color/darker_gray"
-            android:textColor="@android:color/white" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPCIÓN 1"
+            android:backgroundTint="#2196F3"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/boton2"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
-            android:text="OPCION 2"
-            android:background="@android:color/darker_gray"
-            android:textColor="@android:color/white" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPCIÓN 2"
+            android:backgroundTint="#2196F3"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/boton3"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="16dp"
-            android:text="OPCION 3"
-            android:background="@android:color/darker_gray"
-            android:textColor="@android:color/white" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPCIÓN 3"
+            android:backgroundTint="#2196F3"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>

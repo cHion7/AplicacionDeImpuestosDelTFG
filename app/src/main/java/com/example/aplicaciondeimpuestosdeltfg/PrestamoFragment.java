@@ -22,7 +22,7 @@ public class PrestamoFragment extends Fragment {
     private float capital = 0;
     private float plazo = 0;
     private float interes = 0;
-    private float InteresPosterior = 0;
+    private float interesPosterior = 0;
     private float plazoConCambio = 0;
     private CheckBox impuestoPosterior;
     TextView mensualidadText;
@@ -42,44 +42,28 @@ public class PrestamoFragment extends Fragment {
         // Inicializar vistas desde el layout del fragment
         ImageView btn_open_menu = view.findViewById(R.id.boton_abrir_menu);
 
-        Button sumarCapital = view.findViewById(R.id.botonCapitalSumar);
-        Button restarCapital = view.findViewById(R.id.botonCapitalRestar);
-        Button sumarPlazo = view.findViewById(R.id.botonPlazoSumar);
-        Button restarPlazo = view.findViewById(R.id.botonPlazoRestar);
-        Button tipoInteresRestar = view.findViewById(R.id.botonTipoInteresRestar);
-        Button tipoInteresSumar = view.findViewById(R.id.botonTipoInteresSumar);
-        Button cambiarAnioRestar = view.findViewById(R.id.botonCambioAnioRestar);
-        Button cambiarAnioSumar = view.findViewById(R.id.botonCambioAnioSumar);
-        Button interesPosteriorRestar = view.findViewById(R.id.botonInteresPosteriorRestar);
-        Button interesPosteriorSumar = view.findViewById(R.id.botonInteresPosteriorSumar);
-
         impuestoPosterior = view.findViewById(R.id.checkbox_interes_posterior);
 
-        TextView capitalText = view.findViewById(R.id.text_capital_inicial);
-        TextView plazoText = view.findViewById(R.id.text_plazo_amortizacion);
-        TextView interesText = view.findViewById(R.id.text_tipo_interes);
+        TextView capitalText = view.findViewById(R.id.text_capital);
+        TextView plazoText = view.findViewById(R.id.text_plazo);
+        TextView interesText = view.findViewById(R.id.text_interes);
         TextView interesPosteriorText = view.findViewById(R.id.text_interes_posterior);
-        TextView cambioAnioText = view.findViewById(R.id.text_anio_cambio_tipo);
+        TextView cambioAnioText = view.findViewById(R.id.text_anio_cambio);
 
         mensualidadText = view.findViewById(R.id.text_mensualidad);
         mensualidadPosteriorText = view.findViewById(R.id.text_mensualidad_posterior);
 
-        SeekBar capitalInicial = view.findViewById(R.id.seek_capital_inicial);
-        SeekBar plazoAmortizado = view.findViewById(R.id.seek_plazo_amortizacion);
-        SeekBar plazoAmortizadoPosterior = view.findViewById(R.id.seek_anio_cambio_tipo);
+        SeekBar capitalInicial = view.findViewById(R.id.seekbar_capital);
+        SeekBar plazoAmortizado = view.findViewById(R.id.seekbar_plazo);
+        SeekBar tipoInteres = view.findViewById(R.id.seekbar_interes);
+        SeekBar plazoAmortizadoPosterior = view.findViewById(R.id.seekbar_anio_cambio);
+        SeekBar tipoInteresPosterior = view.findViewById(R.id.seekbar_interes_posterior);
 
 
-        interesPosteriorSumar.setEnabled(false);
-        interesPosteriorRestar.setEnabled(false);
-        cambiarAnioRestar.setEnabled(false);
-        cambiarAnioSumar.setEnabled(false);
         plazoAmortizadoPosterior.setEnabled(false);
-
-
-
+        tipoInteresPosterior.setEnabled(false);
 
         DrawerLayout drawerLayout =  view.findViewById(R.id.drawer_layout);
-
 
         btn_open_menu.setOnClickListener(v -> {
             if (drawerLayout != null && !drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -91,40 +75,7 @@ public class PrestamoFragment extends Fragment {
 
             }
         });
-        restarCapital.setOnClickListener(v -> {
-            if (capital >= 1000) capital -= 1000;
-            capitalText.setText(String.format("Precio: %.0f €", capital));
-            actualizarValoresPrestamo();
-        });
-        sumarCapital.setOnClickListener(v -> {
-            capital += 1000;
-            capitalText.setText(String.format("Precio: %.0f €", capital));
-            actualizarValoresPrestamo();
-        });
 
-        restarPlazo.setOnClickListener(v -> {
-            if (plazo > 0) plazo -= 1;
-            plazoText.setText(String.format("Plazo: %.0f años", plazo));
-            actualizarValoresPrestamo();
-        });
-        sumarPlazo.setOnClickListener(v -> {
-            plazo += 1;
-            plazoText.setText(String.format("Plazo: %.0f años", plazo));
-            actualizarValoresPrestamo();
-        });
-
-
-        tipoInteresRestar.setOnClickListener(v -> {
-            if (interes > 0) interes -= 1;
-            interesText.setText(String.format("Interes: %.0f %%", interes));
-            actualizarValoresPrestamo();
-
-                });
-        tipoInteresSumar.setOnClickListener(v -> {
-                    interes += 1;
-                    interesText.setText(String.format("Interes: %.0f %%", interes));
-                    actualizarValoresPrestamo();
-                });
 
 
 
@@ -133,16 +84,11 @@ public class PrestamoFragment extends Fragment {
 
         impuestoPosterior.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                interesPosteriorSumar.setEnabled(true);
-                interesPosteriorRestar.setEnabled(true);
-                cambiarAnioRestar.setEnabled(true);
-                cambiarAnioSumar.setEnabled(true);
+                tipoInteresPosterior.setEnabled(true);
                 plazoAmortizadoPosterior.setEnabled(true);
             } else {
-                interesPosteriorSumar.setEnabled(false);
-                interesPosteriorRestar.setEnabled(false);
-                cambiarAnioRestar.setEnabled(false);
-                cambiarAnioSumar.setEnabled(false);
+
+                tipoInteresPosterior.setEnabled(false);
                 plazoAmortizadoPosterior.setEnabled(false);
 
             }
@@ -150,27 +96,49 @@ public class PrestamoFragment extends Fragment {
         });
 
 
-        interesPosteriorRestar.setOnClickListener(v -> {
-            if (InteresPosterior > 0) InteresPosterior -= 1;
-            interesPosteriorText.setText(String.format("Interes: %.0f %%", InteresPosterior));
-            actualizarValoresPrestamo();
-        });
-        interesPosteriorSumar.setOnClickListener(v -> {
-            InteresPosterior += 1;
-            interesPosteriorText.setText(String.format("Interes: %.0f %%", InteresPosterior));
-            actualizarValoresPrestamo();
+
+        tipoInteres.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                interes = progress;
+                interesText.setText(String.format("Interes: %.0f %%", interes));
+
+            }
+
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+                actualizarValoresPrestamo();
+            }
         });
 
-        cambiarAnioRestar.setOnClickListener(v -> {
-            if (plazoConCambio > 0) plazoConCambio -= 1;
-            cambioAnioText.setText(String.format("Plazo: %.0f años", plazoConCambio));
-            actualizarValoresPrestamo();
+        plazoAmortizadoPosterior.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                plazoConCambio = progress;
+                cambioAnioText.setText(String.format("Plazo: %.0f años", plazoConCambio));
+
+            }
+
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+                actualizarValoresPrestamo();
+            }
         });
-        cambiarAnioSumar.setOnClickListener(v -> {
-            plazoConCambio += 1;
-            cambioAnioText.setText(String.format("Plazo: %.0f años", plazoConCambio));
-            actualizarValoresPrestamo();
+
+        tipoInteresPosterior.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                interesPosterior = progress;
+                interesPosteriorText.setText(String.format("Plazo: %.0f años", interesPosterior));
+
+            }
+
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+                actualizarValoresPrestamo();
+            }
         });
+
 
 
         capitalInicial.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -252,7 +220,7 @@ public class PrestamoFragment extends Fragment {
             //-------------------------------Da mal es una caca FFFFFFFFFFFFFFFFFFFFF
         } else {
 
-            if (plazoConCambio <= 0 || plazoConCambio >= plazo || InteresPosterior <= 0) {
+            if (plazoConCambio <= 0 || plazoConCambio >= plazo || interesPosterior <= 0) {
                 mensualidadText.setText("Error");
                 mensualidadPosteriorText.setText("Error");
                 return;
@@ -265,7 +233,7 @@ public class PrestamoFragment extends Fragment {
 
             double capitalRestante = capital * factor1 - (cuota1 * (factor1 - 1) / r1);
 
-            float r2 = InteresPosterior / 12f / 100f;
+            float r2 = interesPosterior / 12f / 100f;
             int n2 = (int) ((plazo - plazoConCambio) * 12);
             double factor2 = Math.pow(1 + r2, n2);
             double cuota2 = capitalRestante * r2 * factor2 / (factor2 - 1);

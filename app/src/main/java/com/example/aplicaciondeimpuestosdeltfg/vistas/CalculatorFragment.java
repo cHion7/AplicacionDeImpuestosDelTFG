@@ -37,23 +37,19 @@ public class CalculatorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
 
-        Button botonAnosRestar = view.findViewById(R.id.botonAnosRestar);
-        Button botonAnosSumar = view.findViewById(R.id.botonAnosSumar);
+
         Button botonImpuestoRestar = view.findViewById(R.id.botonImpuestoRestar);
         Button botonImpuestoSumar = view.findViewById(R.id.botonImpuestoSumar);
-        Button botonAhorroRestar = view.findViewById(R.id.botonAhorroRestar);
-        Button botonAhorroSumar = view.findViewById(R.id.botonAhorroSumar);
-        Button botonInmuebleRestar = view.findViewById(R.id.botonInmuebleRestar);
-        Button botonInmuebleSumar = view.findViewById(R.id.botonInmuebleSumar);
+
 
         Button botonHipoteca = view.findViewById(R.id.boton1);
         Button botonImpuestos = view.findViewById(R.id.boton2);
         Button botonOtros = view.findViewById(R.id.boton3);
 
         TextView impuestoValor = view.findViewById(R.id.ImpuestoValor);
-        TextView precioInmueble = view.findViewById(R.id.text_precio_inmueble);
-        TextView ahorroAportado = view.findViewById(R.id.text_ahorro_aportado);
-        TextView plazoPrestamo = view.findViewById(R.id.text_plazo_prestamo);
+        TextView precioInmueble = view.findViewById(R.id.textViewPrecio);
+        TextView ahorroAportado = view.findViewById(R.id.textViewAhorro);
+        TextView plazoPrestamo = view.findViewById(R.id.textViewPlazo);
         cuotaMensual = view.findViewById(R.id.cuotaMnesual);
         importeHipoteca = view.findViewById(R.id.importeHipoteca);
         porcentajeFinanciacion = view.findViewById(R.id.porcentajeFinanciacion);
@@ -68,57 +64,13 @@ public class CalculatorFragment extends Fragment {
         impuestoFijo = view.findViewById(R.id.ImpuestoFijo);
         impuestoVariable = view.findViewById(R.id.ImpuestoVariable);
 
-        SeekBar seekerPrecioInmueble = view.findViewById(R.id.precioInmueble);
-        SeekBar seekBarAhorroAportado = view.findViewById(R.id.ahorroAportado);
-        SeekBar seekBarPlazoPrestamo = view.findViewById(R.id.plazoPrestamo);
+        SeekBar seekerPrecioInmueble = view.findViewById(R.id.seekBarPrecio);
+        SeekBar seekBarAhorroAportado = view.findViewById(R.id.seekBarAhorro);
+        SeekBar seekBarPlazoPrestamo = view.findViewById(R.id.seekBarPlazo);
 
         drawerLayout = view.findViewById(R.id.drawer_layout);
         ImageView botonAbrirMenu = view.findViewById(R.id.btn_open_menu);
 
-
-
-        // Botones suma/resta
-        botonAnosRestar.setOnClickListener(v -> {
-            if (plazo > 0) plazo -= 1;
-            plazoPrestamo.setText(String.format("Plazo: %.0f años", plazo));
-            actualizarValores();
-        });
-
-        botonAnosSumar.setOnClickListener(v -> {
-            plazo += 1;
-            plazoPrestamo.setText(String.format("Plazo: %.0f años", plazo));
-            actualizarValores();
-        });
-
-        botonInmuebleRestar.setOnClickListener(v -> {
-            if (precio >= 1000) precio -= 1000;
-            precioInmueble.setText(String.format("Precio: %.0f €", precio));
-            actualizarValores();
-        });
-
-        botonInmuebleSumar.setOnClickListener(v -> {
-            precio += 1000;
-            precioInmueble.setText(String.format("Precio: %.0f €", precio));
-            actualizarValores();
-        });
-
-        botonAhorroRestar.setOnClickListener(v -> {
-            float minimoAhorro = precio * 0.10f;
-            if(minimoAhorro < ahorro){
-            if (ahorro >= 1000) ahorro -= 1000;
-            ahorroAportado.setText(String.format("Ahorro: %.0f €", ahorro));
-            }else {
-                ahorroAportado.setText(String.format("El ahorro debe ser como minimo el 10 porcientode precio: %.0f €", ahorro));
-            }
-            actualizarValores();
-        });
-
-        botonAhorroSumar.setOnClickListener(v -> {
-            ahorro += 1000;
-            if (ahorro > precio) ahorro = precio;
-            ahorroAportado.setText(String.format("Ahorro: %.0f €", ahorro));
-            actualizarValores();
-        });
 
         botonImpuestoRestar.setOnClickListener(v -> {
             if (impuesto > 0) impuesto -= 1;
