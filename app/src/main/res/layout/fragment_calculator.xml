@@ -53,8 +53,7 @@
                     android:id="@+id/seekBarPrecio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="500000"
-                    android:progress="200000"
+                    android:max="200000"
                     android:progressTint="#2196F3"
                     android:thumbTint="#2196F3" />
 
@@ -62,7 +61,7 @@
                     android:id="@+id/textViewPrecio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="200.000 €"
+                    android:text="0€"
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textColor="#666666"
@@ -94,7 +93,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="200000"
-                    android:progress="20000"
                     android:progressTint="#2196F3"
                     android:thumbTint="#2196F3" />
 
@@ -102,7 +100,7 @@
                     android:id="@+id/textViewAhorro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="20.000 €"
+                    android:text="0 €"
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textColor="#666666"
@@ -133,7 +131,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="40"
-                    android:progress="10"
                     android:progressTint="#2196F3"
                     android:thumbTint="#2196F3" />
 
@@ -141,7 +138,7 @@
                     android:id="@+id/textViewPlazo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10 años"
+                    android:text="0 años"
                     android:textAlignment="center"
                     android:textSize="16sp"
                     android:textColor="#666666"
@@ -235,7 +232,7 @@
                     <TextView
                         android:id="@+id/cuotaMnesual"
                         android:gravity="end"
-                        android:text="2.681 €"
+                        android:text="-"
                         android:textColor="#004D40" />
                 </TableRow>
 
@@ -247,7 +244,7 @@
                     <TextView
                         android:id="@+id/importeHipoteca"
                         android:gravity="end"
-                        android:text="203.225 €"
+                        android:text="-"
                         android:textColor="#004D40" />
                 </TableRow>
 
@@ -259,7 +256,7 @@
                     <TextView
                         android:id="@+id/porcentajeFinanciacion"
                         android:gravity="end"
-                        android:text="102 %"
+                        android:text="-"
                         android:textColor="#004D40" />
                 </TableRow>
             </TableLayout>
@@ -282,7 +279,7 @@
                     <TextView
                         android:id="@+id/precioInmuebleResultado"
                         android:gravity="end"
-                        android:text="200.000 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
 
@@ -294,7 +291,7 @@
                     <TextView
                         android:id="@+id/impuestosGastosCompra"
                         android:gravity="end"
-                        android:text="23.225 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
 
@@ -306,7 +303,7 @@
                     <TextView
                         android:id="@+id/costeTotalInmueble"
                         android:gravity="end"
-                        android:text="223.225 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
 
@@ -318,7 +315,7 @@
                     <TextView
                         android:id="@+id/ahorroAportadoResultado"
                         android:gravity="end"
-                        android:text="20.000 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
 
@@ -330,7 +327,7 @@
                     <TextView
                         android:id="@+id/importeHipotecaResultado"
                         android:gravity="end"
-                        android:text="203.225 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
 
@@ -342,7 +339,7 @@
                     <TextView
                         android:id="@+id/interesHipoteca"
                         android:gravity="end"
-                        android:text="118.511 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
 
@@ -354,7 +351,7 @@
                     <TextView
                         android:id="@+id/costeTotalConHipoteca"
                         android:gravity="end"
-                        android:text="341.736 €"
+                        android:text="-"
                         android:textColor="#333333" />
                 </TableRow>
             </TableLayout>
