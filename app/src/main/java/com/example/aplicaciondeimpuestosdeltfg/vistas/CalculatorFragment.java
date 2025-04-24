@@ -280,6 +280,8 @@ public class CalculatorFragment extends Fragment {
         pieChart.setData(data);
         pieChart.highlightValues(null);
         pieChart.invalidate();
+        pieChart.setCenterTextSize(20f);
+        data.setValueTextSize(15f);
         pieChart.getDescription().setEnabled(false);
 
 
