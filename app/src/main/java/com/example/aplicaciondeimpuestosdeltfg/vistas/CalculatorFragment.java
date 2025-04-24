@@ -2,6 +2,8 @@ package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,15 @@ import android.widget.TextView;
 import com.example.aplicaciondeimpuestosdeltfg.CriptoRiesgoFragment;
 import com.example.aplicaciondeimpuestosdeltfg.PrestamoFragment;
 import com.example.aplicaciondeimpuestosdeltfg.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieEntry;
+
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class CalculatorFragment extends Fragment {
 
@@ -33,6 +44,12 @@ public class CalculatorFragment extends Fragment {
             ahorroAportadoResultado, importeHipotecaResultado, interesHipoteca,
             costeTotalConHipoteca;
 
+    PieChart pieChart;
+
+    ArrayList<String> valoresX = new ArrayList<>();
+    ArrayList<PieEntry> valoresY = new ArrayList<>();
+    ArrayList<Integer> colores = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
@@ -40,8 +57,6 @@ public class CalculatorFragment extends Fragment {
 
         Button botonImpuestoRestar = view.findViewById(R.id.botonImpuestoRestar);
         Button botonImpuestoSumar = view.findViewById(R.id.botonImpuestoSumar);
-
-
         Button botonHipoteca = view.findViewById(R.id.boton1);
         Button botonImpuestos = view.findViewById(R.id.boton2);
         Button botonOtros = view.findViewById(R.id.boton3);
@@ -70,6 +85,8 @@ public class CalculatorFragment extends Fragment {
 
         drawerLayout = view.findViewById(R.id.drawer_layout);
         ImageView botonAbrirMenu = view.findViewById(R.id.btn_open_menu);
+
+        pieChart = view.findViewById(R.id.pcGrafica);
 
 
         botonImpuestoRestar.setOnClickListener(v -> {
@@ -177,8 +194,8 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void actualizarValores() {
-        if (precio <= 0 || plazo <= 0|| impuesto <= 0) {
-            cuotaMensual.setText("—");
+        if (precio <= 0 || plazo <= 0 || impuesto <= 0) {
+            cuotaMensual.setText("Introduce todos los datos");
             importeHipoteca.setText("—");
             porcentajeFinanciacion.setText("—");
             impuestosGastosCompra.setText("—");
@@ -191,7 +208,11 @@ public class CalculatorFragment extends Fragment {
             return;
         }
 
-        // Calcular gastos según tipo de impuesto
+        valoresX.clear();
+        valoresY.clear();
+        colores.clear();
+
+        // Calculamos gastos
         float gastos = 0;
         if (impuestoFijo != null && impuestoFijo.isChecked()) {
             gastos = precio * 0.10f;
@@ -226,5 +247,41 @@ public class CalculatorFragment extends Fragment {
         precioInmuebleResultado.setText(String.format("%.2f €", precio));
         interesHipoteca.setText(String.format("%.2f %%", interesAnual * 100));
         costeTotalConHipoteca.setText(String.format("%.2f €", costeTotal));
+
+        creacionDeGrafica(hipoteca, gastos, interesesTotales);
+    }
+
+
+    private void creacionDeGrafica(float hipoteca, float gastos, double intereses) {
+        pieChart.setHoleRadius(40f);
+        pieChart.setRotationEnabled(true);
+        pieChart.animateXY(1500, 1500);
+
+        valoresY.clear();
+        colores.clear();
+
+        valoresY.add(new PieEntry(precio, "Precio del inmueble"));
+        valoresY.add(new PieEntry((float) intereses, "Intereses"));
+        valoresY.add(new PieEntry(hipoteca, "Hipoteca"));
+        valoresY.add(new PieEntry(ahorro, "Ahorro aportado"));
+
+
+        colores.add(ContextCompat.getColor(requireContext(), R.color.grafica_rojo));
+        colores.add(ContextCompat.getColor(requireContext(), R.color.grafica_naranja));
+        colores.add(ContextCompat.getColor(requireContext(), R.color.grafica_azul_medio));
+        colores.add(ContextCompat.getColor(requireContext(), R.color.grafica_azul_claro));
+
+
+        PieDataSet set = new PieDataSet(valoresY, "");
+        set.setSliceSpace(5f);
+        set.setColors(colores);
+
+        PieData data = new PieData(set);
+        pieChart.setData(data);
+        pieChart.highlightValues(null);
+        pieChart.invalidate();
+        pieChart.getDescription().setEnabled(false);
+
+
     }
 }
