@@ -1,5 +1,6 @@
 package com.example.aplicaciondeimpuestosdeltfg;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment;
+import com.example.aplicaciondeimpuestosdeltfg.vistas.linearGraphic;
 
 import java.util.Locale;
 
@@ -33,14 +35,33 @@ public class PrestamoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflar el layout del fragment
         View view = inflater.inflate(R.layout.fragment_prestamo, container, false);
 
         Button botonHipoteca = view.findViewById(R.id.boton1);
         Button botonImpuestos = view.findViewById(R.id.boton2);
         Button botonOtros = view.findViewById(R.id.boton3);
-
-
+        Button botonVerGrafica = view.findViewById(R.id.Vergrafica);
+        Button botonVerTabla = view.findViewById(R.id.irTabla);
+        botonVerGrafica.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), linearGraphic.class);
+            intent.putExtra("capital", capital);
+            intent.putExtra("plazo", plazo);
+            intent.putExtra("interes", interes);
+            intent.putExtra("interesPosterior", interesPosterior);
+            intent.putExtra("plazoConCambio", plazoConCambio);
+            intent.putExtra("tieneCambio", impuestoPosterior.isChecked());
+            startActivity(intent);
+        });
+        botonVerTabla.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), tablaPrestamo.class);
+            intent.putExtra("capital", capital);
+            intent.putExtra("plazo", plazo);
+            intent.putExtra("interes", interes);
+            intent.putExtra("interesPosterior", interesPosterior);
+            intent.putExtra("plazoConCambio", plazoConCambio);
+            intent.putExtra("tieneCambio", impuestoPosterior.isChecked());
+            startActivity(intent);
+        });
         // Inicializar vistas desde el layout del fragment
         ImageView btn_open_menu = view.findViewById(R.id.boton_abrir_menu);
 
