@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
    BottomNavigationView bottomNavigationView;
    HomePage homeFragment = new HomePage();
-   AjustesFragment settings = new AjustesFragment();
+   PerfilFragment perfilFragment = new PerfilFragment();
    CalculatorFragment calculatorFragment = new CalculatorFragment();
 
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.ajustes) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainPageFragmentContainer, settings)
+                            .replace(R.id.mainPageFragmentContainer, perfilFragment)
                             .commit();
                     return true;
                 } else if (id == R.id.calculadora) {

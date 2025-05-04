@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="30dp"
+        android:gravity="end"
         android:orientation="vertical">
 
         <TextView
@@ -20,6 +21,17 @@
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spTipoLaboralReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtPerfilSeleccionado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmpresaRegistro"
@@ -33,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Nombre del empleador o empresa"
                 android:inputType="text" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

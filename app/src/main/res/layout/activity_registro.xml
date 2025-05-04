@@ -73,9 +73,11 @@
         android:id="@+id/btSiguienteReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:backgroundTint="#2C3E50"
-        android:text="Siguiente"
+        android:gravity="center"
+        android:text="Iniciar Sesión"
         android:textAlignment="center" />
 
 </LinearLayout>
