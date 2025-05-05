@@ -1,5 +1,6 @@
 package com.example.aplicaciondeimpuestosdeltfg;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -16,6 +17,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment;
+import com.example.aplicaciondeimpuestosdeltfg.vistas.linearGraphic;
+
+import java.util.Locale;
 
 public class PrestamoFragment extends Fragment {
 
@@ -31,14 +35,33 @@ public class PrestamoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflar el layout del fragment
         View view = inflater.inflate(R.layout.fragment_prestamo, container, false);
 
         Button botonHipoteca = view.findViewById(R.id.boton1);
         Button botonImpuestos = view.findViewById(R.id.boton2);
         Button botonOtros = view.findViewById(R.id.boton3);
-
-
+        Button botonVerGrafica = view.findViewById(R.id.Vergrafica);
+        Button botonVerTabla = view.findViewById(R.id.irTabla);
+        botonVerGrafica.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), linearGraphic.class);
+            intent.putExtra("capital", capital);
+            intent.putExtra("plazo", plazo);
+            intent.putExtra("interes", interes);
+            intent.putExtra("interesPosterior", interesPosterior);
+            intent.putExtra("plazoConCambio", plazoConCambio);
+            intent.putExtra("tieneCambio", impuestoPosterior.isChecked());
+            startActivity(intent);
+        });
+        botonVerTabla.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), tablaPrestamo.class);
+            intent.putExtra("capital", capital);
+            intent.putExtra("plazo", plazo);
+            intent.putExtra("interes", interes);
+            intent.putExtra("interesPosterior", interesPosterior);
+            intent.putExtra("plazoConCambio", plazoConCambio);
+            intent.putExtra("tieneCambio", impuestoPosterior.isChecked());
+            startActivity(intent);
+        });
         // Inicializar vistas desde el layout del fragment
         ImageView btn_open_menu = view.findViewById(R.id.boton_abrir_menu);
 
@@ -128,7 +151,7 @@ public class PrestamoFragment extends Fragment {
         tipoInteresPosterior.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 interesPosterior = progress;
-                interesPosteriorText.setText(String.format("Plazo: %.0f años", interesPosterior));
+                interesPosteriorText.setText(String.format("Interés posterior: %.2f %%", interesPosterior));
 
             }
 
@@ -201,46 +224,80 @@ public class PrestamoFragment extends Fragment {
     }
 
     private void actualizarValoresPrestamo() {
+        // Validación básica
+        if (capital <= 0 || interes <= 0 || plazo <= 0) {
+            mostrarError();
+            return;
+        }
 
-        if (interes <= 0 || plazo <= 0 || capital <= 0) {
-            mensualidadText.setText("Error");
+        // Conversión a tasas y meses
+        double tasaMensualInicial = interes / 100.0 / 12.0;
+        int mesesTotales = (int)(plazo * 12);
+
+        // 1) Cuota inicial (años completos, tasa inicial)
+        double cuotaInicial = calcularCuota(capital, tasaMensualInicial, mesesTotales);
+        mensualidadText.setText(String.format(Locale.getDefault(), "%.2f €", cuotaInicial));
+
+        if (!impuestoPosterior.isChecked()) {
             mensualidadPosteriorText.setText("-");
             return;
         }
 
-        float r = interes / 12f / 100f;
-        int n = (int) plazo * 12;
-
-        if (!impuestoPosterior.isChecked()) {
-            double factor = Math.pow(1 + r, n);
-            double cuota = capital * r * factor / (factor - 1);
-            mensualidadText.setText(String.format("%.2f €", cuota));
-            mensualidadPosteriorText.setText("-");
-
-            //-------------------------------Da mal es una caca FFFFFFFFFFFFFFFFFFFFF
-        } else {
-
-            if (plazoConCambio <= 0 || plazoConCambio >= plazo || interesPosterior <= 0) {
-                mensualidadText.setText("Error");
-                mensualidadPosteriorText.setText("Error");
-                return;
-            }
-
-            float r1 = interes / 12f / 100f;
-            int n1 = (int) plazoConCambio * 12;
-            double factor1 = Math.pow(1 + r1, n1);
-            double cuota1 = capital * r1 * factor1 / (factor1 - 1);
-
-            double capitalRestante = capital * factor1 - (cuota1 * (factor1 - 1) / r1);
-
-            float r2 = interesPosterior / 12f / 100f;
-            int n2 = (int) ((plazo - plazoConCambio) * 12);
-            double factor2 = Math.pow(1 + r2, n2);
-            double cuota2 = capitalRestante * r2 * factor2 / (factor2 - 1);
-
-            mensualidadText.setText(String.format("%.2f €", cuota1));
-            mensualidadPosteriorText.setText(String.format("%.2f €", cuota2));
+        // Validar parámetros de cambio
+        if (plazoConCambio <= 0 || plazoConCambio >= plazo || interesPosterior <= 0) {
+            mostrarError();
+            return;
         }
+
+        // Conversión para el tramo posterior
+        double tasaMensualPosterior = interesPosterior / 100.0 / 12.0;
+        int mesesHastaCambio = (int)(plazoConCambio * 12);
+        int mesesRestantes = mesesTotales - mesesHastaCambio;
+
+        // 2) Capital pendiente al cambio usando la cuota original
+        double capitalPendiente = calcularCapitalPendiente(capital, tasaMensualInicial, mesesHastaCambio, cuotaInicial);
+
+        // 3) Cuota posterior con el nuevo interés y meses restantes
+        double cuotaPosterior = calcularCuota(capitalPendiente, tasaMensualPosterior, mesesRestantes);
+        mensualidadPosteriorText.setText(String.format(Locale.getDefault(), "%.2f €", cuotaPosterior));
     }
+
+    private double calcularCapitalPendiente(double capital, double tasaMensual, int cuotasPagadas, double cuota) {
+        double factor = Math.pow(1 + tasaMensual, cuotasPagadas);
+        if (tasaMensual <= 0) {
+            return capital - cuota * cuotasPagadas;
+        }
+        return capital * factor - cuota * ((factor - 1) / tasaMensual);
+    }
+
+    private double calcularCuota(double capital, double tasaMensual, int numMeses) {
+        // C = K * [ i*(1+i)^N / ((1+i)^N - 1) ]
+        double factor = Math.pow(1 + tasaMensual, numMeses);
+        if (tasaMensual <= 0 || factor == 1.0) {
+            // Evita división por cero
+            return capital / numMeses;
+        }
+        return capital * (tasaMensual * factor) / (factor - 1);
+    }
+
+    private double calcularCapitalPendiente(double capital, double tasaMensual, int cuotasPagadas) {
+        // K_pend = K*(1+i)^n - C * [ ((1+i)^n - 1) / i ]
+        double factor = Math.pow(1 + tasaMensual, cuotasPagadas);
+        double cuota = calcularCuota(capital, tasaMensual, cuotasPagadas);
+        if (tasaMensual <= 0) {
+            // Si i=0, pendiente es lineal
+            return capital - cuota * cuotasPagadas;
+        }
+        return capital * factor
+                - cuota * ((factor - 1) / tasaMensual);
+    }
+
+    private void mostrarError() {
+        mensualidadText.setText("Error");
+        mensualidadPosteriorText.setText("Error");
+    }
+
+
 }
+
 

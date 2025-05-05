@@ -71,8 +71,9 @@
                         android:id="@+id/seekbar_capital"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:max="200000"
                         android:progressTint="#2196F3"
-                        android:thumbTint="#2196F3" />/>
+                        android:thumbTint="#2196F3" />
 
                     <TextView
                         android:id="@+id/text_capital"
@@ -263,10 +264,35 @@
                         android:id="@+id/text_mensualidad_posterior"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="end"
                         android:text="0,00 €"
                         android:textColor="#004D40"
-                        android:textSize="16sp"
-                        android:gravity="end" />
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/Vergrafica"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#2196F3"
+                        android:text="Ver Grafica" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/irTabla"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#2196F3"
+                        android:text="Ver tabla" />
+
                 </LinearLayout>
 
             </LinearLayout>

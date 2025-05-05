@@ -23,4 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AplicacionDeImpuestosDelTFG"
 include(":app")
- 
+include(":PieCharts")

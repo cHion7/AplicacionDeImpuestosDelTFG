@@ -12,4 +12,10 @@
     <color name="primaryDark">#3700B3</color>
     <color name="primaryText">#212121</color>
     <color name="cardBorder">#DADADA</color>
+
+    <color name="grafica_rojo">#f3471b</color>
+    <color name="grafica_naranja">#fe704b</color>
+    <color name="grafica_azul_claro">#09aee1</color>
+    <color name="grafica_azul_medio">#2db7e2</color>
+    <color name="grafica_azul_oscuro">#45cff9</color>
 </resources>
