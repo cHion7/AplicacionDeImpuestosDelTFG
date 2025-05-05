@@ -15,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Registro extends AppCompatActivity {
@@ -79,8 +80,8 @@ public class Registro extends AppCompatActivity {
         editor.putString("password", contrasena);
         editor.apply(); // Guardo los cambios
 
-        // Pasar al siguiente actividad
-        Intent intentReg1 = new Intent(Registro.this, Registro1.class);
-        startActivity(intentReg1);
+        // Pasar a la página principal
+        Intent intentMain = new Intent(Registro.this, MainActivity.class);
+        startActivity(intentMain);
     }
 }

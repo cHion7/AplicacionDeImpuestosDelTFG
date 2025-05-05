@@ -47,14 +47,14 @@ public class Registro1 extends AppCompatActivity {
     public void registrarDatos1(){
         // Obtenemos los datos introducidos por el usuario
         String nombre = etNombreRegistro.getText().toString();
-        String dni = etDNIRegistro.getText().toString();
+        //String dni = etDNIRegistro.getText().toString();
         String fechaNacimiento = etfechaRegistro.getText().toString();
         String estadoCivil = etEstadoRegistro.getText().toString();
         String direccion = etDireccionRegistro.getText().toString();
         String telefono = etTelefonoRegistro.getText().toString();
 
         //Validación campos
-        if (nombre.isEmpty()||dni.isEmpty()||fechaNacimiento.isEmpty()||estadoCivil.isEmpty()||direccion.isEmpty()||telefono.isEmpty()){
+        if (nombre.isEmpty()||fechaNacimiento.isEmpty()||estadoCivil.isEmpty()||direccion.isEmpty()||telefono.isEmpty()){
             Toast.makeText(Registro1.this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -64,7 +64,7 @@ public class Registro1 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("nombre", nombre);
-        editor.putString("dni", dni);
+        //editor.putString("dni", dni);
         editor.putString("fechaNacimiento", fechaNacimiento);
         editor.putString("estadoCivil", estadoCivil);
         editor.putString("direccion", direccion);

@@ -4,7 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +23,8 @@ import com.google.android.material.textfield.TextInputEditText;
 public class Registro2 extends AppCompatActivity {
     private TextInputEditText etEmpresaRegistro, etIngresosBrRegistro, etNominaRegistro, etDeclaracionRegistro;
     private Button btSiguiente2Registro;
+    private Spinner spTipoLaboralRegistro;
+    private TextView txtPerfilSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,33 @@ public class Registro2 extends AppCompatActivity {
         etNominaRegistro = findViewById(R.id.etNominaReg);
         etDeclaracionRegistro = findViewById(R.id.etDeclaracionReg);
         btSiguiente2Registro = findViewById(R.id.btSiguienteReg2);
+        spTipoLaboralRegistro = findViewById(R.id.spTipoLaboralReg);
+        txtPerfilSeleccionado = findViewById(R.id.txtPerfilSeleccionado);
 
+        // Spinner de perfil de usuarios
+        String [] opciones = {"Estudiante", "Desempleado", "Trabajador Autónomo (Freelancer)", "Empleado (trabajador ajeno)", "Jubilado"};
+
+        // Creamos un ArrayAdapter para llenar el Spinner con las opciones
+              ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
+              adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+              spTipoLaboralRegistro.setAdapter(adapter);
+
+        // Listener para manejar la selección de un ítem del Spinner
+        spTipoLaboralRegistro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Obtenemos la opción seleccionada
+                String perfilSeleccionado = parent.getItemAtPosition(position).toString();
+                // Mostramos el perfil seleccionado en el TextView
+                txtPerfilSeleccionado.setText("Perfil seleccionado: " + perfilSeleccionado);
+            }
+            //Cuando no se selecciona nada
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Mostrar un Toast
+                Toast.makeText(Registro2.this, "Campo obligatorio, elige una de las opciones", Toast.LENGTH_SHORT).show();
+            }
+        });
         //Registrar Datos 2
         btSiguiente2Registro.setOnClickListener(v -> {
             registrarDatos2();
