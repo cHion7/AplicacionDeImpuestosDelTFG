@@ -36,7 +36,7 @@
                     android:src="@drawable/baseline_menu_24" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tvGastosViewPager2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -117,7 +117,7 @@
                 </RadioGroup>
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/tvTituloGastos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="¿Cuánto dinero has ganado?"
@@ -149,7 +149,7 @@
                 android:layout_marginHorizontal="16dp">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tvTituloIngresos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2) Tus impuestos y beneficios"
@@ -166,7 +166,7 @@
                     android:paddingVertical="4dp">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/tvCobrosViewPager2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

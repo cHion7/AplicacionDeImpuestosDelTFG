@@ -40,7 +40,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/tvTituloEvento"
         android:layout_width="389dp"
         android:layout_height="60dp"
         android:layout_marginLeft="24dp"
@@ -51,25 +51,40 @@
         android:textSize="25dp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/tvCantDineroAddEvento"
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="numberDecimal" />
+
+    <RadioGroup
+        android:id="@+id/rgGastosCobros"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
         android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/ckGastoAddEvents"
-            android:layout_width="179dp"
+        <RadioButton
+            android:id="@+id/rbGastoAddEvento"
+            android:layout_width="119dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="CheckBox" />
+            android:text="Gasto" />
 
-        <CheckBox
-            android:id="@+id/ckCobrosAddEvents"
-            android:layout_width="115dp"
+        <RadioButton
+            android:id="@+id/rbCobroAddEvento"
+            android:layout_width="109dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="CheckBox" />
-    </LinearLayout>
+            android:text="Cobro" />
+    </RadioGroup>
+
+    <Spinner
+        android:id="@+id/spCategoriasAddEventos"
+        android:layout_width="363dp"
+        android:layout_height="41dp"
+        android:layout_margin="20dp" />
 
     <EditText
         android:id="@+id/tvMultilineDescripcionAddEvents"
