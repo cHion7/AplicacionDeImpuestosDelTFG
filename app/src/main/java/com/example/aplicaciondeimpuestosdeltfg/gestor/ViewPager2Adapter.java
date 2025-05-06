@@ -1,5 +1,6 @@
 package com.example.aplicaciondeimpuestosdeltfg.gestor;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
 
     @Override
     public void onBindViewHolder(@NonNull MesViewHolder holder, int position) {
+        Log.d("DEBUG", "Eventos totales: " + listaEventos.size());
         String mesActual = listaMeses.get(position);
         holder.tituloMes.setText(listaMeses.get(position));
 
@@ -85,13 +87,41 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
                 cobrosPorCategoria.get(evento.getCategoria()).add(evento);
             }
         }
-        mostrarTexto();
+
+        StringBuilder desgloseGastos = new StringBuilder();
+        for (Map.Entry<String, List<Evento>> entry : gastosPorCategoria.entrySet()) {
+            desgloseGastos.append(entry.getKey()).append(":\n"); // La categoría (Transporte, etc.)
+
+            for (Evento evento : entry.getValue()) {
+                desgloseGastos
+                        .append(" - ")
+                        .append(evento.getTitulo())
+                        .append(": ")
+                        .append(evento.getDinero())
+                        .append("€\n");
+            }
+            desgloseGastos.append("\n"); // Salto entre categorías
+        }
+
+        holder.gastos.setText(desgloseGastos.toString());
+
+        StringBuilder desgloseCobros = new StringBuilder();
+        for (Map.Entry<String, List<Evento>> entry : cobrosPorCategoria.entrySet()) {
+            desgloseCobros.append(entry.getKey()).append(":\n");
+
+            for (Evento evento : entry.getValue()) {
+                desgloseCobros
+                        .append(" - ")
+                        .append(evento.getTitulo())
+                        .append(": ")
+                        .append(evento.getDinero())
+                        .append("€\n");
+            }
+            desgloseCobros.append("\n");
+        }
+
+        holder.ingresos.setText(desgloseCobros.toString());
     }
-
-    public void mostrarTexto(){
-
-    }
-
     @Override
     public int getItemCount() {
         return listaMeses.size();

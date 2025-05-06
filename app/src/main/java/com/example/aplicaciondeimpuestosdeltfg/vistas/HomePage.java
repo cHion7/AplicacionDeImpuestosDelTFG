@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import java.util.List;
 public class HomePage extends Fragment {
     private MaterialCalendarView calendarView;
     private ViewPager2 viewPager2;
+    private ViewPager2Adapter adapter;
     private ImageButton addEventos;
     private List<Evento> listaEventos;
     private CalendarManager calendarManager = new CalendarManager();
@@ -106,28 +108,30 @@ public class HomePage extends Fragment {
         calendarView.addDecorator(new MultipleEventsDecorator(multiplesEventos, colores));
     }
 
-    public void viewPager2Configuration(){
-        List<String> meses = Arrays.asList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-
-        ViewPager2Adapter adapter = new ViewPager2Adapter(meses, listaEventos);
-        viewPager2.setAdapter(adapter);
-    }
-
     public void cargarEventos(){
         db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
         String emailUser = user.getEmail();
-        DatabaseReference eventosRef = usuariosReferencia.child(emailUser.replace("@", "_").replace(".", "_")).child("eventos");
+        String userPath = emailUser.replace("@", "_").replace(".", "_");
+        Log.d("RutaFirebase", "Ruta: Usuarios/" + userPath + "/eventos");
+        DatabaseReference eventosRef = usuariosReferencia.child(userPath).child("eventos");
         eventosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listaEventos.clear();
                 if(snapshot.exists()){
-                    // Iterar sobre los productos en el carrito.
                     for (DataSnapshot productoSnapshot : snapshot.getChildren()) {
-                        listaEventos.add(productoSnapshot.getValue(Evento.class));
+                        Evento evento = productoSnapshot.getValue(Evento.class);
+                        if (evento != null) {
+                            listaEventos.add(evento);
+                        }
                     }
                 }
+                Log.d("Eventos", "Eventos totales: " + listaEventos.size());
+
+                // Refresca el calendario y el adapter
+                calendarConfiguration();
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -139,6 +143,8 @@ public class HomePage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
+        List<String> meses = Arrays.asList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         calendarView = view.findViewById(R.id.calendarHomePage);
         viewPager2 = view.findViewById(R.id.homePageMeses);
         addEventos = view.findViewById(R.id.ibMasEventosHomePage);
@@ -147,10 +153,10 @@ public class HomePage extends Fragment {
         user = mAuth.getCurrentUser();
 
         listaEventos = new ArrayList<>();
+        adapter = new ViewPager2Adapter(meses, listaEventos);
+        viewPager2.setAdapter(adapter);
         cargarEventos();
 
-        calendarConfiguration();
-        viewPager2Configuration();
         addEventos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
