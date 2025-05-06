@@ -6,22 +6,30 @@ public class Evento {
     private String dinero;
     public enum Tipo { GASTO, COBRO }
     private String categoria;
-    private Calendar fecha;
+    private long fechaMillis;
     private Tipo tipo;
     private String titulo;
     private String descripcion;
 
-    public Evento(String dinero, String categoria, Calendar fecha, Tipo tipo, String titulo, String descripcion) {
+    public Evento() {
+    }
+
+    public Evento(String dinero, String categoria, Tipo tipo, String titulo, String descripcion) {
         this.dinero = dinero;
         this.categoria = categoria;
-        this.fecha = fecha;
         this.tipo = tipo;
         this.titulo = titulo;
         this.descripcion = descripcion;
     }
 
     public Calendar getFecha() {
-        return fecha;
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(fechaMillis);
+        return cal;
+    }
+
+    public void setFecha(Calendar fecha) {
+        this.fechaMillis = fecha.getTimeInMillis();
     }
 
     public Tipo getTipo() {

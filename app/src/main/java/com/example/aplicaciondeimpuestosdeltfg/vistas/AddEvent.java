@@ -169,11 +169,10 @@ public class AddEvent extends BottomSheetDialogFragment {
                 Evento evento = new Evento(
                         dinero.getText().toString(),
                         spinner.getSelectedItem().toString(),
-                        calendarManager.getCalendar(anioSeleccionado, mesSeleccionado, diaSeleccionado),
                         tipo,
                         titulo.getText().toString(),
                         descripcion.getText().toString());
-
+                evento.setFecha(calendarManager.getCalendar(anioSeleccionado, mesSeleccionado, diaSeleccionado));
                 subirEventoNube(evento);
                 dismiss();
             }
