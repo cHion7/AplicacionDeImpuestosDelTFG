@@ -11,6 +11,6 @@
 
     <item
         android:id="@+id/ajustes"
-        android:title="Ajustes"
-        android:icon="@drawable/baseline_build_24" />
+        android:icon="@drawable/baseline_build_24"
+        android:title="Perfil" />
 </menu>

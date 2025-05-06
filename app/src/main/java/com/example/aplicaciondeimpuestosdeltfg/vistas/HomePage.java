@@ -2,6 +2,8 @@ package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -19,6 +21,13 @@ import com.example.aplicaciondeimpuestosdeltfg.gestor.EventDecorator;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.Evento;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.MultipleEventsDecorator;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -34,6 +43,9 @@ public class HomePage extends Fragment {
     private ImageButton addEventos;
     private List<Evento> listaEventos;
     private CalendarManager calendarManager = new CalendarManager();
+    private FirebaseDatabase db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -98,8 +110,29 @@ public class HomePage extends Fragment {
         List<String> meses = Arrays.asList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
 
-        ViewPager2Adapter adapter = new ViewPager2Adapter(meses);
+        ViewPager2Adapter adapter = new ViewPager2Adapter(meses, listaEventos);
         viewPager2.setAdapter(adapter);
+    }
+
+    public void cargarEventos(){
+        db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
+        String emailUser = user.getEmail();
+        DatabaseReference eventosRef = usuariosReferencia.child(emailUser.replace("@", "_").replace(".", "_")).child("eventos");
+        eventosRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    // Iterar sobre los productos en el carrito.
+                    for (DataSnapshot productoSnapshot : snapshot.getChildren()) {
+                        listaEventos.add(productoSnapshot.getValue(Evento.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     @Override
@@ -110,11 +143,11 @@ public class HomePage extends Fragment {
         viewPager2 = view.findViewById(R.id.homePageMeses);
         addEventos = view.findViewById(R.id.ibMasEventosHomePage);
 
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
         listaEventos = new ArrayList<>();
-        listaEventos.add(new Evento(calendarManager.getCalendar(2025, 3, 18), Evento.Tipo.GASTO)); // 18 abril
-        listaEventos.add(new Evento(calendarManager.getCalendar(2025, 5, 18), Evento.Tipo.COBRO)); // mismo día
-        listaEventos.add(new Evento(calendarManager.getCalendar(2025, 3, 20), Evento.Tipo.GASTO)); // otro día
-        listaEventos.add(new Evento(calendarManager.getCalendar(2025, 3, 20), Evento.Tipo.COBRO)); // otro día
+        cargarEventos();
 
         calendarConfiguration();
         viewPager2Configuration();
