@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F4F4F4"
+    tools:context=".vistas.linearGraphic">
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:padding="8dp" />
+    <Button
+        android:id="@+id/salidaLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        android:textAllCaps="false"
+        android:layout_marginBottom="12dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2196F3"
+        android:elevation="4dp" />
+
+</LinearLayout>
