@@ -78,6 +78,14 @@
             android:layout_width="109dp"
             android:layout_height="wrap_content"
             android:text="Cobro" />
+
+        <Switch
+            android:id="@+id/repetir"
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="Repetir" />
+
     </RadioGroup>
 
     <Spinner
@@ -107,4 +115,5 @@
         android:padding="16dp"
         android:text="Selecciona una fecha"
         android:textSize="16sp" />
+
 </LinearLayout>

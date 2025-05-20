@@ -3,12 +3,14 @@ package com.example.aplicaciondeimpuestosdeltfg.vistas;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
@@ -33,7 +35,6 @@ public class AddEvent extends BottomSheetDialogFragment {
     private int anioSeleccionado;
     private int mesSeleccionado;
     private int diaSeleccionado;
-    private Evento.Tipo tipo;
     private TextView datePicker;
     private TextView guardar;
     private TextView cancelar;
@@ -42,6 +43,8 @@ public class AddEvent extends BottomSheetDialogFragment {
     private TextView titulo;
     private TextView descripcion;
     private TextView dinero;
+    private Switch repetir;
+    private String cobroOGasto = "GASTO"; // valor por defecto
     private Map<Integer, String> mesNombre = new HashMap<Integer, String>() {{
         put(1, "Enero");
         put(2, "Febrero");
@@ -111,6 +114,7 @@ public class AddEvent extends BottomSheetDialogFragment {
         titulo = view.findViewById(R.id.tvTituloEvento);
         descripcion = view.findViewById(R.id.tvMultilineDescripcionAddEvents);
         dinero = view.findViewById(R.id.tvCantDineroAddEvento);
+        repetir = view.findViewById(R.id.repetir);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -140,9 +144,9 @@ public class AddEvent extends BottomSheetDialogFragment {
         
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rbGastoAddEvento){
-                tipo = Evento.Tipo.GASTO;
+                cobroOGasto = "GASTO";
             } else if (checkedId == R.id.rbCobroAddEvento) {
-                tipo = Evento.Tipo.GASTO;
+                cobroOGasto = "COBRO";
             }
         });
 
@@ -168,12 +172,34 @@ public class AddEvent extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 Evento evento = new Evento(
                         dinero.getText().toString(),
+                        cobroOGasto,
                         spinner.getSelectedItem().toString(),
-                        tipo,
                         titulo.getText().toString(),
-                        descripcion.getText().toString());
-                evento.setFecha(calendarManager.getCalendar(anioSeleccionado, mesSeleccionado, diaSeleccionado));
-                subirEventoNube(evento);
+                        descripcion.getText().toString(),
+                        calendarManager.getCalendar(anioSeleccionado, mesSeleccionado, diaSeleccionado));
+                Log.d("AddEvento", "Tipo: " + cobroOGasto);
+                if (repetir.isChecked()) {
+                    Calendar fechaOriginal = calendarManager.getCalendar(anioSeleccionado, mesSeleccionado, diaSeleccionado);
+                    int dia = fechaOriginal.get(Calendar.DAY_OF_MONTH);
+                    int anio = fechaOriginal.get(Calendar.YEAR);
+
+                    for (int mes = 1; mes <= 12; mes++) {
+                        Calendar fechaRepetida = Calendar.getInstance();
+                        fechaRepetida.set(anio, mes - 1, dia);
+
+                        Evento eventoRepetido = new Evento(
+                                dinero.getText().toString(),
+                                cobroOGasto,
+                                spinner.getSelectedItem().toString(),
+                                titulo.getText().toString(),
+                                descripcion.getText().toString(),
+                                fechaRepetida
+                        );
+                        subirEventoNube(eventoRepetido);
+                    }
+                } else {
+                    subirEventoNube(evento);
+                }
                 dismiss();
             }
         });

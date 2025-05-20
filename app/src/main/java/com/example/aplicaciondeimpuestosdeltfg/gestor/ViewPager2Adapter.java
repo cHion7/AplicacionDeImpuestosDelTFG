@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.MesViewHolder> {
@@ -23,18 +26,18 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
     private List<Evento> listaEventos;
     private List<Evento> eventosDelMes;
     private Map<String, Integer> MES_NUMEROS = new HashMap<String, Integer>() {{
-        put("Enero", 0);
-        put("Febrero", 1);
-        put("Marzo", 2);
-        put("Abril", 3);
-        put("Mayo", 4);
-        put("Junio", 5);
-        put("Julio", 6);
-        put("Agosto", 7);
-        put("Septiembre", 8);
-        put("Octubre", 9);
-        put("Noviembre", 10);
-        put("Diciembre", 11);
+        put("Enero", 1);
+        put("Febrero", 2);
+        put("Marzo", 3);
+        put("Abril", 4);
+        put("Mayo", 5);
+        put("Junio", 6);
+        put("Julio", 7);
+        put("Agosto", 8);
+        put("Septiembre", 9);
+        put("Octubre", 10);
+        put("Noviembre", 11);
+        put("Diciembre", 12);
     }};
 
     private Map<String, List<Evento>> gastosPorCategoria;
@@ -63,7 +66,9 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
 
         eventosDelMes = new ArrayList<>();
         for (Evento evento : listaEventos) {
-            Calendar fechaEvento = evento.getFecha(); // <- esto es un Calendar
+            Calendar fechaEvento = Calendar.getInstance();
+            fechaEvento.setTimeInMillis(evento.getFechaMillis()); // <-- el nuevo campo que guardas en Firebase
+
             int mesEvento = fechaEvento.get(Calendar.MONTH); // 0-11
             if (mesEvento == numeroMes) {
                 eventosDelMes.add(evento);
@@ -75,12 +80,12 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
 
 
         for (Evento evento : eventosDelMes) {
-            if (evento.getTipo() == Evento.Tipo.GASTO) {
+            if ("GASTO".equals(evento.getCobroOGasto())) {
                 if (!gastosPorCategoria.containsKey(evento.getCategoria())) {
                     gastosPorCategoria.put(evento.getCategoria(), new ArrayList<>());
                 }
                 gastosPorCategoria.get(evento.getCategoria()).add(evento);
-            } else if (evento.getTipo() == Evento.Tipo.COBRO) {
+            } else if ("COBRO".equals(evento.getCobroOGasto())) {
                 if (!cobrosPorCategoria.containsKey(evento.getCategoria())) {
                     cobrosPorCategoria.put(evento.getCategoria(), new ArrayList<>());
                 }
@@ -88,17 +93,21 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
             }
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         StringBuilder desgloseGastos = new StringBuilder();
         for (Map.Entry<String, List<Evento>> entry : gastosPorCategoria.entrySet()) {
             desgloseGastos.append(entry.getKey()).append(":\n"); // La categoría (Transporte, etc.)
 
             for (Evento evento : entry.getValue()) {
+                String fechaFormateada = sdf.format(new Date(evento.getFechaMillis()));
                 desgloseGastos
                         .append(" - ")
                         .append(evento.getTitulo())
                         .append(": ")
                         .append(evento.getDinero())
-                        .append("€\n");
+                        .append("€")
+                        .append(" - ")
+                        .append(fechaFormateada + "\n");
             }
             desgloseGastos.append("\n"); // Salto entre categorías
         }
@@ -110,12 +119,15 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
             desgloseCobros.append(entry.getKey()).append(":\n");
 
             for (Evento evento : entry.getValue()) {
+                String fechaFormateada = sdf.format(new Date(evento.getFechaMillis()));
                 desgloseCobros
                         .append(" - ")
                         .append(evento.getTitulo())
                         .append(": ")
                         .append(evento.getDinero())
-                        .append("€\n");
+                        .append("€")
+                        .append(" - ")
+                        .append(fechaFormateada+"\n");
             }
             desgloseCobros.append("\n");
         }
