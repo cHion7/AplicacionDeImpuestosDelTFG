@@ -44,6 +44,7 @@ public class HomePage extends Fragment {
     private ViewPager2Adapter adapter;
     private ImageButton addEventos;
     private List<Evento> listaEventos;
+    private List<String> meses;
     private CalendarManager calendarManager = new CalendarManager();
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
@@ -73,48 +74,50 @@ public class HomePage extends Fragment {
         }
     }
 
-    public void calendarConfiguration(){
-        // Clasificar eventos por tipo
+    public void calendarConfiguration() {
         HashSet<CalendarDay> gastos = new HashSet<>();
         HashSet<CalendarDay> cobros = new HashSet<>();
         HashSet<CalendarDay> multiplesEventos = new HashSet<>();
 
         for (Evento evento : listaEventos) {
-            CalendarDay dia = CalendarDay.from(
-                    evento.getFecha().get(Calendar.YEAR),
-                    evento.getFecha().get(Calendar.MONTH),
-                    evento.getFecha().get(Calendar.DAY_OF_MONTH)
-            );
-            if (evento.getTipo() == Evento.Tipo.GASTO) {
-                gastos.add(dia); // Añadir al conjunto de gastos
-            } else {
-                cobros.add(dia); // Añadir al conjunto de cobros
-            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(evento.getFechaMillis());
 
-            if (gastos.contains(dia) && cobros.contains(dia)) {
+            CalendarDay dia = CalendarDay.from(
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+            );
+            if ("GASTO".equalsIgnoreCase(evento.getCobroOGasto())) {
+                gastos.add(dia);
+            } else if ("COBRO".equalsIgnoreCase(evento.getCobroOGasto())) {
+                cobros.add(dia);
+            }
+        }
+
+        for (CalendarDay dia : new HashSet<>(gastos)) {
+            if (cobros.contains(dia)) {
                 multiplesEventos.add(dia);
             }
         }
 
-        // Quitar días con múltiples eventos de los conjuntos individuales
         gastos.removeAll(multiplesEventos);
         cobros.removeAll(multiplesEventos);
 
         int[] colores = {Color.RED, Color.GREEN};
 
-        // Decorar el calendario
-        calendarView.addDecorator(new EventDecorator(Color.RED, gastos));  // Decorador para los GASTOS
-        calendarView.addDecorator(new EventDecorator(Color.GREEN, cobros)); // Decorador para los COBROS
+        calendarView.addDecorator(new EventDecorator(Color.RED, gastos));
+        calendarView.addDecorator(new EventDecorator(Color.GREEN, cobros));
         calendarView.addDecorator(new MultipleEventsDecorator(multiplesEventos, colores));
+        calendarView.invalidateDecorators();
     }
-
     public void cargarEventos(){
         db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
         String emailUser = user.getEmail();
         String userPath = emailUser.replace("@", "_").replace(".", "_");
-        Log.d("RutaFirebase", "Ruta: Usuarios/" + userPath + "/eventos");
         DatabaseReference eventosRef = usuariosReferencia.child(userPath).child("eventos");
+
         eventosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -124,17 +127,33 @@ public class HomePage extends Fragment {
                         Evento evento = productoSnapshot.getValue(Evento.class);
                         if (evento != null) {
                             listaEventos.add(evento);
+
+                            long fecha = evento.getFechaMillis();
+                            Log.d("FECHAS", "Evento: " + evento.getCobroOGasto() + " | fechaMillis: " + fecha);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(fecha);
+                            Log.d("FECHAS", "Fecha convertida: " + calendar.get(Calendar.DAY_OF_MONTH) + "/" +
+                                    (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR));
                         }
                     }
-                }
-                Log.d("Eventos", "Eventos totales: " + listaEventos.size());
 
-                // Refresca el calendario y el adapter
+                }
+
+
+
+                // Aquí, SOLO después de cargar datos, crea y asigna el adapter:
+                adapter = new ViewPager2Adapter(meses, listaEventos);
+                viewPager2.setAdapter(adapter);
+                viewPager2.setCurrentItem(4, false);
+
+                // Refresca el calendario y demás UI
+                calendarView.removeDecorators();
                 calendarConfiguration();
-                adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error cargando eventos: " + error.getMessage());
             }
         });
     }
@@ -143,8 +162,10 @@ public class HomePage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-        List<String> meses = Arrays.asList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+
+        meses = Arrays.asList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+
         calendarView = view.findViewById(R.id.calendarHomePage);
         viewPager2 = view.findViewById(R.id.homePageMeses);
         addEventos = view.findViewById(R.id.ibMasEventosHomePage);
@@ -153,8 +174,9 @@ public class HomePage extends Fragment {
         user = mAuth.getCurrentUser();
 
         listaEventos = new ArrayList<>();
-        adapter = new ViewPager2Adapter(meses, listaEventos);
-        viewPager2.setAdapter(adapter);
+
+        // NO crees el adapter ni asignes aquí, lo harás en cargarEventos después de recibir datos.
+
         cargarEventos();
 
         addEventos.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +186,7 @@ public class HomePage extends Fragment {
                 fragmento.show(((FragmentActivity) getContext()).getSupportFragmentManager(), fragmento.getTag());
             }
         });
+
         return view;
     }
 }

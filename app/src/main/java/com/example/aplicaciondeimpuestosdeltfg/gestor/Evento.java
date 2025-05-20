@@ -1,70 +1,44 @@
 package com.example.aplicaciondeimpuestosdeltfg.gestor;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Calendar;
 
 public class Evento {
     private String dinero;
-    public enum Tipo { GASTO, COBRO }
+    private String cobroOGasto;
     private String categoria;
     private long fechaMillis;
-    private Tipo tipo;
     private String titulo;
     private String descripcion;
 
     public Evento() {
     }
 
-    public Evento(String dinero, String categoria, Tipo tipo, String titulo, String descripcion) {
+    public Evento(String dinero, String cobroOGasto, String categoria, String titulo, String descripcion, Calendar fecha) {
         this.dinero = dinero;
+        this.cobroOGasto = cobroOGasto;
         this.categoria = categoria;
-        this.tipo = tipo;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.fechaMillis = fecha.getTimeInMillis();  // Agregado
     }
+    // Getters y Setters
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public Calendar getFecha() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(fechaMillis);
-        return cal;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public void setFecha(Calendar fecha) {
-        this.fechaMillis = fecha.getTimeInMillis();
-    }
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public Tipo getTipo() {
-        return tipo;
-    }
+    public String getCobroOGasto() { return cobroOGasto; }
+    public void setCobroOGasto(String cobroOGasto) { this.cobroOGasto = cobroOGasto; }
 
-    public String getDinero() {
-        return dinero;
-    }
+    public String getDinero() { return dinero; }
+    public void setDinero(String dinero) { this.dinero = dinero; }
 
-    public void setDinero(String dinero) {
-        this.dinero = dinero;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public long getFechaMillis() { return fechaMillis; }
+    public void setFechaMillis(long fechaMillis) { this.fechaMillis = fechaMillis; }
 }
