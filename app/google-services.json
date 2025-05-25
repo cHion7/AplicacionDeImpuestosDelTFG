@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "322269238228",
+    "firebase_url": "https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "base-de-datos-del-tfg-1",
     "storage_bucket": "base-de-datos-del-tfg-1.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.aplicaciondeimpuestosdeltfg"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "322269238228-lucdub2gn2umrajl9m3iavmrg766502k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aplicaciondeimpuestosdeltfg",
+            "certificate_hash": "f4c671a5201bf1224efbc46214e17c3db3cef0e6"
+          }
+        },
+        {
+          "client_id": "322269238228-2orrmr3evch1b3uo7qa37ekism0ttd15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDCi97vgUzaR-TXpFvmv5vMKG7cdm7vNhU"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322269238228-2orrmr3evch1b3uo7qa37ekism0ttd15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

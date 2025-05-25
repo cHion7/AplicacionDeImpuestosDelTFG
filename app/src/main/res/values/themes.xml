@@ -6,12 +6,12 @@
     </style>
 
     <style name="Theme.AplicacionDeImpuestosDelTFG" parent="Base.Theme.AplicacionDeImpuestosDelTFG" />
-    
+
     <style name="BottomNavigation">
         <item name="android:background">@color/green_dark</item>
         <item name="android:textColor">@color/green_light_2</item>
         <item name="itemIconTint">@color/green_light_2</item>
     </style>
-    
-    
+
+
 </resources>

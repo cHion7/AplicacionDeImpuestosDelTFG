@@ -49,9 +49,9 @@ public class Registro2 extends AppCompatActivity {
         String [] opciones = {"Estudiante", "Desempleado", "Trabajador Autónomo (Freelancer)", "Empleado (trabajador ajeno)", "Jubilado"};
 
         // Creamos un ArrayAdapter para llenar el Spinner con las opciones
-              ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
-              adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-              spTipoLaboralRegistro.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spTipoLaboralRegistro.setAdapter(adapter);
 
         // Listener para manejar la selección de un ítem del Spinner
         spTipoLaboralRegistro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
