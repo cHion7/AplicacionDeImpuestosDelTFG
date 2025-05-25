@@ -5,7 +5,7 @@
     android:id="@+id/sesion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
+    android:layout_margin="50dp"
     android:backgroundTint="#2C3E50"
     android:orientation="vertical"
     tools:context=".Registro">
@@ -17,6 +17,20 @@
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNombreReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNombreReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre y Apellido"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilUsuarioReg"
@@ -46,6 +60,12 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tvAdvertenciaReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Por seguridad la contraseña debe contener como mínimo 6 dígitos" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,14 +90,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btSiguienteReg"
+        android:id="@+id/btRegistrarseReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:backgroundTint="#2C3E50"
         android:gravity="center"
-        android:text="Iniciar Sesión"
+        android:text="Registrarse"
         android:textAlignment="center" />
 
 </LinearLayout>
