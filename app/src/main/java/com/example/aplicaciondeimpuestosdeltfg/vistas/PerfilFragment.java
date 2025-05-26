@@ -55,17 +55,17 @@ public class PerfilFragment extends Fragment {
         btCerrarSesion = view.findViewById(R.id.btCerrarSesion);
 
         //Cargar datos del usuario si está autenticado
-        if (usuarioActual != null){
-            cargarDatosUsuario(database, nodoUsuario, usuarioActual);
-        }else{
+        if (usuarioActual != null) {
+            cargarDatosUsuario();
+        } else {
             Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
 
         //Botón cambiar contraseña
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
-            cambiarContrasena();
+           // cambiarContrasena();
         });
-        detectarUsuario.setOnClickListener(v ->{
+        detectarUsuario.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), afinarUsuario.class);
             startActivity(intent);
         });
@@ -78,55 +78,55 @@ public class PerfilFragment extends Fragment {
     }
 
 
-    public void addDatos(){
+    public void addDatos() {
         Intent intentReg1 = new Intent(getActivity(), Registro1.class);
         startActivity(intentReg1);
+    }
 
-    //Cambiar Contraseña
+    /*Cambiar Contraseña
     public void cambiarContrasena(){
 
-    }
+    }*/
+        //Cerrar Sesión
+        public void cerrarSesion() {
+            Toast.makeText(getActivity(), "Cerrando sesión...", Toast.LENGTH_SHORT).show();
+            Intent intentAlLogin = new Intent(getActivity(), Login.class);
+            startActivity(intentAlLogin);
+            firebaseAuth.signOut();
+            Toast.makeText(getActivity(), "Sesión Cerrada", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+        }
 
-    //Cerrar Sesión
-    public void cerrarSesion(){
-        Toast.makeText(getActivity(), "Cerrando sesión...", Toast.LENGTH_SHORT).show();
-        Intent intentAlLogin = new Intent(getActivity(), Login.class);
-        startActivity(intentAlLogin);
-        firebaseAuth.signOut();
-        Toast.makeText(getActivity(), "Sesión Cerrada", Toast.LENGTH_SHORT).show();
-        getActivity().finish();
-    }
+        // Cargar los datos del usuario desde Firebase y los muestra en la interfaz
+        private void cargarDatosUsuario(){
+            String emailUsuario = usuarioActual.getEmail();
+            //Si el email no está vacío
+            if (emailUsuario != null) {
+                String usuarioClave = emailUsuario.replace("@", "_").replace(".", "_");
+                DatabaseReference usuarioReferenciado = nodoUsuario.child(usuarioClave);
 
-    // Cargar los datos del usuario desde Firebase y los muestra en la interfaz
-    private void cargarDatosUsuario(FirebaseDatabase database, DatabaseReference nodoUsuario, FirebaseUser usuarioActual){
-        String emailUsuario = usuarioActual.getEmail();
-        //Si el email no está vacío
-        if (emailUsuario != null){
-            String usuarioClave = emailUsuario.replace("@", "_").replace(".", "_");
-            DatabaseReference usuarioReferenciado = nodoUsuario.child(usuarioClave);
+                //Solo queremos obtener los datos una vez (sin escuchar cambios en tiempo real)
+                usuarioReferenciado.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //Si existe: obtenemos valores del firebae
+                        if (snapshot.exists()) {
+                            String nombre = snapshot.child("nombre").getValue(String.class);
+                            String email = snapshot.child("correo").getValue(String.class);
 
-            //Solo queremos obtener los datos una vez (sin escuchar cambios en tiempo real)
-            usuarioReferenciado.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //Si existe: obtenemos valores del firebae
-                    if(snapshot.exists()){
-                        String nombre = snapshot.child("nombre").getValue(String.class);
-                        String email = snapshot.child("correo").getValue(String.class);
-
-                        //Si el valor es null, se muestra un mensaje predeterminado
-                        etNombreApellidoPerfil.setText(nombre != null ? nombre: "Nombre no disponible");
-                        etUsuarioPerfil.setText(email != null ? email: "Email no disponible");
-                    }else{
-                        Toast.makeText(getActivity(), "No se encontraron datos", Toast.LENGTH_SHORT).show();
+                            //Si el valor es null, se muestra un mensaje predeterminado
+                            etNombreApellidoPerfil.setText(nombre != null ? nombre : "Nombre no disponible");
+                            etUsuarioPerfil.setText(email != null ? email : "Email no disponible");
+                        } else {
+                            Toast.makeText(getActivity(), "No se encontraron datos", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getActivity(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getActivity(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
-}

@@ -1,6 +1,5 @@
 package com.example.aplicaciondeimpuestosdeltfg;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -34,7 +33,6 @@ public class Login extends AppCompatActivity {
     private TextInputEditText etUsuarioLogin, etContrasenaLogin;
     private Button btIniciarSesionlogin;
     private TextView tvRegistrarse;
-
     private FirebaseAuth firebaseAuth; // Instancia de FirebaseAuth para la autenticación
     private GoogleSignInClient mGoogleSignInClient; // Cliente de Google Sign-In
     private SignInButton googleSignInButton; // Botón para iniciar sesión con Google
@@ -57,8 +55,8 @@ public class Login extends AppCompatActivity {
         etContrasenaLogin = findViewById(R.id.etContrasenaLogin);
         btIniciarSesionlogin = findViewById(R.id.btIniciarSesionLogin);
         tvRegistrarse = findViewById(R.id.btRegistroLogin);
-        googleSignInButton = findViewById(R.id.btGoogleLogin);
-        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+       // googleSignInButton = findViewById(R.id.btGoogle);
+        // googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
 
         //Inicialización de la autentificación
         firebaseAuth = FirebaseAuth.getInstance();
@@ -72,6 +70,7 @@ public class Login extends AppCompatActivity {
         //Configuración de los listeners para los botones
         btIniciarSesionlogin.setOnClickListener(view ->
                 signInWithEmail());
+        /*
         googleSignInButton.setOnClickListener(view -> {
             signInWithGoogle();
         });
@@ -93,7 +92,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(this, "Error en iniciar sesión con Google por el dato", Toast.LENGTH_SHORT).show();
                 }
             }
-        );
+        );*/
     }
 
     //Método para iniciar sesión con email y contraseña
@@ -129,7 +128,9 @@ public class Login extends AppCompatActivity {
     }
 
     // Método para iniciar sesión con Google
+    /*
     private void signInWithGoogle(){
+
         // Configuración de Google Sign-In (está deprecado porque la mayoría de los móviles no soportan la nueva versión): pide el ID de cliente web y el email.
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -156,5 +157,5 @@ public class Login extends AppCompatActivity {
                        }
                    }
                 });
-    }
+    }*/
 }
