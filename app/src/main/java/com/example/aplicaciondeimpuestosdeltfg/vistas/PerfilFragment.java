@@ -46,6 +46,8 @@ public class PerfilFragment extends Fragment {
         usuarioActual = firebaseAuth.getCurrentUser();
 
         //Referenciamos los layouts
+        Button btanadirDatos = view.findViewById(R.id.btanadirDatosPerfil);
+        Button detectarUsuario = view.findViewById(R.id.detectarUsuario);
         etNombreApellidoPerfil = view.findViewById(R.id.etNombreApPerf);
         etUsuarioPerfil = view.findViewById(R.id.etCorreoPerf);
         etUsuarioPerfil.setEnabled(false);
@@ -63,6 +65,10 @@ public class PerfilFragment extends Fragment {
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
             cambiarContrasena();
         });
+        detectarUsuario.setOnClickListener(v ->{
+            Intent intent = new Intent(getActivity(), afinarUsuario.class);
+            startActivity(intent);
+        });
 
         //Botón de cerrar sessión
         btCerrarSesion.setOnClickListener(v -> {
@@ -70,6 +76,11 @@ public class PerfilFragment extends Fragment {
         });
         return view;
     }
+
+
+    public void addDatos(){
+        Intent intentReg1 = new Intent(getActivity(), Registro1.class);
+        startActivity(intentReg1);
 
     //Cambiar Contraseña
     public void cambiarContrasena(){

@@ -143,55 +143,55 @@ public class RegistroRevision extends AppCompatActivity {
     }
 
     private void registrarNuevoUsuario(String correo, String password, String nombre, String dni, String fechaNacimiento, String estadoCivil, String direccion, String telefono, String empresa, String ingresosBrutos, String nomina, String declaraciones){
-    //Crear y registrar un nuevo usuario en Firebase Authentication
-    firebaseAuth.createUserWithEmailAndPassword(correo, password)
-            //Se ejecuta cuando el intento de registro termina
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    //Obtenemos el usuario registrado
-                    FirebaseUser usuario = firebaseAuth.getCurrentUser();
-                    if (usuario != null) { //registro fue exitoso y el usuario está disponible.
-                        // Crear un HashMap para almacenar los datos del usuario
-                        HashMap<String, Object> datosUsuario = new HashMap<>();
-                        datosUsuario.put("correo", correo);
-                        datosUsuario.put("nombre", nombre);
-                        datosUsuario.put("dni", dni);
-                        datosUsuario.put("fechaNacimiento", fechaNacimiento);
-                        datosUsuario.put("estadoCivil", estadoCivil);
-                        datosUsuario.put("direccion", direccion);
-                        datosUsuario.put("telefono", telefono);
-                        datosUsuario.put("password", password);
+        //Crear y registrar un nuevo usuario en Firebase Authentication
+        firebaseAuth.createUserWithEmailAndPassword(correo, password)
+                //Se ejecuta cuando el intento de registro termina
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        //Obtenemos el usuario registrado
+                        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+                        if (usuario != null) { //registro fue exitoso y el usuario está disponible.
+                            // Crear un HashMap para almacenar los datos del usuario
+                            HashMap<String, Object> datosUsuario = new HashMap<>();
+                            datosUsuario.put("correo", correo);
+                            datosUsuario.put("nombre", nombre);
+                            datosUsuario.put("dni", dni);
+                            datosUsuario.put("fechaNacimiento", fechaNacimiento);
+                            datosUsuario.put("estadoCivil", estadoCivil);
+                            datosUsuario.put("direccion", direccion);
+                            datosUsuario.put("telefono", telefono);
+                            datosUsuario.put("password", password);
 
-                        datosUsuario.put("empresa", empresa);
-                        datosUsuario.put("ingresosBrutos", ingresosBrutos);
-                        datosUsuario.put("nomina", nomina);
-                        datosUsuario.put("declaraciones", declaraciones);
+                            datosUsuario.put("empresa", empresa);
+                            datosUsuario.put("ingresosBrutos", ingresosBrutos);
+                            datosUsuario.put("nomina", nomina);
+                            datosUsuario.put("declaraciones", declaraciones);
 
-                        // Convertir el email en clave válida para Firebase (reemplaza caracteres especiales)
-                        String emailKey = correo.replace(".", "_").replace("@", "_");
+                            // Convertir el email en clave válida para Firebase (reemplaza caracteres especiales)
+                            String emailKey = correo.replace(".", "_").replace("@", "_");
 
-                        // Guardar los datos en la base de datos Firebase
-                        nodoUsuario.child(emailKey).setValue(datosUsuario).addOnCompleteListener(dbTask ->{
+                            // Guardar los datos en la base de datos Firebase
+                            nodoUsuario.child(emailKey).setValue(datosUsuario).addOnCompleteListener(dbTask ->{
 
-                            if (dbTask.isSuccessful()) { //Escritura
-                                Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
+                                if (dbTask.isSuccessful()) { //Escritura
+                                    Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
 
-                                //Redirigir al main
-                                Intent intentAlLogin = new Intent(RegistroRevision.this, MainActivity.class);
-                                startActivity(intentAlLogin);
-                                finish();
-                            } else {
-                                Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else{
-                        Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
+                                    //Redirigir al main
+                                    Intent intentAlLogin = new Intent(RegistroRevision.this, MainActivity.class);
+                                    startActivity(intentAlLogin);
+                                    finish();
+                                } else {
+                                    Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }else{
+                            Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(this, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(this, "Error: el correo introducido ya existe", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(this, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(this, "Error: el correo introducido ya existe", Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
     }
 }
 /* // Pasar al siguiente fragmento
