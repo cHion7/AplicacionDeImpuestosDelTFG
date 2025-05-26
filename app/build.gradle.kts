@@ -55,5 +55,6 @@ dependencies {
     implementation("com.github.prolificinteractive:material-calendarview:2.0.0")
 
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
+    //Iniciar sesión con Google
+    implementation ("com.google.android.gms:play-services-auth:20.6.0")
 }
