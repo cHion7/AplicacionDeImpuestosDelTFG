@@ -99,7 +99,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/GoogleLogin"
+            android:id="@+id/btGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#2C3E50"

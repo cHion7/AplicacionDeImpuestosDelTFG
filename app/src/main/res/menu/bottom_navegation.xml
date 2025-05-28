@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/ajustes"
+        android:icon="@drawable/perfil"
+        android:title="Perfil" />
+    <item
         android:id="@+id/home"
         android:title="Home"
         android:icon="@drawable/baseline_calendar_month_24" />
@@ -8,9 +12,4 @@
         android:id="@+id/calculadora"
         android:title="Calculadora"
         android:icon="@drawable/baseline_calculate_24" />
-
-    <item
-        android:id="@+id/ajustes"
-        android:icon="@drawable/baseline_build_24"
-        android:title="Perfil" />
 </menu>

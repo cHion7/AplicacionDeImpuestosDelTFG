@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if (id == R.id.home) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainPageFragmentContainer, homeFragment)
-                            .commit();
-                    return true;
-                } else if (id == R.id.ajustes) {
+                if (id == R.id.ajustes) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainPageFragmentContainer, perfilFragment)
+                            .commit();
+                    return true;
+                } else if (id == R.id.home) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainPageFragmentContainer, homeFragment)
                             .commit();
                     return true;
                 } else if (id == R.id.calculadora) {

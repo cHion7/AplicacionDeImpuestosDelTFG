@@ -225,10 +225,7 @@ public class PrestamoFragment extends Fragment {
 
     private void actualizarValoresPrestamo() {
         // Validación básica
-        if (capital <= 0 || interes <= 0 || plazo <= 0) {
-            mostrarError();
-            return;
-        }
+
 
         // Conversión a tasas y meses
         double tasaMensualInicial = interes / 100.0 / 12.0;
@@ -240,12 +237,6 @@ public class PrestamoFragment extends Fragment {
 
         if (!impuestoPosterior.isChecked()) {
             mensualidadPosteriorText.setText("-");
-            return;
-        }
-
-        // Validar parámetros de cambio
-        if (plazoConCambio <= 0 || plazoConCambio >= plazo || interesPosterior <= 0) {
-            mostrarError();
             return;
         }
 
@@ -264,38 +255,16 @@ public class PrestamoFragment extends Fragment {
 
     private double calcularCapitalPendiente(double capital, double tasaMensual, int cuotasPagadas, double cuota) {
         double factor = Math.pow(1 + tasaMensual, cuotasPagadas);
-        if (tasaMensual <= 0) {
-            return capital - cuota * cuotasPagadas;
-        }
         return capital * factor - cuota * ((factor - 1) / tasaMensual);
     }
 
     private double calcularCuota(double capital, double tasaMensual, int numMeses) {
-        // C = K * [ i*(1+i)^N / ((1+i)^N - 1) ]
+
         double factor = Math.pow(1 + tasaMensual, numMeses);
-        if (tasaMensual <= 0 || factor == 1.0) {
-            // Evita división por cero
-            return capital / numMeses;
-        }
         return capital * (tasaMensual * factor) / (factor - 1);
     }
 
-    private double calcularCapitalPendiente(double capital, double tasaMensual, int cuotasPagadas) {
-        // K_pend = K*(1+i)^n - C * [ ((1+i)^n - 1) / i ]
-        double factor = Math.pow(1 + tasaMensual, cuotasPagadas);
-        double cuota = calcularCuota(capital, tasaMensual, cuotasPagadas);
-        if (tasaMensual <= 0) {
-            // Si i=0, pendiente es lineal
-            return capital - cuota * cuotasPagadas;
-        }
-        return capital * factor
-                - cuota * ((factor - 1) / tasaMensual);
-    }
 
-    private void mostrarError() {
-        mensualidadText.setText("Error");
-        mensualidadPosteriorText.setText("Error");
-    }
 
 
 }

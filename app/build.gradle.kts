@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.annotation)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -55,5 +57,6 @@ dependencies {
     implementation("com.github.prolificinteractive:material-calendarview:2.0.0")
 
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
+    //Iniciar sesión con Google
+    implementation ("com.google.android.gms:play-services-auth:20.6.0")
 }
