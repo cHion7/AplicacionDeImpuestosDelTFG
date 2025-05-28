@@ -26,8 +26,7 @@ public class PrestamoFragment extends Fragment {
     private float capital = 0;
     private float plazo = 0;
     private float interes = 0;
-    private float interesPosterior = 0;
-    private float plazoConCambio = 0;
+
     private CheckBox impuestoPosterior;
     TextView mensualidadText;
     TextView mensualidadPosteriorText;
@@ -47,9 +46,8 @@ public class PrestamoFragment extends Fragment {
             intent.putExtra("capital", capital);
             intent.putExtra("plazo", plazo);
             intent.putExtra("interes", interes);
-            intent.putExtra("interesPosterior", interesPosterior);
-            intent.putExtra("plazoConCambio", plazoConCambio);
-            intent.putExtra("tieneCambio", impuestoPosterior.isChecked());
+
+
             startActivity(intent);
         });
         botonVerTabla.setOnClickListener(v -> {
@@ -57,21 +55,17 @@ public class PrestamoFragment extends Fragment {
             intent.putExtra("capital", capital);
             intent.putExtra("plazo", plazo);
             intent.putExtra("interes", interes);
-            intent.putExtra("interesPosterior", interesPosterior);
-            intent.putExtra("plazoConCambio", plazoConCambio);
-            intent.putExtra("tieneCambio", impuestoPosterior.isChecked());
+
             startActivity(intent);
         });
         // Inicializar vistas desde el layout del fragment
         ImageView btn_open_menu = view.findViewById(R.id.boton_abrir_menu);
 
-        impuestoPosterior = view.findViewById(R.id.checkbox_interes_posterior);
+
 
         TextView capitalText = view.findViewById(R.id.text_capital);
         TextView plazoText = view.findViewById(R.id.text_plazo);
         TextView interesText = view.findViewById(R.id.text_interes);
-        TextView interesPosteriorText = view.findViewById(R.id.text_interes_posterior);
-        TextView cambioAnioText = view.findViewById(R.id.text_anio_cambio);
 
         mensualidadText = view.findViewById(R.id.text_mensualidad);
         mensualidadPosteriorText = view.findViewById(R.id.text_mensualidad_posterior);
@@ -79,12 +73,9 @@ public class PrestamoFragment extends Fragment {
         SeekBar capitalInicial = view.findViewById(R.id.seekbar_capital);
         SeekBar plazoAmortizado = view.findViewById(R.id.seekbar_plazo);
         SeekBar tipoInteres = view.findViewById(R.id.seekbar_interes);
-        SeekBar plazoAmortizadoPosterior = view.findViewById(R.id.seekbar_anio_cambio);
-        SeekBar tipoInteresPosterior = view.findViewById(R.id.seekbar_interes_posterior);
 
 
-        plazoAmortizadoPosterior.setEnabled(false);
-        tipoInteresPosterior.setEnabled(false);
+
 
         DrawerLayout drawerLayout =  view.findViewById(R.id.drawer_layout);
 
@@ -97,25 +88,6 @@ public class PrestamoFragment extends Fragment {
                 botonOtros.setOnClickListener(i -> cargarFragment(new CriptoRiesgoFragment()));
 
             }
-        });
-
-
-
-
-        //--------------------------------------------------------------
-
-
-        impuestoPosterior.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                tipoInteresPosterior.setEnabled(true);
-                plazoAmortizadoPosterior.setEnabled(true);
-            } else {
-
-                tipoInteresPosterior.setEnabled(false);
-                plazoAmortizadoPosterior.setEnabled(false);
-
-            }
-            actualizarValoresPrestamo();
         });
 
 
@@ -133,35 +105,6 @@ public class PrestamoFragment extends Fragment {
                 actualizarValoresPrestamo();
             }
         });
-
-        plazoAmortizadoPosterior.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                plazoConCambio = progress;
-                cambioAnioText.setText(String.format("Plazo: %.0f años", plazoConCambio));
-
-            }
-
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
-                actualizarValoresPrestamo();
-            }
-        });
-
-        tipoInteresPosterior.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                interesPosterior = progress;
-                interesPosteriorText.setText(String.format("Interés posterior: %.2f %%", interesPosterior));
-
-            }
-
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
-                actualizarValoresPrestamo();
-            }
-        });
-
 
 
         capitalInicial.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -192,24 +135,7 @@ public class PrestamoFragment extends Fragment {
             }
         });
 
-        plazoAmortizadoPosterior.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress < plazo) {
-                    plazoConCambio = progress;
-                    cambioAnioText.setText(String.format("Cambio en el año: %.0f", plazoConCambio));
-                } else {
-                    cambioAnioText.setText("Debe ser menor al plazo total");
-                }
-            }
 
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                actualizarValoresPrestamo();
-            }
-        });
         return view;
     }
 
@@ -224,38 +150,28 @@ public class PrestamoFragment extends Fragment {
     }
 
     private void actualizarValoresPrestamo() {
-        // Validación básica
-
-
-        // Conversión a tasas y meses
-        double tasaMensualInicial = interes / 100.0 / 12.0;
-        int mesesTotales = (int)(plazo * 12);
-
-        // 1) Cuota inicial (años completos, tasa inicial)
-        double cuotaInicial = calcularCuota(capital, tasaMensualInicial, mesesTotales);
-        mensualidadText.setText(String.format(Locale.getDefault(), "%.2f €", cuotaInicial));
-
-        if (!impuestoPosterior.isChecked()) {
+        if (capital <= 0 || plazo <= 0 || interes <= 0) {
+            mensualidadText.setText("0.00 €");
             mensualidadPosteriorText.setText("-");
             return;
         }
 
-        // Conversión para el tramo posterior
-        double tasaMensualPosterior = interesPosterior / 100.0 / 12.0;
-        int mesesHastaCambio = (int)(plazoConCambio * 12);
-        int mesesRestantes = mesesTotales - mesesHastaCambio;
+        // Conversión de tasa anual a tasa mensual
+        double tasaMensual = interes / 100.0 / 12.0;
+        int meses = (int) (plazo);
 
-        // 2) Capital pendiente al cambio usando la cuota original
-        double capitalPendiente = calcularCapitalPendiente(capital, tasaMensualInicial, mesesHastaCambio, cuotaInicial);
+        // Cálculo de la cuota fija mensual
+        double cuotaMensual = calcularCuota(capital, tasaMensual, meses);
 
-        // 3) Cuota posterior con el nuevo interés y meses restantes
-        double cuotaPosterior = calcularCuota(capitalPendiente, tasaMensualPosterior, mesesRestantes);
-        mensualidadPosteriorText.setText(String.format(Locale.getDefault(), "%.2f €", cuotaPosterior));
-    }
+        // Total pagado y total de intereses
+        double pagoTotal = cuotaMensual * meses;
+        double interesesTotales = pagoTotal - capital;
 
-    private double calcularCapitalPendiente(double capital, double tasaMensual, int cuotasPagadas, double cuota) {
-        double factor = Math.pow(1 + tasaMensual, cuotasPagadas);
-        return capital * factor - cuota * ((factor - 1) / tasaMensual);
+        // Mostrar resultados
+        mensualidadText.setText(String.format(Locale.getDefault(),
+                "Anualidad: %.2f €\nTotal intereses: %.2f €\nPago total: %.2f €",
+                cuotaMensual, interesesTotales, pagoTotal));
+
     }
 
     private double calcularCuota(double capital, double tasaMensual, int numMeses) {

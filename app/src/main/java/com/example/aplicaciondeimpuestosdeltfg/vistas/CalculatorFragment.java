@@ -36,7 +36,6 @@ public class CalculatorFragment extends Fragment {
     private float plazo = 0;
     private float impuesto = 0;
 
-    private CheckBox impuestoFijo, impuestoVariable;
     private DrawerLayout drawerLayout;
 
     private TextView cuotaMensual, importeHipoteca, porcentajeFinanciacion,
@@ -76,8 +75,6 @@ public class CalculatorFragment extends Fragment {
         interesHipoteca = view.findViewById(R.id.interesHipoteca);
         costeTotalConHipoteca = view.findViewById(R.id.costeTotalConHipoteca);
 
-        impuestoFijo = view.findViewById(R.id.ImpuestoFijo);
-        impuestoVariable = view.findViewById(R.id.ImpuestoVariable);
 
         SeekBar seekerPrecioInmueble = view.findViewById(R.id.seekBarPrecio);
         SeekBar seekBarAhorroAportado = view.findViewById(R.id.seekBarAhorro);
@@ -98,19 +95,6 @@ public class CalculatorFragment extends Fragment {
         botonImpuestoSumar.setOnClickListener(v -> {
             impuesto += 1;
             impuestoValor.setText(String.format("Impuesto: %.0f %%", impuesto));
-            actualizarValores();
-        });
-        impuestoFijo.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                impuestoVariable.setChecked(false);
-            }
-            actualizarValores();
-        });
-
-        impuestoVariable.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                impuestoFijo.setChecked(false);
-            }
             actualizarValores();
         });
 
@@ -214,11 +198,8 @@ public class CalculatorFragment extends Fragment {
 
         // Calculamos gastos
         float gastos = 0;
-        if (impuestoFijo != null && impuestoFijo.isChecked()) {
             gastos = precio * 0.10f;
-        } else if (impuestoVariable != null && impuestoVariable.isChecked()) {
-            gastos = precio * (impuesto / 100);
-        }
+
 
         float hipoteca = (precio + gastos) - ahorro;
         float porcentajeFinanciacionValor = (hipoteca / precio) * 100;
@@ -238,13 +219,10 @@ public class CalculatorFragment extends Fragment {
         double costeTotal = precio + gastos + interesesTotales;
 
         importeHipoteca.setText(String.format("%.2f €", hipoteca));
-        porcentajeFinanciacion.setText(String.format("%.2f %%", porcentajeFinanciacionValor));
         impuestosGastosCompra.setText(String.format("%.2f €", gastos));
         costeTotalInmueble.setText(String.format("%.2f €", precio + gastos));
         cuotaMensual.setText(String.format("%.2f €", cuotaMensualCalculada));
         importeHipotecaResultado.setText(String.format("%.2f €", hipoteca));
-        ahorroAportadoResultado.setText(String.format("%.2f €", ahorro));
-        precioInmuebleResultado.setText(String.format("%.2f €", precio));
         interesHipoteca.setText(String.format("%.2f %%", interesAnual * 100));
         costeTotalConHipoteca.setText(String.format("%.2f €", costeTotal));
 

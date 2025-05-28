@@ -105,6 +105,7 @@
                         android:id="@+id/seekbar_plazo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:max="40"
                         android:progressTint="#2196F3"
                         android:thumbTint="#2196F3" />/>
 
@@ -150,79 +151,10 @@
                 </LinearLayout>
 
                 <!-- CHECKBOX -->
-                <CheckBox
-                    android:id="@+id/checkbox_interes_posterior"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Activar Interés Posterior"
-                    android:textColor="#444444"
-                    android:layout_marginBottom="8dp" />
 
                 <!-- INTERÉS POSTERIOR -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#FFFFFF"
-                    android:padding="16dp"
-                    android:layout_marginBottom="12dp"
-                    android:elevation="2dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Interés posterior (%)"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#333333" />
-
-                    <SeekBar
-                        android:id="@+id/seekbar_interes_posterior"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:progressTint="#2196F3"
-                        android:thumbTint="#2196F3" />/>
-
-                    <TextView
-                        android:id="@+id/text_interes_posterior"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0.0 %"
-                        android:textColor="#666666" />
-                </LinearLayout>
 
                 <!-- AÑO CAMBIO TIPO -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#FFFFFF"
-                    android:padding="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:elevation="2dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Año de cambio de tipo"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#333333" />
-
-                    <SeekBar
-                        android:id="@+id/seekbar_anio_cambio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:progressTint="#2196F3"
-                        android:thumbTint="#2196F3" />/>
-
-                    <TextView
-                        android:id="@+id/text_anio_cambio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="#666666" />
-                </LinearLayout>
 
                 <!-- RESULTADOS -->
                 <LinearLayout

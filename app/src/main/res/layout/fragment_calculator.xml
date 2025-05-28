@@ -146,38 +146,6 @@
             </LinearLayout>
 
             <!-- Elección tipo de impuesto -->
-            <LinearLayout
-                android:id="@+id/nuevo_apartado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingVertical="16dp"
-                android:layout_marginTop="24dp">
-
-                <TextView
-                    android:id="@+id/text_nuevo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="¿Qué eliges?"
-                    android:textSize="18sp"
-                    android:textColor="#333333" />
-
-                <CheckBox
-                    android:id="@+id/ImpuestoFijo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fijo"
-                    android:textColor="#333333" />
-
-                <CheckBox
-                    android:id="@+id/ImpuestoVariable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Variable"
-                    android:textColor="#333333" />
-            </LinearLayout>
 
             <!-- Ajuste de impuesto -->
             <LinearLayout
