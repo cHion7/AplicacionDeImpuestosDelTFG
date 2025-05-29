@@ -16,21 +16,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
             android:background="#F4F4F4">
 
-            <!-- Botón de menú -->
-            <ImageView
-                android:id="@+id/btn_open_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="Abrir menú"
-                android:src="@drawable/baseline_menu_24"
-                android:padding="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless" />
 
-            <!-- Bloques reutilizables -->
-            <!-- Precio del inmueble -->
+            <LinearLayout
+                android:id="@+id/layout_encabezado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF"
+                android:elevation="2dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/btn_open_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Abrir menú"
+                    android:padding="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/baseline_menu_24" />
+
+                <TextView
+                    android:id="@+id/text_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Simulador Hipotecario"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +88,7 @@
 
             </LinearLayout>
 
-            <!-- Ahorro aportado -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,7 +126,6 @@
                     android:paddingTop="6dp" />
             </LinearLayout>
 
-            <!-- Plazo del préstamo -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -145,9 +163,7 @@
                     android:paddingTop="6dp" />
             </LinearLayout>
 
-            <!-- Elección tipo de impuesto -->
 
-            <!-- Ajuste de impuesto -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,7 +198,7 @@
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 
-            <!-- Resultados (azul) -->
+
             <TableLayout
                 android:id="@+id/tabla_azul"
                 android:layout_width="match_parent"
@@ -229,7 +245,7 @@
                 </TableRow>
             </TableLayout>
 
-            <!-- Resultados (gris) -->
+
             <TableLayout
                 android:id="@+id/tabla_gris"
                 android:layout_width="match_parent"
