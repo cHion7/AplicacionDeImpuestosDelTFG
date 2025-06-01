@@ -30,30 +30,54 @@
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="162dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tvTituloGastos"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="Gastos"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvGastosViewPager2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="TextView"
-                        android:textSize="16sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                </LinearLayout>
+                            <TextView
+                                android:id="@+id/tvDescripcionTextoListaEventos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="Gastos"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvEliminarListaEventos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right|center_vertical"
+                                android:layout_marginLeft="240dp"
+                                android:layout_marginTop="2dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:padding="5dp"
+                                android:text="See All"
+                                android:textColor="@color/grafica_azul_medio" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvGastosViewPager2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="TextView"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+                </ScrollView>
 
             </androidx.cardview.widget.CardView>
 
@@ -64,30 +88,55 @@
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="149dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tvTituloIngresos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="sans-serif"
-                        android:text="Ingresos"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCobrosViewPager2"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTituloIngresos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:fontFamily="sans-serif"
+                                android:text="Ingresos"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvVerTodoIngresos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right|center_vertical"
+                                android:layout_marginLeft="220dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:padding="5dp"
+                                android:text="See All"
+                                android:textColor="@color/grafica_azul_medio" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvCobrosViewPager2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="TextView"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </ScrollView>
 
             </androidx.cardview.widget.CardView>
         </LinearLayout>

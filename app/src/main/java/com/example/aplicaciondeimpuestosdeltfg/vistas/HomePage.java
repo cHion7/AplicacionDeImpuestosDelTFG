@@ -142,9 +142,9 @@ public class HomePage extends Fragment {
 
 
                 // Aquí, SOLO después de cargar datos, crea y asigna el adapter:
-                adapter = new ViewPager2Adapter(meses, listaEventos);
+                adapter = new ViewPager2Adapter(meses, listaEventos, getParentFragmentManager());
                 viewPager2.setAdapter(adapter);
-                viewPager2.setCurrentItem(4, false);
+                viewPager2.setCurrentItem(5, false);
 
                 // Refresca el calendario y demás UI
                 calendarView.removeDecorators();
