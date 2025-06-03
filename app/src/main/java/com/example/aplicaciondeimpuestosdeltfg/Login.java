@@ -27,6 +27,22 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+
+import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Login extends AppCompatActivity {
@@ -55,8 +71,8 @@ public class Login extends AppCompatActivity {
         etContrasenaLogin = findViewById(R.id.etContrasenaLogin);
         btIniciarSesionlogin = findViewById(R.id.btIniciarSesionLogin);
         tvRegistrarse = findViewById(R.id.btRegistroLogin);
-       // googleSignInButton = findViewById(R.id.btGoogle);
-        // googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+        googleSignInButton = findViewById(R.id.btGoogle);
+        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
 
         //Inicialización de la autentificación
         firebaseAuth = FirebaseAuth.getInstance();
@@ -70,7 +86,7 @@ public class Login extends AppCompatActivity {
         //Configuración de los listeners para los botones
         btIniciarSesionlogin.setOnClickListener(view ->
                 signInWithEmail());
-        /*
+
         googleSignInButton.setOnClickListener(view -> {
             signInWithGoogle();
         });
@@ -92,7 +108,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(this, "Error en iniciar sesión con Google por el dato", Toast.LENGTH_SHORT).show();
                 }
             }
-        );*/
+        );
     }
 
     //Método para iniciar sesión con email y contraseña
@@ -128,7 +144,6 @@ public class Login extends AppCompatActivity {
     }
 
     // Método para iniciar sesión con Google
-    /*
     private void signInWithGoogle(){
 
         // Configuración de Google Sign-In (está deprecado porque la mayoría de los móviles no soportan la nueva versión): pide el ID de cliente web y el email.
@@ -157,5 +172,5 @@ public class Login extends AppCompatActivity {
                        }
                    }
                 });
-    }*/
+    }
 }
