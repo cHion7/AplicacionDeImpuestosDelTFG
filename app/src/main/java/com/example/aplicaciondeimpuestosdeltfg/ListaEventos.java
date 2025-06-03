@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.aplicaciondeimpuestosdeltfg.gestor.Evento;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter;
+import com.example.aplicaciondeimpuestosdeltfg.vistas.HomePage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +39,7 @@ public class ListaEventos extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private RecyclerView recyclerView;
+    private ImageButton atras;
     private List<Evento> listaEventos;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +88,7 @@ public class ListaEventos extends Fragment {
         DatabaseReference eventosRef = usuariosReferencia.child(userPath).child("eventos");
 
         String tipoSeleccionado = getArguments() != null ? getArguments().getString("tipo") : null;
+        int mesSeleccionado = getArguments() != null ? getArguments().getInt("mes", -1) : -1;
 
         eventosRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,7 +98,18 @@ public class ListaEventos extends Fragment {
                     for (DataSnapshot eventoSnapshot : snapshot.getChildren()) {
                         Evento evento = eventoSnapshot.getValue(Evento.class);
                         if (evento != null && evento.getCobroOGasto().equalsIgnoreCase(tipoSeleccionado)) {
-                            listaEventos.add(evento);
+
+                            if (mesSeleccionado != -1) {
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTimeInMillis(evento.getFechaMillis());
+                                int mesEvento = cal.get(Calendar.MONTH); // ← 1 a 12
+
+                                if (mesEvento == mesSeleccionado) {
+                                    listaEventos.add(evento);
+                                }
+                            } else {
+                                listaEventos.add(evento); // por si no se pasa el mes
+                            }
                         }
                     }
                     recyclerView.setAdapter(new ListaEventosAdapter(listaEventos));
@@ -106,6 +121,7 @@ public class ListaEventos extends Fragment {
                 Log.e("FirebaseError", "Error cargando eventos: " + error.getMessage());
             }
         });
+
     }
 
     @Override
@@ -113,6 +129,7 @@ public class ListaEventos extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lista_eventos, container, false);
 
         recyclerView = view.findViewById(R.id.rvListaEventos);
+        atras = view.findViewById(R.id.ibBackListaEventos);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listaEventos = new ArrayList<>();
 
@@ -120,6 +137,18 @@ public class ListaEventos extends Fragment {
         user = mAuth.getCurrentUser();
 
         cogerDatos();
+
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.mainPageFragmentContainer, new HomePage()) // Asegúrate de que R.id.fragment_container es el ID correcto de tu contenedor de fragments
+                        .addToBackStack(null) // Opcional: permite volver atrás con el botón del sistema
+                        .commit();
+            }
+        });
 
         return view;
     }

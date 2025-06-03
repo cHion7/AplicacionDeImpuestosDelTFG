@@ -140,11 +140,11 @@ public class AddEvent extends BottomSheetDialogFragment {
                     getContext(),
                     (view1, year, month, dayOfMonth) -> {
                         anioSeleccionado = year;
-                        mesSeleccionado = month + 1;
+                        mesSeleccionado = month;
                         diaSeleccionado = dayOfMonth;
 
                         // Actualizar el texto del TextView
-                        datePicker.setText(diaSeleccionado + " de " + mesNombre.get(mesSeleccionado) + " de " + anioSeleccionado);
+                        datePicker.setText(diaSeleccionado + " de " + mesNombre.get(mesSeleccionado + 1) + " de " + anioSeleccionado);
                     },
                     anio, mes, dia
             );
