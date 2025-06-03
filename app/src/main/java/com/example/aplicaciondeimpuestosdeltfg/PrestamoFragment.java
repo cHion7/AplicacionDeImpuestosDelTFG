@@ -68,7 +68,7 @@ public class PrestamoFragment extends Fragment {
         TextView interesText = view.findViewById(R.id.text_interes);
 
         mensualidadText = view.findViewById(R.id.text_mensualidad);
-        mensualidadPosteriorText = view.findViewById(R.id.text_mensualidad_posterior);
+        mensualidadPosteriorText = view.findViewById(R.id.text_mensualidad);
 
         SeekBar capitalInicial = view.findViewById(R.id.seekbar_capital);
         SeekBar plazoAmortizado = view.findViewById(R.id.seekbar_plazo);

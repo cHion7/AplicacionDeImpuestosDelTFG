@@ -94,12 +94,21 @@ public class AddEvent extends BottomSheetDialogFragment {
         if (getArguments() != null) {
         }
     }
-    public void subirEventoNube(Evento evento){
+    public void subirEventoNube(Evento evento) {
         db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
         String emailUser = user.getEmail();
         DatabaseReference eventosRef = usuariosReferencia.child(emailUser.replace("@", "_").replace(".", "_")).child("eventos");
-        eventosRef.push().setValue(evento);
+
+        // Generar referencia con clave única
+        DatabaseReference nuevaRef = eventosRef.push();
+        String clave = nuevaRef.getKey(); // Obtener clave generada
+
+        // Asignar clave al objeto Evento
+        evento.setKey(clave);
+
+        // Subir evento con la clave incluida
+        nuevaRef.setValue(evento);
     }
 
     @Override
@@ -131,41 +140,35 @@ public class AddEvent extends BottomSheetDialogFragment {
                     getContext(),
                     (view1, year, month, dayOfMonth) -> {
                         anioSeleccionado = year;
-                        mesSeleccionado = month + 1;
+                        mesSeleccionado = month;
                         diaSeleccionado = dayOfMonth;
 
                         // Actualizar el texto del TextView
-                        datePicker.setText(diaSeleccionado + " de " + mesNombre.get(mesSeleccionado) + " de " + anioSeleccionado);
+                        datePicker.setText(diaSeleccionado + " de " + mesNombre.get(mesSeleccionado + 1) + " de " + anioSeleccionado);
                     },
                     anio, mes, dia
             );
             datePickerDialog.show();
         });
-        
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbGastoAddEvento){
-                cobroOGasto = "GASTO";
-            } else if (checkedId == R.id.rbCobroAddEvento) {
-                cobroOGasto = "COBRO";
-            }
-        });
 
-        radioGroup.setOnCheckedChangeListener((radioGroup1, id) -> {
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             List<String> categoriasSeleccionadas;
 
-            if(id == R.id.rbGastoAddEvento){
+            if (checkedId == R.id.rbGastoAddEvento) {
+                cobroOGasto = "GASTO";
                 categoriasSeleccionadas = categoriasGastos;
-            } else if (id == R.id.rbCobroAddEvento) {
+            } else if (checkedId == R.id.rbCobroAddEvento) {
+                cobroOGasto = "COBRO";
                 categoriasSeleccionadas = categoriasCobros;
             } else {
                 categoriasSeleccionadas = new ArrayList<>();
             }
+
             // Actualiza el Spinner
             ArrayAdapter<String> adapterCategorias = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriasSeleccionadas);
             adapterCategorias.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapterCategorias);
         });
-        radioGroup.check(R.id.rbGastoAddEvento);
 
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override

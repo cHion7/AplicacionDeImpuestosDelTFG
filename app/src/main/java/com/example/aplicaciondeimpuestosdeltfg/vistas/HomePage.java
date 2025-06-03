@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
@@ -85,7 +83,7 @@ public class HomePage extends Fragment {
 
             CalendarDay dia = CalendarDay.from(
                     calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.MONTH) + 1,
                     calendar.get(Calendar.DAY_OF_MONTH)
             );
             if ("GASTO".equalsIgnoreCase(evento.getCobroOGasto())) {
@@ -139,12 +137,13 @@ public class HomePage extends Fragment {
 
                 }
 
-
-
+                if (!isAdded()) {
+                    return;
+                }
                 // Aquí, SOLO después de cargar datos, crea y asigna el adapter:
-                adapter = new ViewPager2Adapter(meses, listaEventos);
+                adapter = new ViewPager2Adapter(meses, listaEventos, getParentFragmentManager());
                 viewPager2.setAdapter(adapter);
-                viewPager2.setCurrentItem(4, false);
+                viewPager2.setCurrentItem(5, false);
 
                 // Refresca el calendario y demás UI
                 calendarView.removeDecorators();
@@ -168,7 +167,7 @@ public class HomePage extends Fragment {
 
         calendarView = view.findViewById(R.id.calendarHomePage);
         viewPager2 = view.findViewById(R.id.homePageMeses);
-        addEventos = view.findViewById(R.id.ibMasEventosHomePage);
+        addEventos = view.findViewById(R.id.ibBackListaEventos);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();

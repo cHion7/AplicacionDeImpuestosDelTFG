@@ -1,5 +1,6 @@
 package com.example.aplicaciondeimpuestosdeltfg.gestor;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aplicaciondeimpuestosdeltfg.ListaEventos;
 import com.example.aplicaciondeimpuestosdeltfg.R;
 
 import java.text.SimpleDateFormat;
@@ -26,26 +30,27 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
     private List<Evento> listaEventos;
     private List<Evento> eventosDelMes;
     private Map<String, Integer> MES_NUMEROS = new HashMap<String, Integer>() {{
-        put("Enero", 1);
-        put("Febrero", 2);
-        put("Marzo", 3);
-        put("Abril", 4);
-        put("Mayo", 5);
-        put("Junio", 6);
-        put("Julio", 7);
-        put("Agosto", 8);
-        put("Septiembre", 9);
-        put("Octubre", 10);
-        put("Noviembre", 11);
-        put("Diciembre", 12);
+        put("Enero", 0);
+        put("Febrero", 1);
+        put("Marzo", 2);
+        put("Abril", 3);
+        put("Mayo", 4);
+        put("Junio", 5);
+        put("Julio", 6);
+        put("Agosto", 7);
+        put("Septiembre", 8);
+        put("Octubre", 9);
+        put("Noviembre", 10);
+        put("Diciembre", 11);
     }};
-
     private Map<String, List<Evento>> gastosPorCategoria;
     private Map<String, List<Evento>> cobrosPorCategoria;
+    private FragmentManager fragmentManager;
 
-    public ViewPager2Adapter(List<String> listaMeses, List<Evento> listaEventos) {
+    public ViewPager2Adapter(List<String> listaMeses, List<Evento> listaEventos, FragmentManager fragmentManager) {
         this.listaMeses = listaMeses;
         this.listaEventos = listaEventos;
+        this.fragmentManager = fragmentManager;
     }
 
 
@@ -70,7 +75,7 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
             fechaEvento.setTimeInMillis(evento.getFechaMillis()); // <-- el nuevo campo que guardas en Firebase
 
             int mesEvento = fechaEvento.get(Calendar.MONTH); // 0-11
-            if (mesEvento == numeroMes) {
+            if (mesEvento == (numeroMes)) {
                 eventosDelMes.add(evento);
             }
         }
@@ -133,6 +138,33 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
         }
 
         holder.ingresos.setText(desgloseCobros.toString());
+
+        holder.seeAllGastos.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("tipo", "GASTO"); // o "COBRO" si es el otro
+            bundle.putInt("mes", numeroMes);
+            Fragment fragment = new ListaEventos(); // tu fragmento de destino
+            fragment.setArguments(bundle);
+
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.mainPageFragmentContainer, fragment) // Usa tu ID real
+                    .addToBackStack(null)
+                    .commit();
+        });
+        holder.seeAllIngresos.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("tipo", "COBRO");
+            bundle.putInt("mes", numeroMes);
+            Fragment fragment = new ListaEventos();
+            fragment.setArguments(bundle);
+
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.mainPageFragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
     @Override
     public int getItemCount() {
@@ -145,9 +177,10 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
         TextView tituloIngresos;
         CardView cvGastos;
         CardView cvIngresos;
-
         TextView gastos;
         TextView ingresos;
+        TextView seeAllGastos;
+        TextView seeAllIngresos;
 
 
         public MesViewHolder(@NonNull View itemView) {
@@ -155,10 +188,12 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Me
             tituloMes = itemView.findViewById(R.id.tituloMesHomePage);
             cvGastos = itemView.findViewById(R.id.cvGastos);
             cvIngresos = itemView.findViewById(R.id.cvIngresos);
-            tituloGastos = itemView.findViewById(R.id.tvTituloGastos);
+            tituloGastos = itemView.findViewById(R.id.tvDescripcionTextoListaEventos);
             tituloIngresos = itemView.findViewById(R.id.tvTituloIngresos);
             gastos = itemView.findViewById(R.id.tvGastosViewPager2);
             ingresos = itemView.findViewById(R.id.tvCobrosViewPager2);
+            seeAllGastos = itemView.findViewById(R.id.tvEliminarListaEventos);
+            seeAllIngresos = itemView.findViewById(R.id.tvVerTodoIngresos);
         }
     }
 }

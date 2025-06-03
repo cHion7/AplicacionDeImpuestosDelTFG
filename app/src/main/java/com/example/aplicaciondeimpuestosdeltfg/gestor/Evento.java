@@ -11,6 +11,7 @@ public class Evento {
     private long fechaMillis;
     private String titulo;
     private String descripcion;
+    private String key;
 
     public Evento() {
     }
@@ -41,4 +42,10 @@ public class Evento {
 
     public long getFechaMillis() { return fechaMillis; }
     public void setFechaMillis(long fechaMillis) { this.fechaMillis = fechaMillis; }
+    public String getKey() {
+        return key;
+    }
+    public void setKey(String key) {
+        this.key = key;
+    }
 }
