@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class Registro extends AppCompatActivity {
-    private TextInputEditText etNombreReg, etUsuarioReg, etContrasenaReg;
+    private TextInputEditText etNombreReg, etUsuarioReg, etContrasenaReg, etSaldoInicial;
     private TextView btVolverLoginReg, tvNivelSeguridad;
     private Button btRegistrarseReg;
     private FirebaseAuth firebaseAuth;
@@ -57,6 +57,7 @@ public class Registro extends AppCompatActivity {
         etUsuarioReg = findViewById(R.id.etUsuarioReg);
         tvNivelSeguridad = findViewById(R.id.txtNivelSeguridad);
         etContrasenaReg = findViewById(R.id.etContrasenaReg);
+        etSaldoInicial = findViewById(R.id.etSaldoInicialReg);
         btRegistrarseReg = findViewById(R.id.btRegistrarseReg);
         btVolverLoginReg = findViewById(R.id.btVolverLoginRegistro);
 
@@ -92,6 +93,7 @@ public class Registro extends AppCompatActivity {
         String nombre = etNombreReg.getText().toString().trim();
         String correo = etUsuarioReg.getText().toString().trim();
         String contrasena = etContrasenaReg.getText().toString().trim();
+        String saldoInicial = etSaldoInicial.getText().toString().trim();
 
         //Validaciones de campo
         if(nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty()){
@@ -120,6 +122,7 @@ public class Registro extends AppCompatActivity {
                         HashMap<String, Object> datosUsuario = new HashMap<>();
                         datosUsuario.put("correo", correo);
                         datosUsuario.put("nombre", nombre);
+                        datosUsuario.put("saldoInicial", saldoInicial);
 
                         //Convertir el email en clave válida para el Firebase (reemplazar carácteres especiales)
                         String emailKey = correo.replace(".", "_").replace("@", "_");

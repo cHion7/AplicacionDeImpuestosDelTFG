@@ -26,12 +26,16 @@
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center" /> <ImageButton
-            android:id="@+id/btnAjustes"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Ajustes" />
+            android:gravity="center" />
+
+            <ImageButton
+                android:id="@+id/btnAjustes"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="Ajustes"
+                android:src="@drawable/impuestos"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -99,6 +103,26 @@
                     android:enabled="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSaldoInicialPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Saldo Inicial (moneda)"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSaldoInicialPerf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:enabled="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -114,18 +138,10 @@
                 android:paddingVertical="14dp" />
 
             <Button
-            android:id="@+id/btanadirDatosPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gestionar Datos Personales"
-            android:layout_marginBottom="12dp"
-            android:paddingVertical="14dp" />
-
-            <Button
-                android:id="@+id/btDetectarUsuarios"
+                android:id="@+id/anadirImpuestos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Detectar Usuarios" />
+                android:text="Añadir Impuestos" />
 
             <Button
                 android:id="@+id/btCerrarSesion"
