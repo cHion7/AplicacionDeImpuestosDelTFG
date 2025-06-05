@@ -22,19 +22,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Asegúrate que este layout tenga el BottomNavigationView y el FrameLayout con los IDs correctos
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Cargar el fragmento inicial (Home) directamente
         getSupportFragmentManager().beginTransaction().replace(R.id.mainPageFragmentContainer,homeFragment).commit();
+        bottomNavigationView.setSelectedItemId(R.id.principal);
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if (id == R.id.ajustes) {
+                if (id == R.id.perfil) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainPageFragmentContainer, perfilFragment)
                             .commit();
                     return true;
-                } else if (id == R.id.home) {
+                } else if (id == R.id.principal) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.mainPageFragmentContainer, homeFragment)
                             .commit();
@@ -45,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                     return true;
                 }
-
                 return false;
             }
-
         });
     }
 }
