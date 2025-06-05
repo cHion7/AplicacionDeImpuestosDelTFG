@@ -31,7 +31,7 @@ public class RecuperarContrasena extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_recuperar_contrasena);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.recuperarContrasena), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -45,21 +45,16 @@ public class RecuperarContrasena extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Configurar Listener para el botón de recuperar contraseña
-        btnRecuperarContrasena.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vertificarYenviarCorreoRestablecimiento();
-            }
+        btnRecuperarContrasena.setOnClickListener(view -> {
+            vertificarYenviarCorreoRestablecimiento();
         });
+
         // Configurar Listener para el texto "Volver al inicio de sesión"
-        tvVolverLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Redirigir a la actividad de Login
-                Intent intent = new Intent(RecuperarContrasena.this, Login.class);
-                startActivity(intent);
-                finish(); // Finaliza esta actividad para que el usuario no pueda volver atrás con el botón de retroceso
-            }
+        tvVolverLogin.setOnClickListener( v -> {
+            // Redirigir a la actividad de Login
+            Intent intent = new Intent(RecuperarContrasena.this, Login.class);
+            startActivity(intent);
+            finish(); // Finaliza esta actividad para que el usuario no pueda volver atrás con el botón de retroceso
         });
     }
 
@@ -69,7 +64,7 @@ private void vertificarYenviarCorreoRestablecimiento() {
 
     // Validar si el campo de correo electrónico está vacío
     if (TextUtils.isEmpty(email)) {
-        etEmailRecuperar.setError("El correo electrónico es requerido.");
+        etEmailRecuperar.setError("Es obligatorio completar el ccorreo electrónico.");
         etEmailRecuperar.requestFocus();
         return;
     }
@@ -84,7 +79,6 @@ private void vertificarYenviarCorreoRestablecimiento() {
     // Deshabilitar el botón para evitar múltiples clics mientras se procesa
     btnRecuperarContrasena.setEnabled(false);
     Toast.makeText(this, "Enviando instrucciones......", Toast.LENGTH_SHORT).show();
-
 
     // Enviar el correo de restablecimiento de contraseña
     mAuth.sendPasswordResetEmail(email)

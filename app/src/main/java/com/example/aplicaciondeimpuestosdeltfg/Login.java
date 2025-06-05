@@ -39,7 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Login extends AppCompatActivity {
     private TextInputEditText etUsuarioLogin, etContrasenaLogin;
     private Button btIniciarSesionlogin;
-    private TextView tvRegistrarse;
+    private TextView tvRegistrarseLogin, tvRecuperarContrasenaLogin;
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private SignInButton googleSignInButton; // Botón para iniciar sesión con Google
@@ -61,7 +61,8 @@ public class Login extends AppCompatActivity {
         etUsuarioLogin = findViewById(R.id.etUsuarioLogin);
         etContrasenaLogin = findViewById(R.id.etContrasenaLogin);
         btIniciarSesionlogin = findViewById(R.id.btIniciarSesionLogin);
-        tvRegistrarse = findViewById(R.id.btRegistroLogin);
+        tvRegistrarseLogin = findViewById(R.id.btRegistroLogin);
+        tvRecuperarContrasenaLogin = findViewById(R.id.tvRecuperarContrasena);
         googleSignInButton = findViewById(R.id.btGoogle);
         googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
 
@@ -69,9 +70,15 @@ public class Login extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Redirección a la pantalla de registro
-        tvRegistrarse.setOnClickListener(view -> {
-            Intent intent = new Intent(Login.this, Registro.class);
-            startActivity(intent);
+        tvRegistrarseLogin.setOnClickListener(view -> {
+            Intent intentRegistro = new Intent(Login.this, Registro.class);
+            startActivity(intentRegistro);
+        });
+
+        // Redirección a la pantalla de recuperar contraseña
+        tvRecuperarContrasenaLogin.setOnClickListener(view -> {
+            Intent intentRecuperarContrasena = new Intent(Login.this, RecuperarContrasena.class);
+            startActivity(intentRecuperarContrasena);
         });
 
         //Configuración de los listeners para los botones

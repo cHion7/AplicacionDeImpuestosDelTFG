@@ -95,7 +95,7 @@
                 android:text="¿He olvidado mi contraseña?" />
 
             <TextView
-                android:id="@+id/btRecuperarContrasena"
+                android:id="@+id/tvRecuperarContrasena"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
