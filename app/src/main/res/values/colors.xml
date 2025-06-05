@@ -18,4 +18,7 @@
     <color name="grafica_azul_claro">#09aee1</color>
     <color name="grafica_azul_medio">#2db7e2</color>
     <color name="grafica_azul_oscuro">#45cff9</color>
+    <color name="rojo">#FF0000</color>
+    <color name="naranja">#FFA500</color>
+    <color name="verde">#008000</color>
 </resources>

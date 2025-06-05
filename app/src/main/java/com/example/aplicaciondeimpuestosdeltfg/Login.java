@@ -1,7 +1,9 @@
 package com.example.aplicaciondeimpuestosdeltfg;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,11 +11,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.HomePage;
 import com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,17 +28,20 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Login extends AppCompatActivity {
     private TextInputEditText etUsuarioLogin, etContrasenaLogin;
     private Button btIniciarSesionlogin;
-    private TextView tvRegistrarse;
-    private FirebaseAuth firebaseAuth; // Instancia de FirebaseAuth para la autenticación
-    private GoogleSignInClient mGoogleSignInClient; // Cliente de Google Sign-In
+    private TextView tvRegistrarseLogin, tvRecuperarContrasenaLogin;
+    private FirebaseAuth firebaseAuth;
+    private GoogleSignInClient mGoogleSignInClient;
     private SignInButton googleSignInButton; // Botón para iniciar sesión con Google
     private ActivityResultLauncher<Intent> signInResultLauncher; // Lanzador de actividad para Google Sign-In
 
@@ -54,26 +61,34 @@ public class Login extends AppCompatActivity {
         etUsuarioLogin = findViewById(R.id.etUsuarioLogin);
         etContrasenaLogin = findViewById(R.id.etContrasenaLogin);
         btIniciarSesionlogin = findViewById(R.id.btIniciarSesionLogin);
-        tvRegistrarse = findViewById(R.id.btRegistroLogin);
-       // googleSignInButton = findViewById(R.id.btGoogle);
-        // googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+        tvRegistrarseLogin = findViewById(R.id.btRegistroLogin);
+        tvRecuperarContrasenaLogin = findViewById(R.id.tvRecuperarContrasena);
+        googleSignInButton = findViewById(R.id.btGoogle);
+        googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
 
         //Inicialización de la autentificación
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Redirección a la pantalla de registro
-        tvRegistrarse.setOnClickListener(view -> {
-            Intent intent = new Intent(Login.this, Registro.class);
-            startActivity(intent);
+        tvRegistrarseLogin.setOnClickListener(view -> {
+            Intent intentRegistro = new Intent(Login.this, Registro.class);
+            startActivity(intentRegistro);
+        });
+
+        // Redirección a la pantalla de recuperar contraseña
+        tvRecuperarContrasenaLogin.setOnClickListener(view -> {
+            Intent intentRecuperarContrasena = new Intent(Login.this, RecuperarContrasena.class);
+            startActivity(intentRecuperarContrasena);
         });
 
         //Configuración de los listeners para los botones
         btIniciarSesionlogin.setOnClickListener(view ->
                 signInWithEmail());
-        /*
+
         googleSignInButton.setOnClickListener(view -> {
             signInWithGoogle();
         });
+
         //Resultado de la actividad de Google Sign-In
         signInResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -82,6 +97,7 @@ public class Login extends AppCompatActivity {
                     if(datos != null){
                         GoogleSignIn.getSignedInAccountFromIntent(datos).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+                                Toast.makeText(this, "Google sign in exitoso.", Toast.LENGTH_SHORT).show();
                                 firebaseAuthWithGoogle(task.getResult()); // Autenticación con Google
                             } else {
                                 Toast.makeText(this, "Error en Google sign in.", Toast.LENGTH_SHORT).show();
@@ -92,7 +108,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(this, "Error en iniciar sesión con Google por el dato", Toast.LENGTH_SHORT).show();
                 }
             }
-        );*/
+        );
     }
 
     //Método para iniciar sesión con email y contraseña
@@ -128,15 +144,14 @@ public class Login extends AppCompatActivity {
     }
 
     // Método para iniciar sesión con Google
-    /*
     private void signInWithGoogle(){
-
         // Configuración de Google Sign-In (está deprecado porque la mayoría de los móviles no soportan la nueva versión): pide el ID de cliente web y el email.
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
+                .requestIdToken(getString(R.string.default_web_client_id)) // Se especifica el ID de cliente web
+                .requestEmail() // Solicita el email
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+        mGoogleSignInClient.signOut(); //Si es necesario - Desconecta previamente al usuario de Google
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         signInResultLauncher.launch(signInIntent); // Lanza el intent de Google Sign-In
     }
@@ -154,8 +169,35 @@ public class Login extends AppCompatActivity {
                            String email = usuario.getEmail();
                            String emailkey = email.replace("@", "_").replace(".", "_");
                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios").child(emailkey);
+                           databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                               // Asigna los primeros datos al iniciar sesión con Google Firebase
+                               @Override
+                               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                   if (!snapshot.exists()) {
+                                       databaseReference.child("nombre").setValue(usuario.getDisplayName());
+                                       databaseReference.child("email").setValue(usuario.getEmail());
+                                   }
+                                   // Guarda los datos del usuario en SharedPreferences
+                                   SharedPreferences preferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
+                                   SharedPreferences.Editor editor = preferences.edit();
+                                   editor.putString("email", email);
+                                   editor.putString("nombre", usuario.getDisplayName());
+                                   editor.apply();
+                               }
+                               @Override
+                               public void onCancelled(@NonNull DatabaseError error) {
+                                   Log.e("Database", "Error al acceder a la base de datos", error.toException());
+                               }
+                           });
+                           //Inicia la actividad principal y cierra la pantalla de login
+                           Intent GoogleirAlMain = new Intent(Login.this, MainActivity.class);
+                           startActivity(GoogleirAlMain);
+                           finish();
+                           Toast.makeText(this, "Inicio de sesión exitoso con Google", Toast.LENGTH_SHORT).show();
                        }
+                   } else{
+                       Toast.makeText(this, "Error al autentificar con Firebase.", Toast.LENGTH_SHORT).show();
                    }
                 });
-    }*/
+    }
 }

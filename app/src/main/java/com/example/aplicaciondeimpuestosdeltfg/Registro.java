@@ -3,7 +3,10 @@ package com.example.aplicaciondeimpuestosdeltfg;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,10 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class Registro extends AppCompatActivity {
-    private TextInputEditText etNombreReg, etUsuarioReg, etContrasenaReg;
+    private TextInputEditText etNombreReg, etUsuarioReg, etContrasenaReg, etSaldoInicial;
+    private TextView btVolverLoginReg, tvNivelSeguridad;
     private Button btRegistrarseReg;
-    private TextView btVolverLoginReg;
-
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -53,11 +55,28 @@ public class Registro extends AppCompatActivity {
         // Referenciamos los elementos del layout
         etNombreReg = findViewById(R.id.etNombreReg);
         etUsuarioReg = findViewById(R.id.etUsuarioReg);
+        tvNivelSeguridad = findViewById(R.id.txtNivelSeguridad);
         etContrasenaReg = findViewById(R.id.etContrasenaReg);
+        etSaldoInicial = findViewById(R.id.etSaldoInicialReg);
         btRegistrarseReg = findViewById(R.id.btRegistrarseReg);
         btVolverLoginReg = findViewById(R.id.btVolverLoginRegistro);
 
-        //Botón siguiente
+        // 3 Método (se generan "solo") TextWatcher al campo de la contraseña para verificar su fuerza en tiempo real
+        etContrasenaReg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                comprobarNivelSeguridadContrasena(s.toString());
+            }
+        });
+        //Botón registrarse
         btRegistrarseReg.setOnClickListener(v -> {
             registrarse();
         });
@@ -74,6 +93,7 @@ public class Registro extends AppCompatActivity {
         String nombre = etNombreReg.getText().toString().trim();
         String correo = etUsuarioReg.getText().toString().trim();
         String contrasena = etContrasenaReg.getText().toString().trim();
+        String saldoInicial = etSaldoInicial.getText().toString().trim();
 
         //Validaciones de campo
         if(nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty()){
@@ -102,6 +122,7 @@ public class Registro extends AppCompatActivity {
                         HashMap<String, Object> datosUsuario = new HashMap<>();
                         datosUsuario.put("correo", correo);
                         datosUsuario.put("nombre", nombre);
+                        datosUsuario.put("saldoInicial", saldoInicial);
 
                         //Convertir el email en clave válida para el Firebase (reemplazar carácteres especiales)
                         String emailKey = correo.replace(".", "_").replace("@", "_");
@@ -133,5 +154,39 @@ public class Registro extends AppCompatActivity {
         editor.putString("correo", correo);
         editor.putString("password", contrasena);
         editor.apply(); // Guardo los cambios*/
+    }
+
+    public void comprobarNivelSeguridadContrasena(String contrasena){
+        //Valores Predeterminado
+        int puntos = 0;
+        String textoMostrado = "";
+        int color = Color.GRAY;
+
+        //Si la contraseña es demasiado corta, se considera débil
+        if(contrasena.length()<6){
+            textoMostrado = "Débil (mínimo 6 carácteres)";
+            color = getResources().getColor(R.color.grafica_rojo, null);
+        }else{
+            // Verifica la presencia de diferentes tipos de caracteres para aumentar la fuerza
+            if (contrasena.matches(".*[a-z].*")) puntos++; // Letras minúsculas
+            if (contrasena.matches(".*[A-Z].*")) puntos++; // Letras mayúsculas
+            if (contrasena.matches(".*[0-9].*")) puntos++; // Dígitos
+            if (contrasena.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\",.<>/?].*")) puntos++; // Caracteres especiales
+
+            // Asigna el texto y color según la fuerza acumulada
+            if (puntos < 2) {
+                textoMostrado = "Débil";
+                color = getResources().getColor(R.color.rojo, null);
+            } else if (puntos < 4) {
+                textoMostrado = "Media";
+                color = getResources().getColor(R.color.naranja, null);
+            } else {
+                textoMostrado = "Fuerte";
+                color = getResources().getColor(R.color.verde, null);
+            }
+        }
+        // Actualiza el texto y el color del TextView que muestra el nivel de seguridad
+        tvNivelSeguridad.setText(textoMostrado);
+        tvNivelSeguridad.setTextColor(color);
     }
 }

@@ -13,6 +13,18 @@
         android:theme="@style/Theme.AplicacionDeImpuestosDelTFG"
         tools:targetApi="31">
         <activity
+            android:name=".VerImpuestos"
+            android:exported="false" />
+        <activity
+            android:name=".verImpuestos"
+            android:exported="false" />
+        <activity
+            android:name=".CambiarContrasena"
+            android:exported="false" />
+        <activity
+            android:name=".RecuperarContrasena"
+            android:exported="false" />
+        <activity
             android:name=".vistas.JubiladoPerfilar"
             android:exported="false" />
         <activity
@@ -28,7 +40,7 @@
             android:name=".vistas.AsalariadoPerfilar"
             android:exported="false" />
         <activity
-            android:name=".vistas.afinarUsuario"
+            android:name=".vistas.preguntasComunes"
             android:exported="false"
             android:theme="@style/Theme.AplicacionDeImpuestosDelTFG" />
         <activity
