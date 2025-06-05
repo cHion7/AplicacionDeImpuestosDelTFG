@@ -162,7 +162,7 @@ public class Registro extends AppCompatActivity {
         //Si la contraseña es demasiado corta, se considera débil
         if(contrasena.length()<6){
             textoMostrado = "Débil (mínimo 6 carácteres)";
-            color = getResources().getColor(R.color.weak_password, null);
+            color = getResources().getColor(R.color.grafica_rojo, null);
         }else{
             // Verifica la presencia de diferentes tipos de caracteres para aumentar la fuerza
             if (contrasena.matches(".*[a-z].*")) puntos++; // Letras minúsculas
@@ -173,13 +173,13 @@ public class Registro extends AppCompatActivity {
             // Asigna el texto y color según la fuerza acumulada
             if (puntos < 2) {
                 textoMostrado = "Débil";
-                color = getResources().getColor(R.color.weak_password, null); // Rojo
+                color = getResources().getColor(R.color.rojo, null);
             } else if (puntos < 4) {
                 textoMostrado = "Media";
-                color = getResources().getColor(R.color.medium_password, null); // Naranja
+                color = getResources().getColor(R.color.naranja, null);
             } else {
                 textoMostrado = "Fuerte";
-                color = getResources().getColor(R.color.strong_password, null); // Verde
+                color = getResources().getColor(R.color.verde, null);
             }
         }
         // Actualiza el texto y el color del TextView que muestra el nivel de seguridad

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "322269238228-lkmi1g81l852nulanl62tar7ov7gd4f9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aplicaciondeimpuestosdeltfg",
+            "certificate_hash": "9ee8b6ef8876889408353c3e7daca2cf5a56c23e"
+          }
+        },
+        {
           "client_id": "322269238228-lucdub2gn2umrajl9m3iavmrg766502k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

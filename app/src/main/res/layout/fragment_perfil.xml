@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AjustesFragment">
+    tools:context=".vistas.PerfilFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,7 @@
             android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:background="@color/md_theme_primaryContainer">
+            android:paddingHorizontal="16dp">
 
             <TextView
             android:layout_width="0dp"
@@ -32,8 +31,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Ajustes"
-            android:src="@drawable/setting"/>
+            android:contentDescription="Ajustes" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,8 +56,7 @@
                     android:id="@+id/ivPerfil"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_default_avatar" />
+                    android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -125,13 +122,18 @@
             android:paddingVertical="14dp" />
 
             <Button
+                android:id="@+id/btDetectarUsuarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Detectar Usuarios" />
+
+            <Button
                 android:id="@+id/btCerrarSesion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cerrar Sesión"
                 android:layout_marginTop="24dp"
-                android:paddingVertical="14dp"
-                android:backgroundTint="@color/md_theme_error" />
+                android:paddingVertical="14dp" />
 
         </LinearLayout>
 

@@ -12,8 +12,7 @@
     android:id="@+id/ivLogoRecuperar"
     android:layout_width="120dp"
     android:layout_height="120dp"
-    android:layout_marginTop="48dp"
-    android:src="@drawable/ic_tax_app_logo"/>
+    android:layout_marginTop="48dp" />
 
     <TextView
         android:id="@+id/tvTituloRecuperar"
@@ -42,7 +41,7 @@
         android:layout_height="wrap_content"
         android:hint="Correo Electrónico"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:startIconDrawable="@drawable/ic_email" app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp">
@@ -78,5 +77,4 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="8dp"/>
-
 </LinearLayout>

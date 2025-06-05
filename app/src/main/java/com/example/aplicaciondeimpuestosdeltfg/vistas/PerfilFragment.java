@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class PerfilFragment extends Fragment {
     private TextInputEditText etNombreApellidoPerfil, etUsuarioPerfil;
-    private Button btCambiarContrasenaPerfil, btCerrarSesion;
+    private Button btCambiarContrasenaPerfil, btCerrarSesion, detectarUsuario, btanadirDatos;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -36,7 +36,6 @@ public class PerfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         // Inicializamos Firebase
@@ -46,8 +45,8 @@ public class PerfilFragment extends Fragment {
         usuarioActual = firebaseAuth.getCurrentUser();
 
         //Referenciamos los layouts
-        Button btanadirDatos = view.findViewById(R.id.btanadirDatosPerfil);
-        Button detectarUsuario = view.findViewById(R.id.detectarUsuario);
+        btanadirDatos = view.findViewById(R.id.btanadirDatosPerfil);
+        detectarUsuario = view.findViewById(R.id.btDetectarUsuarios);
         etNombreApellidoPerfil = view.findViewById(R.id.etNombreApPerf);
         etUsuarioPerfil = view.findViewById(R.id.etCorreoPerf);
         etUsuarioPerfil.setEnabled(false);
@@ -60,6 +59,10 @@ public class PerfilFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
+        //Botón añadir datos
+        btanadirDatos.setOnClickListener(v -> {
+            addDatos();
+        });
 
         //Botón cambiar contraseña
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
