@@ -3,6 +3,7 @@ package com.example.aplicaciondeimpuestosdeltfg.gestor;
 import com.google.firebase.database.Exclude;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class Evento {
     private String dinero;
@@ -12,7 +13,6 @@ public class Evento {
     private String titulo;
     private String descripcion;
     private String key;
-
     public Evento() {
     }
 

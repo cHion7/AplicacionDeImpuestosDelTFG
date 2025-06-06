@@ -78,6 +78,7 @@
                 android:clickable="true"
                 android:text="Registrate"
                 android:textAlignment="textEnd"
+                android:textColor="#2196F3"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -102,6 +103,8 @@
                 android:clickable="true"
                 android:text="Recuperar"
                 android:textAlignment="textEnd"
+                android:textColor="#2196F3"
+                android:textColorLink="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg.vistas;
+/*package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -191,6 +191,7 @@ public class verImpuestos extends AppCompatActivity {
                 hideAllSpecificLayouts();
             }
         });
+
 
         // Listener for the "Sí" radio button in Jubilado section
         rgAyudaAdicionalJubilado.setOnCheckedChangeListener((group, checkedId) -> {
@@ -386,3 +387,4 @@ public class verImpuestos extends AppCompatActivity {
                 });
     }
 }
+*/

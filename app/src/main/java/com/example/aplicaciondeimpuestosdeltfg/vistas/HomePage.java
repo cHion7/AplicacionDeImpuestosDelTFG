@@ -193,7 +193,6 @@ public class HomePage extends Fragment {
         });
         return view;
     }
-
     private void calcularSaldoActual() {
         db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");

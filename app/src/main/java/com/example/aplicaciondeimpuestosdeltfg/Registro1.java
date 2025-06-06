@@ -72,7 +72,7 @@ public class Registro1 extends AppCompatActivity {
         editor.apply(); // Guardo los cambios
 
         //Pasa al siguiente registro 2
-        Intent intentReg2 = new Intent(Registro1.this, Registro2.class);
-        startActivity(intentReg2);
+        //Intent intentReg2 = new Intent(Registro1.this, Registro2.class);
+        //startActivity(intentReg2);
     }
 }

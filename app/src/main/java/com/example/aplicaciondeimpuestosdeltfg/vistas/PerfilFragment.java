@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
-import com.example.aplicaciondeimpuestosdeltfg.VerImpuestos;
+//import com.example.aplicaciondeimpuestosdeltfg.VerImpuestos;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -57,7 +57,6 @@ public class PerfilFragment extends Fragment {
         etUsuarioPerfil = view.findViewById(R.id.etCorreoPerf);
         etUsuarioPerfil.setEnabled(false);
         etSaldoInicialPerfil = view.findViewById(R.id.etSaldoInicialPerf);
-        btAjustesPerfil = view.findViewById(R.id.btnAjustes);
         btModificarDatos = view.findViewById(R.id.btModificarDatosPerfil);
         btCambiarContrasenaPerfil = view.findViewById(R.id.btCambiarContrasenaPerf);
         btAnadriImpuestosPerfil = view.findViewById(R.id.anadirImpuestos);
@@ -76,13 +75,13 @@ public class PerfilFragment extends Fragment {
                 modificarDatosUsuario();
             }
         });
-
+/*
         //Imagen botón
         btAjustesPerfil.setOnClickListener(v ->{
             Intent irADatosImpuestos = new Intent(getActivity(), VerImpuestos.class);
             startActivity(irADatosImpuestos);
         });
-
+*/
         //Botón cambiar contraseña
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
             cambiarContrasena();
