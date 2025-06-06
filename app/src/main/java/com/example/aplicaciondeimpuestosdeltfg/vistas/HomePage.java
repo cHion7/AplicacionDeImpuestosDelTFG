@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.CalendarManager;
@@ -44,6 +46,7 @@ public class HomePage extends Fragment {
     private List<Evento> listaEventos;
     private List<String> meses;
     private CalendarManager calendarManager = new CalendarManager();
+    private TextView tvSaldo;
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -168,6 +171,7 @@ public class HomePage extends Fragment {
         calendarView = view.findViewById(R.id.calendarHomePage);
         viewPager2 = view.findViewById(R.id.homePageMeses);
         addEventos = view.findViewById(R.id.ibBackListaEventos);
+        tvSaldo = view.findViewById(R.id.tvNumeroSaldoHomePage);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -187,5 +191,60 @@ public class HomePage extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        calcularSaldoActual();
+    }
+
+    private void calcularSaldoActual() {
+        db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
+        String emailUser = user.getEmail();
+        String userPath = emailUser.replace("@", "_").replace(".", "_");
+        DatabaseReference ref = usuariosReferencia.child(userPath);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) return;
+
+                String saldo = snapshot.child("saldoInicial").getValue(String.class);
+                long fechaInicio = snapshot.child("tiempoSaldoInicial").getValue(Long.class);
+                long ahora = System.currentTimeMillis();
+
+                double saldoInicial = Double.parseDouble(saldo);
+                // Supongamos que tienes una lista de eventos ya cargada
+                double saldoActual = saldoInicial;
+
+                for (Evento evento : listaEventos) {
+                    long fechaEvento = evento.getFechaMillis();
+                    if (fechaEvento >= fechaInicio && fechaEvento <= ahora) {
+                        if ("COBRO".equals(evento.getCobroOGasto())) {
+                            saldoActual += Double.parseDouble(evento.getDinero());
+                        } else if ("GASTO".equals(evento.getCobroOGasto())) {
+                            saldoActual -= Double.parseDouble(evento.getDinero());
+                        }
+                    }
+                }
+
+                // Mostrar el saldo en tu TextView
+                tvSaldo.setText(String.format("%.2f €", saldoActual));
+                if (saldoActual < 0) {
+                    tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.rojo)); // rojo para negativo
+                } else {
+                    tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.verde)); // verde para positivo
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error al obtener datos del usuario", error.toException());
+            }
+        });
+
+
     }
 }
