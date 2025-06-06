@@ -87,6 +87,7 @@ public class PerfilFragment extends Fragment {
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
             cambiarContrasena();
         });
+        //Botón Preguntas Impuestos
         btAnadriImpuestosPerfil.setOnClickListener(v -> {
             Intent intentUsuarios = new Intent(getActivity(), preguntasComunes.class);
             startActivity(intentUsuarios);

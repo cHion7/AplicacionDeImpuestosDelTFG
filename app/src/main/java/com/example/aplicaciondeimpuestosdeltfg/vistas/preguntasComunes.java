@@ -18,10 +18,10 @@ import com.example.aplicaciondeimpuestosdeltfg.R;
 import java.util.List;
 
 public class preguntasComunes extends AppCompatActivity {
-    RadioButton radio_trabaja_si, radio_vivienda_si ;
-    EditText edit_num_hijos, edit_ingreso;
-    Spinner spinner_situacion, spinner_discapacidad;
-    Button btn_enviar;
+    EditText etIngresoPregComunes, etEdadPregComunes, etPersonasACargoPregComunes;
+    RadioButton viviendaPregComunes;
+    Spinner spinner_situacion;
+    Button btEnviarCom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,41 +29,39 @@ public class preguntasComunes extends AppCompatActivity {
         setContentView(R.layout.activity_preguntas_comunes);
 
         // Declarar UI
-        radio_trabaja_si = findViewById(R.id.radio_trabaja_si);
-        edit_num_hijos = findViewById(R.id.edit_num_hijos);
-        edit_ingreso = findViewById(R.id.edit_ingreso);
+        etIngresoPregComunes = findViewById(R.id.etIngresosCom);
+        etEdadPregComunes = findViewById(R.id.etEdadCom);
+        etPersonasACargoPregComunes = findViewById(R.id.etPersonasACargoCom);
+        viviendaPregComunes = findViewById(R.id.radio_vivienda_si);
         spinner_situacion = findViewById(R.id.spinner_situacion);
-        radio_vivienda_si = findViewById(R.id.radio_vivienda_si);
-        spinner_discapacidad = findViewById(R.id.spinner_discapacidad);
-        btn_enviar = findViewById(R.id.btn_enviar);
+        btEnviarCom = findViewById(R.id.btEnviarCom);
 
-        List<String> spinnerValues = List.of("Autónomo", "Asalariado", "Empresario", "Estudiante", "Jubilado");
-        ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValues);
+        List<String> valorSpinnerSituacion = List.of("Autónomo", "Asalariado", "Empresario", "Estudiante", "Jubilado");
+        ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, valorSpinnerSituacion);
         spinner_situacion.setAdapter(arraySituacion);
         spinner_situacion.setSelection(3);
 
-        List<String> spinnerValuesDiscapacidad = List.of("Ninguna", "Leve", "Moderada", "Grave");
+        /*List<String> spinnerValuesDiscapacidad = List.of("Ninguna", "Leve", "Moderada", "Grave");
         ArrayAdapter<String> adapterDiscapacidad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValuesDiscapacidad);
         spinner_discapacidad.setAdapter(adapterDiscapacidad);
-        spinner_discapacidad.setSelection(0);
+        spinner_discapacidad.setSelection(0);*/
 
         //Botón siguente página
-        btn_enviar.setOnClickListener(v -> {
+        btEnviarCom.setOnClickListener(v -> {
             registrarPreguntasComunes();
         });
     }
 
     public void registrarPreguntasComunes() {
         //Obtener datos de las Preguntas Comunes
-        boolean trabaja = radio_trabaja_si.isChecked();
-        String numHijos = edit_num_hijos.getText().toString();
-        String ingreso = edit_ingreso.getText().toString();
-        String situacion = spinner_situacion.getSelectedItem().toString();
-        boolean tieneViviendaExtra = radio_vivienda_si.isChecked();
-        String discapacidad = spinner_discapacidad.getSelectedItem().toString();
+        String eleccion = spinner_situacion.getSelectedItem().toString();
+        String ingresoBruto = etIngresoPregComunes.getText().toString();
+        String edad = etEdadPregComunes.getText().toString();
+        String personaACargo = etPersonasACargoPregComunes.getText().toString();
+        boolean vivienda = viviendaPregComunes.isChecked();
 
         // Validación de los campos
-        if (numHijos.isEmpty() || ingreso.isEmpty() || situacion.isEmpty() || discapacidad.isEmpty()) {
+        if (edad.isEmpty() || ingresoBruto.isEmpty() || eleccion.isEmpty() || personaACargo.isEmpty()) {
             Toast.makeText(preguntasComunes.this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -72,23 +70,22 @@ public class preguntasComunes extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("impuestos", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putBoolean("trabaja", trabaja);
-        editor.putString("hijos", numHijos);
-        editor.putString("ingreso", ingreso);
-        editor.putString("situacion", situacion);
-        editor.putBoolean("viviendaExtra", tieneViviendaExtra);
-        editor.putString("discapacidad", discapacidad);
+        editor.putString("eleccion", eleccion);
+        editor.putString("ingresoBruto", ingresoBruto);
+        editor.putString("edad", edad);
+        editor.putString("personasACargo", personaACargo);
+        editor.putBoolean("vivienda", vivienda);
         editor.apply();
 
         //Pasa a la siguiente actividad de Preguntas Específicas
         Intent intent;
-        if (situacion.equals("Autónomo")) {
+        if (eleccion.equals("Autónomo")) {
             intent = new Intent(this, AutonomoPerfilar.class);
-        } else if (situacion.equals("Empresario")) {
+        } else if (eleccion.equals("Empresario")) {
             intent = new Intent(this, EmpresarioPerfilar.class);
-        } else if (situacion.equals("Estudiante")) {
+        } else if (eleccion.equals("Estudiante")) {
             intent = new Intent(this, EstudiantePerfilar.class);
-        } else if (situacion.equals("Jubilado")) {
+        } else if (eleccion.equals("Jubilado")) {
             intent = new Intent(this, JubiladoPerfilar.class);
         } else { // Esto cubrirá el caso de "Asalariado" y cualquier otro valor no previsto
             intent = new Intent(this, AsalariadoPerfilar.class);

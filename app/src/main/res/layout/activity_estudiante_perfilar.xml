@@ -81,14 +81,14 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/rebirBeca"
+                android:id="@+id/etRecibirBecaEstudiante"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej:1200" />
 
 
             <Button
-                android:id="@+id/btn_enviar"
+                android:id="@+id/btEniviarEstudiante"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

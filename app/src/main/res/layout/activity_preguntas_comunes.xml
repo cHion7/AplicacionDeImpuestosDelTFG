@@ -7,151 +7,130 @@
     android:layout_height="match_parent"
     tools:context=".vistas.preguntasComunes">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:background="@android:color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/titleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cuestionario de Afinación"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:paddingBottom="16dp" />
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:text="Información de usuario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            <!-- ¿Trabajas actualmente? -->
-            <TextView
+        <!-- ¿Trabajas actualmente? -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:text="¿Cuál es tu situación laboral?"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinner_situacion"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:text="¿Cuál es tu ingreso bruto anual?"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etIngresosCom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ej: 22000€"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="¿Cuál es tu edad?"
+            android:textSize="16sp" />
+
+        <!-- Hij@s -->
+        <EditText
+            android:id="@+id/etEdadCom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ej: 24"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:text="¿Tienes personas a tu cargo (hijos, dependientes...)? ¿Cuántos?"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etPersonasACargoCom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de personas"
+            android:inputType="number" />
+
+        <!-- Tipo de trabajador -->
+
+        <!-- Ingreso mensual -->
+
+        <!-- Vivienda adicional -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:text="¿Tienes más de una vivienda en propiedad?"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_vivienda_si"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿Trabajas actualmente?"
-                android:textSize="16sp"
-                android:paddingBottom="8dp" />
+                android:text="Sí" />
 
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/radio_vivienda_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_trabaja_si"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sí" />
-
-                <RadioButton
-                    android:id="@+id/radio_trabaja_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No" />
-            </RadioGroup>
-
-            <!-- Hij@s -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Cuántos hij@s tienes?"
-                android:textSize="16sp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp" />
-
-            <EditText
-                android:id="@+id/edit_num_hijos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ej: 2"
-                android:inputType="number" />
-
-            <!-- Tipo de trabajador -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Cuál es tu situación laboral?"
-                android:textSize="16sp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp" />
-
-            <Spinner
-                android:id="@+id/spinner_situacion"
-                android:layout_width="207dp"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dropdown" />
-
-            <!-- Ingreso mensual -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Cuál es tu ingreso mensual?"
-                android:textSize="16sp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp" />
-
-            <EditText
-                android:id="@+id/edit_ingreso"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ej: 22000€"
-                android:inputType="numberDecimal" />
-
-            <!-- Vivienda adicional -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Tienes más de una vivienda?"
-                android:textSize="16sp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_vivienda_si"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sí" />
-
-                <RadioButton
-                    android:id="@+id/radio_vivienda_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿Tienes alguna discapacidad?"
-                android:textSize="16sp"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp" />
-
-            <Spinner
-                android:id="@+id/spinner_discapacidad"
-                android:layout_width="216dp"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dropdown" />
+                android:text="No" />
+        </RadioGroup>
 
 
-            <!-- Botón -->
-            <Button
-                android:id="@+id/btn_enviar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="?attr/colorPrimary"
-                android:text="1 de 2"
-                android:textColor="@android:color/white" />
+        <!-- Botón -->
+        <Button
+            android:id="@+id/btEnviarCom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:text="1 de 2"
+            android:textColor="@android:color/white" />
 
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
