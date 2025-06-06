@@ -151,6 +151,8 @@ public class HomePage extends Fragment {
                 // Refresca el calendario y demás UI
                 calendarView.removeDecorators();
                 calendarConfiguration();
+
+                calcularSaldoActual();
             }
 
             @Override
@@ -189,14 +191,7 @@ public class HomePage extends Fragment {
                 fragmento.show(((FragmentActivity) getContext()).getSupportFragmentManager(), fragmento.getTag());
             }
         });
-
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        calcularSaldoActual();
     }
 
     private void calcularSaldoActual() {
@@ -209,33 +204,69 @@ public class HomePage extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) return;
-
-                String saldo = snapshot.child("saldoInicial").getValue(String.class);
-                long fechaInicio = snapshot.child("tiempoSaldoInicial").getValue(Long.class);
-                long ahora = System.currentTimeMillis();
-
-                double saldoInicial = Double.parseDouble(saldo);
-                // Supongamos que tienes una lista de eventos ya cargada
-                double saldoActual = saldoInicial;
-
-                for (Evento evento : listaEventos) {
-                    long fechaEvento = evento.getFechaMillis();
-                    if (fechaEvento >= fechaInicio && fechaEvento <= ahora) {
-                        if ("COBRO".equals(evento.getCobroOGasto())) {
-                            saldoActual += Double.parseDouble(evento.getDinero());
-                        } else if ("GASTO".equals(evento.getCobroOGasto())) {
-                            saldoActual -= Double.parseDouble(evento.getDinero());
-                        }
-                    }
+                if (!snapshot.exists()) {
+                    Log.e("SaldoDebug", "Snapshot del usuario no existe.");
+                    return;
                 }
 
-                // Mostrar el saldo en tu TextView
-                tvSaldo.setText(String.format("%.2f €", saldoActual));
-                if (saldoActual < 0) {
-                    tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.rojo)); // rojo para negativo
-                } else {
-                    tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.verde)); // verde para positivo
+                try {
+                    Double saldo = snapshot.child("saldoInicial").getValue(Double.class);
+                    Long fechaInicio = snapshot.child("tiempoSaldoInicial").getValue(Long.class);
+
+
+                    if (saldo == null || fechaInicio == null) {
+                        Log.e("SaldoDebug", "Datos faltantes: saldoInicial o tiempoSaldoInicial es null.");
+                        return;
+                    }
+
+                    long ahora = System.currentTimeMillis();
+                    Log.d("SaldoDebug", "Saldo Inicial: " + saldo);
+                    Log.d("SaldoDebug", "Fecha Inicial: " + fechaInicio);
+                    Log.d("SaldoDebug", "Fecha Actual: " + ahora);
+
+                    double saldoInicial = saldo;
+                    double saldoActual = saldoInicial;
+
+                    for (Evento evento : listaEventos) {
+                        long fechaEvento = evento.getFechaMillis();
+                        String tipo = evento.getCobroOGasto();
+                        String cantidadStr = evento.getDinero();
+
+                        Log.d("SaldoDebug", "Evento: " + cantidadStr + " - " + tipo + " - Fecha: " + fechaEvento);
+
+                        if (fechaEvento >= fechaInicio && fechaEvento <= ahora) {
+                            try {
+                                double cantidad = Double.parseDouble(cantidadStr);
+                                if ("COBRO".equalsIgnoreCase(tipo)) {
+                                    saldoActual += cantidad;
+                                } else if ("GASTO".equalsIgnoreCase(tipo)) {
+                                    saldoActual -= cantidad;
+                                }
+                                Log.d("SaldoDebug", "Saldo tras evento: " + saldoActual);
+                            } catch (NumberFormatException e) {
+                                Log.e("SaldoDebug", "Cantidad inválida en evento: " + cantidadStr);
+                            }
+                        } else {
+                            Log.d("SaldoDebug", "Evento fuera de rango: " + fechaEvento);
+                        }
+                    }
+
+                    if (!isAdded() || getContext() == null || tvSaldo == null) {
+                        Log.w("SaldoDebug", "Fragmento no montado o TextView nulo.");
+                        return;
+                    }
+
+                    tvSaldo.setText(String.format("%.2f €", saldoActual));
+
+                    if (saldoActual < 0) {
+                        tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.rojo)); // negativo
+                    } else {
+                        tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.verde)); // positivo
+                    }
+
+                    Log.d("Saldo", "Saldo final calculado: " + saldoActual);
+                } catch (Exception e) {
+                    Log.e("SaldoDebug", "Error general al calcular saldo", e);
                 }
             }
 
@@ -244,7 +275,5 @@ public class HomePage extends Fragment {
                 Log.e("Firebase", "Error al obtener datos del usuario", error.toException());
             }
         });
-
-
     }
 }
