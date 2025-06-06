@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,28 +16,28 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#F4F4F4">
+            android:background="@drawable/background"
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:id="@+id/layout_encabezado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp"
                 android:background="#FFFFFF"
                 android:elevation="2dp"
-                android:layout_marginBottom="12dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
                     android:id="@+id/btn_open_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Abrir menú"
                     android:padding="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_menu_24" />
 
                 <TextView
@@ -45,307 +46,353 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Simulador Hipotecario"
+                    android:textColor="#3730A3"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#222222" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingVertical="8dp"
-                android:background="#FFFFFF"
-                android:elevation="2dp"
-                android:layout_marginBottom="12dp">
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="#F6F6F6"
+                app:cardElevation="10dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Precio del inmueble"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:paddingBottom="4dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <SeekBar
-                    android:id="@+id/seekBarPrecio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="200000"
-                    android:progressTint="#2196F3"
-                    android:thumbTint="#2196F3" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#FFFFFF"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingVertical="8dp">
 
-                <TextView
-                    android:id="@+id/textViewPrecio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0€"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:paddingTop="6dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:paddingBottom="4dp"
+                            android:text="Precio del inmueble"
+                            android:textColor="#3730A3"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-            </LinearLayout>
+                        <SeekBar
+                            android:id="@+id/seekBarPrecio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:max="200000"
+                            android:progressTint="#2196F3"
+                            android:thumbTint="#2196F3" />
+
+                        <TextView
+                            android:id="@+id/textViewPrecio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="6dp"
+                            android:text="0€"
+                            android:textAlignment="center"
+                            android:textColor="#666666"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#FFFFFF"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:paddingBottom="4dp"
+                            android:text="Ahorro aportado"
+                            android:textColor="#3730A3"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <SeekBar
+                            android:id="@+id/seekBarAhorro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:max="200000"
+                            android:progressTint="#2196F3"
+                            android:thumbTint="#2196F3" />
+
+                        <TextView
+                            android:id="@+id/textViewAhorro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="6dp"
+                            android:text="0 €"
+                            android:textAlignment="center"
+                            android:textColor="#666666"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#FFFFFF"
+                        android:elevation="2dp"
+                        android:orientation="vertical"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:paddingBottom="4dp"
+                            android:text="Plazo del préstamo"
+                            android:textColor="#3730A3"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <SeekBar
+                            android:id="@+id/seekBarPlazo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:max="40"
+                            android:progressTint="#2196F3"
+                            android:thumbTint="#2196F3" />
+
+                        <TextView
+                            android:id="@+id/textViewPlazo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="6dp"
+                            android:text="0 años"
+                            android:textAlignment="center"
+                            android:textColor="#666666"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
+
+                        <Button
+                            android:id="@+id/botonImpuestoRestar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#3730A3"
+                            android:text="-"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/ImpuestoValor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Valor"
+                            android:textColor="#333333"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/botonImpuestoSumar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#3730A3"
+                            android:text="+"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:id="@+id/tabla_azul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="24dp"
+                        android:background="#D5ECFF"
+                        android:elevation="10dp"
+                        android:padding="16dp">
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Tu cuota mensual"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/cuotaMnesual"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#004D40" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Importe hipoteca"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/importeHipoteca"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#004D40" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Porcentaje de financiación"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/porcentajeFinanciacion"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#004D40" />
+                        </TableRow>
+                    </TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/tabla_gris"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#FFFFFF"
+                        android:elevation="10dp"
+                        android:padding="16dp">
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Precio del inmueble"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/precioInmuebleResultado"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Impuestos y gastos de la compra"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/impuestosGastosCompra"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Coste total del inmueble"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/costeTotalInmueble"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Ahorro aportado"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/ahorroAportadoResultado"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Importe hipoteca"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/importeHipotecaResultado"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Interés hipoteca"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/interesHipoteca"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:text="Coste total con hipoteca"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/costeTotalConHipoteca"
+                                android:gravity="end"
+                                android:text="-"
+                                android:textColor="#333333" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingVertical="8dp"
-                android:background="#FFFFFF"
-                android:elevation="2dp"
-                android:layout_marginBottom="12dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ahorro aportado"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:paddingBottom="4dp" />
-
-                <SeekBar
-                    android:id="@+id/seekBarAhorro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="200000"
-                    android:progressTint="#2196F3"
-                    android:thumbTint="#2196F3" />
-
-                <TextView
-                    android:id="@+id/textViewAhorro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0 €"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:paddingTop="6dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingVertical="8dp"
-                android:background="#FFFFFF"
-                android:elevation="2dp"
-                android:layout_marginBottom="12dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Plazo del préstamo"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:paddingBottom="4dp" />
-
-                <SeekBar
-                    android:id="@+id/seekBarPlazo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="40"
-                    android:progressTint="#2196F3"
-                    android:thumbTint="#2196F3" />
-
-                <TextView
-                    android:id="@+id/textViewPlazo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0 años"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:paddingTop="6dp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
-
-                <Button
-                    android:id="@+id/botonImpuestoRestar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:backgroundTint="#2196F3"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:id="@+id/ImpuestoValor"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Valor"
-                    android:textSize="18sp"
-                    android:textColor="#333333" />
-
-                <Button
-                    android:id="@+id/botonImpuestoSumar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+"
-                    android:backgroundTint="#2196F3"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-
-            <TableLayout
-                android:id="@+id/tabla_azul"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="#E3F2FD"
-                android:padding="16dp"
-                android:elevation="2dp">
-
-                <TableRow>
-                    <TextView
-                        android:text="Tu cuota mensual"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/cuotaMnesual"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#004D40" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Importe hipoteca"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/importeHipoteca"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#004D40" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Porcentaje de financiación"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/porcentajeFinanciacion"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#004D40" />
-                </TableRow>
-            </TableLayout>
-
-
-            <TableLayout
-                android:id="@+id/tabla_gris"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="#FFFFFF"
-                android:padding="16dp"
-                android:elevation="2dp">
-
-                <TableRow>
-                    <TextView
-                        android:text="Precio del inmueble"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/precioInmuebleResultado"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Impuestos y gastos de la compra"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/impuestosGastosCompra"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Coste total del inmueble"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/costeTotalInmueble"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Ahorro aportado"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/ahorroAportadoResultado"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Importe hipoteca"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/importeHipotecaResultado"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Interés hipoteca"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/interesHipoteca"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:text="Coste total con hipoteca"
-                        android:layout_weight="1"
-                        android:textColor="#333333" />
-                    <TextView
-                        android:id="@+id/costeTotalConHipoteca"
-                        android:gravity="end"
-                        android:text="-"
-                        android:textColor="#333333" />
-                </TableRow>
-            </TableLayout>
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pcGrafica"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_margin="8dp"
 
-                android:background="#efefef"/>
+                android:background="#efefef" />
 
 
         </LinearLayout>
@@ -366,26 +413,27 @@
             android:id="@+id/boton1"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#3730A3"
             android:text="OPCIÓN 1"
-            android:backgroundTint="#2196F3"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="8dp" />
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/boton2"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#3730A3"
             android:text="OPCIÓN 2"
-            android:backgroundTint="#2196F3"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="8dp" />
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/boton3"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:backgroundTint="#3730A3"
             android:text="OPCIÓN 3"
-            android:backgroundTint="#2196F3"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
