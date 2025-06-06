@@ -13,12 +13,9 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
-import com.example.aplicaciondeimpuestosdeltfg.RegistroRevision;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -26,13 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AsalariadoPerfilar extends AppCompatActivity {
     Spinner spinner_contrato;
-    RadioButton familiaNum;
-    EditText edit_hijosCantida,gastosEscolares;
-    Button btn_enviar;
+    RadioButton familiaNumAsala;
+    EditText etEdadHijosAsala, gastosEscolaresAsala;
+    Button btEnviarAsala;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -44,10 +40,10 @@ public class AsalariadoPerfilar extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_asalariado_perfilar);
         spinner_contrato = findViewById(R.id.spinner_contrato);
-        familiaNum = findViewById(R.id.radio_familia_si);
-        edit_hijosCantida = findViewById(R.id.edadHijos);
-        gastosEscolares = findViewById(R.id.gastosEscolares);
-        btn_enviar = findViewById(R.id.btn_enviar);
+        familiaNumAsala = findViewById(R.id.radio_familia_si);
+        etEdadHijosAsala = findViewById(R.id.edadHijos);
+        gastosEscolaresAsala = findViewById(R.id.gastosEscolares);
+        btEnviarAsala = findViewById(R.id.btEnviarCom);
 
         List<String> spinnerValues = List.of("Parcial", "Indefinido", "Estacional");
         ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValues);
@@ -61,43 +57,41 @@ public class AsalariadoPerfilar extends AppCompatActivity {
 
         //Recuperar datos del SharePreference
         SharedPreferences sharedPreferences = getSharedPreferences("impuestos", Context.MODE_PRIVATE);
-        Boolean trabajo = sharedPreferences.getBoolean("trabaja", false);
-        String numHijos = sharedPreferences.getString("hijos", "");
-        String ingreso = sharedPreferences.getString("ingreso", "");
-        String situacion = sharedPreferences.getString("situacion", "");
-        String discapacidad = sharedPreferences.getString("discapacidad", "");
-        Boolean viviendaExtra = sharedPreferences.getBoolean("viviendaExtra", false);
+        String eleccion = sharedPreferences.getString("situacion", "");
+        String ingresoBruto = sharedPreferences.getString("ingresoBruto", "");
+        String edad = sharedPreferences.getString("edad", "");
+        String personasACargo = sharedPreferences.getString("personasACargo", "");
+        Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
 
         // Botón enviar datos
-        btn_enviar.setOnClickListener(v -> {
+        btEnviarAsala.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {
-                mandarDatosAsalariado(usuarioActual, trabajo, numHijos, ingreso, situacion, discapacidad, viviendaExtra);
+                mandarDatosAsalariado(usuarioActual, eleccion, ingresoBruto, edad, personasACargo, vivienda);
             }else{
                 Toast.makeText(this, "No hay usuario autentificado.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    public void mandarDatosAsalariado(FirebaseUser usuarioActual, Boolean trabajo, String numHijos, String ingreso, String situacion, String discapacidad, Boolean viviendaExtra){
-        boolean familia = familiaNum.isChecked();
-        String hijosEdades = edit_hijosCantida.getText().toString();
-        String gastos = gastosEscolares.getText().toString();
-        String contrato = spinner_contrato.getSelectedItem().toString();
+    public void mandarDatosAsalariado(FirebaseUser usuarioActual, String eleccion, String ingresoBruto, String edad, String personasACargo, Boolean vivienda){
+        String tipoContrato = spinner_contrato.getSelectedItem().toString();
+        boolean familiaNumerosa = familiaNumAsala.isChecked();
+        String edadesHijos = etEdadHijosAsala.getText().toString();
+        String gastosEscolares = gastosEscolaresAsala.getText().toString();
 
         if (usuarioActual != null) { //registro fue exitoso y el usuario está disponible.
             // Crear un HashMap para almacenar los datos del usuario
             HashMap<String, Object> datosUsuario = new HashMap<>();
-            datosUsuario.put("trabajo", trabajo);
-            datosUsuario.put("numHijos", numHijos);
-            datosUsuario.put("ingreso", ingreso);
-            datosUsuario.put("situacion", situacion);
-            datosUsuario.put("discapacidad", discapacidad);
-            datosUsuario.put("viviendaExtra", viviendaExtra);
+            datosUsuario.put("eleccion", eleccion);
+            datosUsuario.put("ingresoBruto", ingresoBruto);
+            datosUsuario.put("edad", edad);
+            datosUsuario.put("personasACargo", personasACargo);
+            datosUsuario.put("vivienda", vivienda);
 
-            datosUsuario.put("familia", familia);
-            datosUsuario.put("hijosEdades", hijosEdades);
-            datosUsuario.put("gastos", gastos);
-            datosUsuario.put("contrato", contrato);
+            datosUsuario.put("tipoContrato", tipoContrato);
+            datosUsuario.put("familiaNumerosa", familiaNumerosa);
+            datosUsuario.put("edadesHijos", edadesHijos);
+            datosUsuario.put("gastosEscolares", gastosEscolares);
 
             //Obtener el email del usuario logueado
             String emailUsuario = usuarioActual.getEmail();
@@ -115,7 +109,7 @@ public class AsalariadoPerfilar extends AppCompatActivity {
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(AsalariadoPerfilar.this, MainActivity.class);
+                    Intent intentAlLogin = new Intent(AsalariadoPerfilar.this, Login.class);
                     startActivity(intentAlLogin);
                     finish();
                 } else {

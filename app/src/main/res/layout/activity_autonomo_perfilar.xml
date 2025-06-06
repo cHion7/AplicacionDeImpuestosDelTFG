@@ -39,7 +39,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextDate"
+                android:id="@+id/etDadoAltaSSAutono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -55,7 +55,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/actividadEconomica"
+                android:id="@+id/etActividadEconoAutono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Código CNAE"
@@ -70,7 +70,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/gastosDeducibles"
+                android:id="@+id/etgastosDeduciblesAutono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej: 22000€"
@@ -85,7 +85,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/ivaSoportado"
+                android:id="@+id/ivaSoportadoAutono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej: 22000€"
@@ -100,7 +100,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/ivaRepercutido"
+                android:id="@+id/ivaRepercutidoAutono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej: 22000€"
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="8dp"
-                android:text="¿¿Utilizas vehículo para tu actividad profesional??"
+                android:text="¿Utilizas vehículo para tu actividad profesional?"
                 android:textSize="16sp" />
 
             <RadioGroup

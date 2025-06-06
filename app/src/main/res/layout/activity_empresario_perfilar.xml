@@ -28,7 +28,6 @@
                 android:gravity="center"
                 android:paddingBottom="16dp" />
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +51,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/facturaAnual"
+                android:id="@+id/etfacturaAnual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej: 20000€" />
@@ -66,7 +65,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/sueldoAdmin"
+                android:id="@+id/etsueldoAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej:3100€" />
@@ -80,14 +79,29 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/numeroEmpleados"
+                android:id="@+id/etnumeroEmpleados"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ej: 20" />
 
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:text="¿Cuáles son los gastos deducibles anuales?"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/etGastosDeduciblesEmpresario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Gastos deducibles" />
+
             <Button
-                android:id="@+id/btn_enviar"
+                android:id="@+id/btEnviarCom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

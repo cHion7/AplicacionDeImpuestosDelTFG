@@ -1,8 +1,9 @@
 package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -10,94 +11,116 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
-import com.example.aplicaciondeimpuestosdeltfg.RegistroRevision;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class AutonomoPerfilar extends AppCompatActivity {
+    EditText editTextDate, actividadEconomica, gastosDeducibles, ivaSoportado, ivaRepercutido;
+    RadioButton radio_coche_si;
+    Button bt_enviarAutonomo;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference nodoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_autonomo_perfilar);
-        EditText editTextDate = findViewById(R.id.editTextDate);
-        EditText actividadEconomica = findViewById(R.id.actividadEconomica);
-        EditText gastosDeducibles = findViewById(R.id.gastosDeducibles);
-        EditText ivaSoportado = findViewById(R.id.ivaSoportado);
-        EditText ivaRepercutido = findViewById(R.id.ivaRepercutido);
-        RadioButton radio_coche_si = findViewById(R.id.radio_coche_si);
-        RadioButton radio_coche_no = findViewById(R.id.radio_coche_no);
-        Button btn_enviar = findViewById(R.id.btn_enviarAutonomo);
+        editTextDate = findViewById(R.id.etDadoAltaSSAutono);
+        actividadEconomica = findViewById(R.id.etActividadEconoAutono);
+        gastosDeducibles = findViewById(R.id.etgastosDeduciblesAutono);
+        ivaSoportado = findViewById(R.id.ivaSoportadoAutono);
+        ivaRepercutido = findViewById(R.id.ivaRepercutidoAutono);
+        radio_coche_si = findViewById(R.id.radio_coche_si);
+        bt_enviarAutonomo = findViewById(R.id.btn_enviarAutonomo);
 
-        btn_enviar.setOnClickListener(v -> {
-            boolean coche = radio_coche_si.isChecked();
-            String fecha = editTextDate.getText().toString();
-            String actividad = actividadEconomica.getText().toString();
-            String gastos = gastosDeducibles.getText().toString();
-            String iva = ivaSoportado.getText().toString();
-            String ivaRep = ivaRepercutido.getText().toString();
+        //Iniciamos Firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
+        nodoUsuario = database.getReference("Usuarios");
 
-            boolean trabaja = getIntent().getBooleanExtra("trabaja", false);
-            String hijos = getIntent().getStringExtra("hijos");
-            String ingreso = getIntent().getStringExtra("ingreso");
-            String situacion = getIntent().getStringExtra("situacion");
-            boolean viviendaExtra = getIntent().getBooleanExtra("viviendaExtra", false);
-            String discapacidad = getIntent().getStringExtra("discapacidad");
+        //Recuperar datos del SharePreference
+        SharedPreferences sharedPreferences = getSharedPreferences("impuestos", Context.MODE_PRIVATE);
+        String eleccion = sharedPreferences.getString("situacion", "");
+        String ingresoBruto = sharedPreferences.getString("ingresoBruto", "");
+        String edad = sharedPreferences.getString("edad", "");
+        String personasACargo = sharedPreferences.getString("personasACargo", "");
+        Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
 
+        bt_enviarAutonomo.setOnClickListener(v -> {
+            FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
+            if (usuarioActual != null) {
+                mandarDatosAutonomo(usuarioActual, eleccion, ingresoBruto, edad, personasACargo, vivienda);
+            }else{
+                Toast.makeText(this, "No hay usuario autentificado.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            DatabaseReference referencia = FirebaseDatabase.getInstance().getReference("Usuarios").child(mAuth.getCurrentUser().getUid()).child("datosPersonales");
+    public void mandarDatosAutonomo (FirebaseUser usuarioActual, String eleccion, String ingresoBruto, String edad, String personasACargo, Boolean vivienda){
+        String fecha = editTextDate.getText().toString();
+        String actividad = actividadEconomica.getText().toString();
+        String gastos = gastosDeducibles.getText().toString();
+        String ivaSop = ivaSoportado.getText().toString();
+        String ivaRep = ivaRepercutido.getText().toString();
+        boolean coche = radio_coche_si.isChecked();
 
-            if (fecha.isEmpty() || actividad.isEmpty() || gastos.isEmpty() || iva.isEmpty() || ivaRep.isEmpty()) {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+        if (fecha.isEmpty() || actividad.isEmpty() || gastos.isEmpty() || ivaSop.isEmpty() || ivaRep.isEmpty()) {
+            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (usuarioActual != null) { //registro fue exitoso y el usuario está disponible.
+            // Crear un HashMap para almacenar los datos del usuario
+            HashMap<String, Object> datosUsuario = new HashMap<>();
+            datosUsuario.put("eleccion", eleccion);
+            datosUsuario.put("ingresoBruto", ingresoBruto);
+            datosUsuario.put("edad", edad);
+            datosUsuario.put("personasACargo", personasACargo);
+            datosUsuario.put("vivienda", vivienda);
+
+            datosUsuario.put("fechaAlta", fecha);
+            datosUsuario.put("actividad", actividad);
+            datosUsuario.put("gastosDeducibles", gastos);
+            datosUsuario.put("ivaSoportado", ivaSop);
+            datosUsuario.put("ivaRepercutido", ivaRep);
+            datosUsuario.put("vehiculo", coche);
+
+            //Obtener el email del usuario logueado
+            String emailUsuario = usuarioActual.getEmail();
+            if (emailUsuario == null || emailUsuario.isEmpty()) {
+                Toast.makeText(this, "Error: El correo del usuario no está disponible.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // Convertir el email en clave válida para Firebase (reemplaza caracteres especiales)
+            String emailKey = emailUsuario.replace(".", "_").replace("@", "_");
 
+            // Guardar los datos en la base de datos Firebase
+            nodoUsuario.child(emailKey).child("datosPersonales").setValue(datosUsuario).addOnCompleteListener(dbTask ->{
 
-            DatabaseReference ref = FirebaseDatabase.getInstance()
-                    .getReference("Usuarios")
-                    .child((mAuth.getCurrentUser()).getUid())
-                    .child("datosPersonales");
-
-                Map<String, Object> datosUsuario = new HashMap<>();
-                datosUsuario.put("coche", coche);
-                datosUsuario.put("fecha", fecha);
-                datosUsuario.put("actividad", actividad);
-                datosUsuario.put("gastos", gastos);
-                datosUsuario.put("ivaSoportado", iva);
-                datosUsuario.put("ivaRepercutido", ivaRep);
-                datosUsuario.put("trabaja", trabaja);
-                datosUsuario.put("hijos", hijos);
-                datosUsuario.put("ingreso", ingreso);
-                datosUsuario.put("situacion", situacion);
-                datosUsuario.put("viviendaExtra", viviendaExtra);
-                datosUsuario.put("discapacidad", discapacidad);
-
-                ref.setValue(datosUsuario).addOnCompleteListener(dbTask -> {
-                    if (dbTask.isSuccessful()) {
-                        Toast.makeText(this, "Datos guardados correctamente.", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        Toast.makeText(this, "Error al guardar los datos.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-        });
+                if (dbTask.isSuccessful()) { //Escritura
+                    Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
+                    //Redirigir al main
+                    Intent intentAlLogin = new Intent(AutonomoPerfilar.this, Login.class);
+                    startActivity(intentAlLogin);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(this, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
     }
 }
