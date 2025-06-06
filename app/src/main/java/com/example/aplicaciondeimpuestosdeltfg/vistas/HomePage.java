@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.CalendarManager;
@@ -44,6 +46,7 @@ public class HomePage extends Fragment {
     private List<Evento> listaEventos;
     private List<String> meses;
     private CalendarManager calendarManager = new CalendarManager();
+    private TextView tvSaldo;
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -148,6 +151,8 @@ public class HomePage extends Fragment {
                 // Refresca el calendario y demás UI
                 calendarView.removeDecorators();
                 calendarConfiguration();
+
+                calcularSaldoActual();
             }
 
             @Override
@@ -168,6 +173,7 @@ public class HomePage extends Fragment {
         calendarView = view.findViewById(R.id.calendarHomePage);
         viewPager2 = view.findViewById(R.id.homePageMeses);
         addEventos = view.findViewById(R.id.ibBackListaEventos);
+        tvSaldo = view.findViewById(R.id.tvNumeroSaldoHomePage);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -185,7 +191,89 @@ public class HomePage extends Fragment {
                 fragmento.show(((FragmentActivity) getContext()).getSupportFragmentManager(), fragmento.getTag());
             }
         });
-
         return view;
+    }
+
+    private void calcularSaldoActual() {
+        db = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
+        String emailUser = user.getEmail();
+        String userPath = emailUser.replace("@", "_").replace(".", "_");
+        DatabaseReference ref = usuariosReferencia.child(userPath);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    Log.e("SaldoDebug", "Snapshot del usuario no existe.");
+                    return;
+                }
+
+                try {
+                    Double saldo = snapshot.child("saldoInicial").getValue(Double.class);
+                    Long fechaInicio = snapshot.child("tiempoSaldoInicial").getValue(Long.class);
+
+
+                    if (saldo == null || fechaInicio == null) {
+                        Log.e("SaldoDebug", "Datos faltantes: saldoInicial o tiempoSaldoInicial es null.");
+                        return;
+                    }
+
+                    long ahora = System.currentTimeMillis();
+                    Log.d("SaldoDebug", "Saldo Inicial: " + saldo);
+                    Log.d("SaldoDebug", "Fecha Inicial: " + fechaInicio);
+                    Log.d("SaldoDebug", "Fecha Actual: " + ahora);
+
+                    double saldoInicial = saldo;
+                    double saldoActual = saldoInicial;
+
+                    for (Evento evento : listaEventos) {
+                        long fechaEvento = evento.getFechaMillis();
+                        String tipo = evento.getCobroOGasto();
+                        String cantidadStr = evento.getDinero();
+
+                        Log.d("SaldoDebug", "Evento: " + cantidadStr + " - " + tipo + " - Fecha: " + fechaEvento);
+
+                        if (fechaEvento >= fechaInicio && fechaEvento <= ahora) {
+                            try {
+                                double cantidad = Double.parseDouble(cantidadStr);
+                                if ("COBRO".equalsIgnoreCase(tipo)) {
+                                    saldoActual += cantidad;
+                                } else if ("GASTO".equalsIgnoreCase(tipo)) {
+                                    saldoActual -= cantidad;
+                                }
+                                Log.d("SaldoDebug", "Saldo tras evento: " + saldoActual);
+                            } catch (NumberFormatException e) {
+                                Log.e("SaldoDebug", "Cantidad inválida en evento: " + cantidadStr);
+                            }
+                        } else {
+                            Log.d("SaldoDebug", "Evento fuera de rango: " + fechaEvento);
+                        }
+                    }
+
+                    if (!isAdded() || getContext() == null || tvSaldo == null) {
+                        Log.w("SaldoDebug", "Fragmento no montado o TextView nulo.");
+                        return;
+                    }
+
+                    tvSaldo.setText(String.format("%.2f €", saldoActual));
+
+                    if (saldoActual < 0) {
+                        tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.rojo)); // negativo
+                    } else {
+                        tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.verde)); // positivo
+                    }
+
+                    Log.d("Saldo", "Saldo final calculado: " + saldoActual);
+                } catch (Exception e) {
+                    Log.e("SaldoDebug", "Error general al calcular saldo", e);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error al obtener datos del usuario", error.toException());
+            }
+        });
     }
 }

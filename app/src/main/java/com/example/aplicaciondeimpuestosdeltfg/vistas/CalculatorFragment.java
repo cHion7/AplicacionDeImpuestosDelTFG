@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class CalculatorFragment extends Fragment {
-
     private float precio = 0;
     private float ahorro = 0;
     private float plazo = 0;

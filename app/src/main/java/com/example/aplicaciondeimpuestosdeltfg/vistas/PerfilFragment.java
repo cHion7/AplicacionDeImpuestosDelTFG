@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class PerfilFragment extends Fragment {
     private TextInputEditText etNombreApellidoPerfil, etUsuarioPerfil, etSaldoInicialPerfil;
-    private Button btCambiarContrasenaPerfil, btCerrarSesion, btAnadriImpuestosPerfil;
+    private Button btCambiarContrasenaPerfil, btCerrarSesion, btAnadriImpuestosPerfil, btModificarDatos;
     private ImageButton btAjustesPerfil;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -56,8 +56,9 @@ public class PerfilFragment extends Fragment {
         etNombreApellidoPerfil = view.findViewById(R.id.etNombreApPerf);
         etUsuarioPerfil = view.findViewById(R.id.etCorreoPerf);
         etUsuarioPerfil.setEnabled(false);
-        //etSaldoInicialPerfil = view.findViewById(R.id.etSaldoInicialReg);
+        etSaldoInicialPerfil = view.findViewById(R.id.etSaldoInicialPerf);
         btAjustesPerfil = view.findViewById(R.id.btnAjustes);
+        btModificarDatos = view.findViewById(R.id.btModificarDatosPerfil);
         btCambiarContrasenaPerfil = view.findViewById(R.id.btCambiarContrasenaPerf);
         btAnadriImpuestosPerfil = view.findViewById(R.id.anadirImpuestos);
         btCerrarSesion = view.findViewById(R.id.btCerrarSesion);
@@ -68,6 +69,13 @@ public class PerfilFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
+
+        btModificarDatos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modificarDatosUsuario();
+            }
+        });
 
         //Imagen botón
         btAjustesPerfil.setOnClickListener(v ->{
@@ -212,5 +220,17 @@ public class PerfilFragment extends Fragment {
                 }
             });
         }
+    }
+
+    //Modificar datos personales del usuario
+    public void modificarDatosUsuario(){
+        String emailUser = usuarioActual.getEmail();
+        DatabaseReference refNombre = nodoUsuario.child(emailUser.replace("@", "_").replace(".", "_")).child("nombre");
+        DatabaseReference refSaldoInicial = nodoUsuario.child(emailUser.replace("@", "_").replace(".", "_")).child("saldoInicial");
+        DatabaseReference refTiempoSaldoInicial = nodoUsuario.child(emailUser.replace("@", "_").replace(".", "_")).child("tiempoSaldoInicial");
+        refNombre.setValue(etNombreApellidoPerfil.getText().toString());
+        refSaldoInicial.setValue(Double.parseDouble(etSaldoInicialPerfil.getText().toString()));
+        long currentTimeMillis = System.currentTimeMillis();
+        refTiempoSaldoInicial.setValue(currentTimeMillis);
     }
 }
