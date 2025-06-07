@@ -55,13 +55,13 @@ public class JubiladoPerfilar extends AppCompatActivity {
         btn_enviarJubilado.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {
-                mandarDatosJubilados(usuarioActual, eleccion, ingresoBruto, edad, personasACargo, vivienda);
+                mandarDatosJubilados(usuarioActual, ingresoBruto, edad, personasACargo, vivienda);
             }else{
                 Toast.makeText(this, "No hay usuario autentificado.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    public void mandarDatosJubilados(FirebaseUser usuarioActual, String eleccion, String ingresoBruto, String edad, String personasACargo, Boolean vivienda){
+    public void mandarDatosJubilados(FirebaseUser usuarioActual, String ingresoBruto, String edad, String personasACargo, Boolean vivienda){
         Boolean segundaVivienda = radio_jubilado_si.isChecked();
         String cobroPensionario = cobroPension.getText().toString();
         String gastoMedico = gastosMedicos.getText().toString();

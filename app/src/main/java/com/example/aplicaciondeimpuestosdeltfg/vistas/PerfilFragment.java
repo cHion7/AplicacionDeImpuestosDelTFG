@@ -1,6 +1,5 @@
 package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -56,7 +55,7 @@ public class PerfilFragment extends Fragment {
     private static final int CAMERA_REQUEST_CODE = 100;
 
     private TextInputEditText etNombreApellidoPerfil, etUsuarioPerfil, etSaldoInicialPerfil;
-    private Button btCambiarContrasenaPerfil, btAnadriImpuestosPerfil, btModificarDatos;
+    private Button btCambiarContrasenaPerfil, btAnadriImpuestosPerfil, btModificarDatos, btGuardarDatos;
     private TextView btVerTodoPerfil;
     private ImageView ivFotoPerfil;
     private ImageButton btCerrarSesionPerfil;
@@ -150,9 +149,14 @@ public class PerfilFragment extends Fragment {
         ivFotoPerfil = view.findViewById(R.id.ivPerfil);
         ivFotoPerfil.setImageResource(R.drawable.perfilimpuestos3);
         btModificarDatos = view.findViewById(R.id.btModificarDatosPerfil);
+        btGuardarDatos = view.findViewById(R.id.btGuardarDatosPerfil);
+        btGuardarDatos.setVisibility(View.GONE);
         btCambiarContrasenaPerfil = view.findViewById(R.id.btCambiarContrasenaPerf);
         btAnadriImpuestosPerfil = view.findViewById(R.id.anadirImpuestos);
         btCerrarSesionPerfil = view.findViewById(R.id.ibCerrarSesionPerfil);
+
+        etNombreApellidoPerfil.setEnabled(false);
+        etSaldoInicialPerfil.setEnabled(false);
 
         //Cargar datos del usuario si está autenticado
         if (usuarioActual != null) {
@@ -161,13 +165,22 @@ public class PerfilFragment extends Fragment {
             Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
 
-        btModificarDatos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                modificarDatosUsuario();
-            }
+        //Botón modificar datos
+        btModificarDatos.setOnClickListener(v ->{
+           etNombreApellidoPerfil.setEnabled(true);
+           etSaldoInicialPerfil.setEnabled(true);
+           btModificarDatos.setVisibility(View.GONE);
+           btGuardarDatos.setVisibility(View.VISIBLE);
         });
 
+        //Botón guardar datos
+        btGuardarDatos.setOnClickListener(v ->{
+            guardarDatos();
+            etNombreApellidoPerfil.setEnabled(false);
+            etSaldoInicialPerfil.setEnabled(false);
+            btModificarDatos.setVisibility(View.VISIBLE);
+            btGuardarDatos.setVisibility(View.GONE);
+        });
         //Imagen botón ver todo
         btVerTodoPerfil.setOnClickListener(v ->{
             Intent irADatosImpuestos = new Intent(getActivity(), informacionAdicional.class);
@@ -299,7 +312,13 @@ public class PerfilFragment extends Fragment {
     private void cargarDatosUsuario(){
         String emailUsuario = usuarioActual.getEmail();
         String nombreUsuario = usuarioActual.getDisplayName();
-        //Si el email no está vacío
+        /*//Coge datos de FirebaseUser
+        if (emailUsuario != null) {
+            etUsuarioPerfil.setText(emailUsuario);
+        }else if(nombreUsuario != null){
+            etNombreApellidoPerfil.setText(nombreUsuario);
+        }*/
+        //Si el email no está vacío -> cargar datos Realtime Database
         if (emailUsuario != null) {
             String usuarioClave = emailUsuario.replace("@", "_").replace(".", "_");
             DatabaseReference usuarioReferenciado = nodoUsuario.child(usuarioClave);
@@ -310,12 +329,15 @@ public class PerfilFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     //Si existe: obtenemos valores del firebae
                     if (snapshot.exists()) {
+                        //Sobreescribe datos
                         String nombre = snapshot.child("nombre").getValue(String.class);
                         String email = snapshot.child("correo").getValue(String.class);
+                        Double saldoInicial = snapshot.child("saldoInicial").getValue(Double.class);
 
                         //Si el valor es null, se muestra un mensaje predeterminado
                         etNombreApellidoPerfil.setText(nombre != null ? nombre : "Nombre no disponible");
-                        etUsuarioPerfil.setText(email != null ? email : "Email no disponible");
+                        etUsuarioPerfil.setText(email != null ? email : "Correo no disponible");
+                        etSaldoInicialPerfil.setText(saldoInicial != null ? String.valueOf(saldoInicial) : "0");
 
                         // Verificar si hay una imagen en Base64 subida por el usuario
                         if (snapshot.child("photoBase64").exists()) {
@@ -346,8 +368,8 @@ public class PerfilFragment extends Fragment {
         }
     }
 
-    //Modificar datos personales del usuario
-    public void modificarDatosUsuario(){
+    //Guardar datos personales modificados del usuario
+    public void guardarDatos(){
         String emailUser = usuarioActual.getEmail();
         DatabaseReference refNombre = nodoUsuario.child(emailUser.replace("@", "_").replace(".", "_")).child("nombre");
         DatabaseReference refSaldoInicial = nodoUsuario.child(emailUser.replace("@", "_").replace(".", "_")).child("saldoInicial");
@@ -356,6 +378,7 @@ public class PerfilFragment extends Fragment {
         refSaldoInicial.setValue(Double.parseDouble(etSaldoInicialPerfil.getText().toString()));
         long currentTimeMillis = System.currentTimeMillis();
         refTiempoSaldoInicial.setValue(currentTimeMillis);
+        Toast.makeText(getActivity(), "Perfil actualizado.", Toast.LENGTH_SHORT).show();
     }
 
     //Si hay aplicación de cámara

@@ -175,12 +175,12 @@ public class Login extends AppCompatActivity {
                                public void onDataChange(@NonNull DataSnapshot snapshot) {
                                    if (!snapshot.exists()) {
                                        databaseReference.child("nombre").setValue(usuario.getDisplayName());
-                                       databaseReference.child("email").setValue(usuario.getEmail());
+                                       databaseReference.child("correo").setValue(usuario.getEmail());
                                    }
                                    // Guarda los datos del usuario en SharedPreferences
                                    SharedPreferences preferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
                                    SharedPreferences.Editor editor = preferences.edit();
-                                   editor.putString("email", email);
+                                   editor.putString("correo", email);
                                    editor.putString("nombre", usuario.getDisplayName());
                                    editor.apply();
                                }
