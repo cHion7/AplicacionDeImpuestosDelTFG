@@ -416,7 +416,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="#3730A3"
-            android:text="OPCIÓN 1"
+            android:text="Hipoteca"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -425,7 +425,7 @@
             android:layout_height="48dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="#3730A3"
-            android:text="OPCIÓN 2"
+            android:text="Préstamo"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -433,7 +433,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:backgroundTint="#3730A3"
-            android:text="OPCIÓN 3"
+            android:text="Crypto Riesgo"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

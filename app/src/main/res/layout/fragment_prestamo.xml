@@ -232,26 +232,27 @@
             android:id="@+id/boton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="#2196F3"
-            android:text="Préstamos"
+            android:backgroundTint="#3730A3"
+            android:text="Hipoteca"
             android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/boton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OPCIÓN 2"
-            android:backgroundTint="#2196F3"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#3730A3"
+            android:text="Préstamos"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/boton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#2196F3"
-            android:text="Riesgo Cryptos"
+            android:backgroundTint="#3730A3"
+            android:text="Crypto Riesgo"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

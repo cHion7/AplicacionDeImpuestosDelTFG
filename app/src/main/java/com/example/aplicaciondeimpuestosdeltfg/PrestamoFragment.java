@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class PrestamoFragment extends Fragment {
 
-    /*private float capital = 0;
+    private float capital = 0;
     private float plazo = 0;
     private float interes = 0;
 
@@ -178,7 +178,7 @@ public class PrestamoFragment extends Fragment {
 
         double factor = Math.pow(1 + tasaMensual, numMeses);
         return capital * (tasaMensual * factor) / (factor - 1);
-    }*/
+    }
 }
 
 
