@@ -19,7 +19,7 @@
             app:cardElevation="10dp">
 
             <ImageButton
-                android:id="@+id/ibBackListaEventos2"
+                android:id="@+id/ibCerrarSesionPerfil"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="right"
@@ -60,9 +60,11 @@
 
                 <ImageView
                     android:id="@+id/ivPerfil"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/perfilimpuestos3" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -140,7 +142,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/tvVerTodoDatosPerfil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="25dp"
@@ -226,15 +228,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/btCerrarSesion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#3730A3"
-                android:paddingVertical="14dp"
-                android:text="Cerrar Sesión" />
 
         </LinearLayout>
 

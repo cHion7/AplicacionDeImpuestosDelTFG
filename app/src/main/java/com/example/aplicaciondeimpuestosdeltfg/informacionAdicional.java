@@ -3,62 +3,57 @@ package com.example.aplicaciondeimpuestosdeltfg;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.aplicaciondeimpuestosdeltfg.vistas.AsalariadoPerfilar;
-import com.example.aplicaciondeimpuestosdeltfg.vistas.preguntasComunes;
+import com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity;
+import com.example.aplicaciondeimpuestosdeltfg.vistas.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class informacionAdicional extends AppCompatActivity {
-    EditText etIngresoPregComunes, etEdadPregComunes, etPersonasACargoPregComunes;
-    RadioButton viviendaPregComunes;
-    Spinner spinner_situacion;
-    Button btEnviarCom;
+    TextView tvNombreUsuarioInforme, tvCorreoUsuarioInforme;
 
-    LinearLayout layoutAsalariadoPerfilar, layoutAutonomoPerfilar,
+    TextView tvIngresoPregComunes, tvEdadPregComunes, tvPersonasACargoPregComunes, spinner_situacion;
+    TextView tvViviendaPropiedadAd;
+
+    CardView layoutAsalariadoPerfilar, layoutAutonomoPerfilar,
             layoutEmpresarioPerfilar, layoutEstudiantePerfilar, layoutJubiladoPerfilar;
 
+    TextView tvDate, tvactividadEconomica, tvgastosDeducibles, tvivaSoportado, tvivaRepercutido;
+    TextView tvCocheAutonomoAd;
 
-    EditText editTextDate, actividadEconomica, gastosDeducibles, ivaSoportado, ivaRepercutido;
-    RadioButton radio_coche_si;
-    Button bt_enviarAutonomo;
+    TextView tvFamiliaNumerosaAd;
+    TextView tvEdadHijosAsala, tvgastosEscolaresAsala, spinner_contrato;
 
-    Spinner spinner_contrato;
-    RadioButton familiaNumAsala;
-    EditText etEdadHijosAsala, gastosEscolaresAsala;
-    Button btEnviarAsala;
+    TextView tvingreso, tvsueldoAdmin, tvempleadosNum, tvgastosDeduciblesEmp, spinnerTipoempresa;
 
-    Spinner spinnerTipoempresa;
-    EditText edit_ingreso, sueldoAdmin, empleadosNum, gastosDeduciblesEmp;
-    Button btn_enviarEmpresario;
+    TextView tvTrabajaParcialEstudianteAd;
+    TextView tvestudiosBeca, spiner_estudios;
 
-    Spinner spiner_estudios;
-    RadioButton radio_estudiante_si;
-    EditText edit_estudiosBeca;
-    Button btn_enviarEstudiante;
-
-    RadioButton radio_jubilado_si;
-    EditText cobroPension, gastosMedicos;
-    Button btn_enviarJubilado;
+    TextView tvcobroPension, tvgastosMedicos;
+    TextView tvSegundaViviendaAd;
+    ImageButton btVolverAtrasInformacion;
+    Button btEnviarCom;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -74,18 +69,17 @@ public class informacionAdicional extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Inicializar TextViews para Nombre y Correo
+        tvNombreUsuarioInforme = findViewById(R.id.tvNombreDocumento);
+        tvCorreoUsuarioInforme = findViewById(R.id.tvCorreoDocumento);
+        btVolverAtrasInformacion = findViewById(R.id.ibVolverInformacion);
+
 
         //Preguntas comunes
-        etIngresoPregComunes = findViewById(R.id.etIngresosComAd);
-        etEdadPregComunes = findViewById(R.id.etEdadComAd);
-        etPersonasACargoPregComunes = findViewById(R.id.etPersonasACargoComAd);
-        viviendaPregComunes = findViewById(R.id.radio_vivienda_siAd);
+        tvIngresoPregComunes = findViewById(R.id.etIngresosComAd);
+        tvEdadPregComunes = findViewById(R.id.etEdadComAd);
+        tvPersonasACargoPregComunes = findViewById(R.id.etPersonasACargoComAd);
         spinner_situacion = findViewById(R.id.spinner_situacionAd);
-
-        List<String> valorSpinnerSituacion = List.of("Autónomo", "Asalariado", "Empresario", "Estudiante", "Jubilado");
-        ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, valorSpinnerSituacion);
-        spinner_situacion.setAdapter(arraySituacion);
-        spinner_situacion.setSelection(3);
 
         //LinearLayout
         layoutAsalariadoPerfilar = findViewById(R.id.layout_asalariado_perfilarAd);
@@ -96,75 +90,140 @@ public class informacionAdicional extends AppCompatActivity {
 
         //Asalariado
         spinner_contrato = findViewById(R.id.spinner_contratoAd);
-        familiaNumAsala = findViewById(R.id.radio_familia_siAd);
-        etEdadHijosAsala = findViewById(R.id.etEdadHijosAd);
-        gastosEscolaresAsala = findViewById(R.id.etGastosEscolaresAd);
-
-        List<String> spinnerValues = List.of("Parcial", "Indefinido", "Estacional");
-        ArrayAdapter<String> arraySituacionContrato = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValues);
-        spinner_contrato.setAdapter(arraySituacionContrato);
-        spinner_contrato.setSelection(0);
+        tvFamiliaNumerosaAd = findViewById(R.id.tvFamiliaNumerosaAd);
+        tvEdadHijosAsala = findViewById(R.id.etEdadHijosAd);
+        tvgastosEscolaresAsala = findViewById(R.id.etGastosEscolaresAd);
+        tvViviendaPropiedadAd = findViewById(R.id.tvViviendaPropiedadAd);
 
         //Autónomo
-        editTextDate = findViewById(R.id.etDadoAltaSSAutonoAd);
-        actividadEconomica = findViewById(R.id.etActividadEconoAutonoAd);
-        gastosDeducibles = findViewById(R.id.etGastosDeduciblesAutonoAd);
-        ivaSoportado = findViewById(R.id.etIvaSoportadoAutonoAd);
-        ivaRepercutido = findViewById(R.id.etIvaRepercutidoAutonoAd);
-        radio_coche_si = findViewById(R.id.radio_coche_siAd);
+        tvDate = findViewById(R.id.etDadoAltaSSAutonoAd);
+        tvactividadEconomica = findViewById(R.id.etActividadEconoAutonoAd);
+        tvgastosDeducibles = findViewById(R.id.etGastosDeduciblesAutonoAd);
+        tvivaSoportado = findViewById(R.id.etIvaSoportadoAutonoAd);
+        tvivaRepercutido = findViewById(R.id.etIvaRepercutidoAutonoAd);
+        tvCocheAutonomoAd = findViewById(R.id.tvCocheAutonomoAd);
 
         //Empresario
         spinnerTipoempresa = findViewById(R.id.spinnerTipoEmpresaAd);
-        edit_ingreso = findViewById(R.id.etFacturaAnualAd);
-        sueldoAdmin = findViewById(R.id.etSueldoAdminAd);
-        empleadosNum = findViewById(R.id.etNumeroEmpleadosAd);
-        gastosDeduciblesEmp = findViewById(R.id.etGastosDeduciblesEmpresarioAd);
-
-        List<String> spinnerValuesEmpresa = List.of("S.A", "S.L", "Otro");
-        ArrayAdapter<String> arraySituacionEmpresa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValuesEmpresa);
-        spinnerTipoempresa.setAdapter(arraySituacionEmpresa);
-        spinnerTipoempresa.setSelection(0);
+        tvingreso = findViewById(R.id.etFacturaAnualAd);
+        tvsueldoAdmin = findViewById(R.id.etSueldoAdminAd);
+        tvempleadosNum = findViewById(R.id.etNumeroEmpleadosAd);
+        tvgastosDeduciblesEmp = findViewById(R.id.etGastosDeduciblesEmpresarioAd);
 
         //Estudiante
         spiner_estudios = findViewById(R.id.spinner_estudiosAd);
-        radio_estudiante_si = findViewById(R.id.radio_trabajaParcial_siAd);
-        edit_estudiosBeca = findViewById(R.id.etRecibirBecaEstudianteAd);
-
-        List<String> spinnerValuesEstudios = List.of("Universidad", "FP", "Bachiller");
-        ArrayAdapter<String> arraySituacionEstudios = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValuesEstudios);
-        spiner_estudios.setAdapter(arraySituacionEstudios);
-        spiner_estudios.setSelection(0);
+        tvestudiosBeca = findViewById(R.id.etRecibirBecaEstudianteAd);
+        tvTrabajaParcialEstudianteAd = findViewById(R.id.tvTrabajaParcialEstudianteAd);
 
         //Jubilados
-        radio_jubilado_si = findViewById(R.id.radio_ayuda_si_jubiladoAd);
-        cobroPension = findViewById(R.id.etPensionMensualJubiladoAd);
-        gastosMedicos = findViewById(R.id.etTipoAyudaJubiladoAd);
+        tvcobroPension = findViewById(R.id.etPensionAnualJubiladoAd);
+        tvgastosMedicos = findViewById(R.id.etgastosMedicosJubiladoAd);
+        tvSegundaViviendaAd = findViewById(R.id.tvSegViviendalJubiladoAd);
 
-        //Situación
-        spinner_situacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String situacionSelecionada = parent.getItemAtPosition(position).toString();
-                vistaEspecializada(situacionSelecionada);
-            }
+        //Iniciamos Firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
+        nodoUsuario = database.getReference("Usuarios");
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+        //Botón de volver atrás
+        btVolverAtrasInformacion.setOnClickListener(v ->{
+            Intent intentAlPerfil = new Intent(informacionAdicional.this, MainActivity.class);
+            intentAlPerfil.putExtra("selected_tab", "perfil");
+            startActivity(intentAlPerfil);
+            finish();
         });
-        vistaEspecializada(spinner_situacion.getSelectedItem().toString());
 
-        btEnviarCom.setOnClickListener(v -> {
-            FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
-            if (usuarioActual != null) {
-                registrarDatosComunesYEspecificos(usuarioActual);
-            }else{
-                Toast.makeText(this, "No hay usuario autentificado.", Toast.LENGTH_SHORT).show();
+        FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
+        if (usuarioActual != null) {
+            obtenerDatos(usuarioActual);
+        } else {
+            Toast.makeText(this, "No hay usuario autentificado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void obtenerDatos(FirebaseUser usuarioActual) {
+        // Convertir el email en clave válida para Firebase (reemplaza caracteres especiales)
+        String emailKey = usuarioActual.getEmail().replace(".", "_").replace("@", "_");
+
+        // Cpger los datos en la base de datos Firebase
+        nodoUsuario.child(emailKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot capturaSnapshot) {
+                // dataSnapshot aquí contiene TODO el contenido del nodo del email en el momento de la lectura. -> Foto
+                if (capturaSnapshot.exists()) {
+                    //Correo
+                    String correo = capturaSnapshot.child("correo").getValue(String.class);
+                    if (correo != null) {
+                        tvCorreoUsuarioInforme.setText(correo);
+                    } else {
+                        tvCorreoUsuarioInforme.setText("Correo no disponible");
+                    }
+                    //Nombre
+                    String nombre = capturaSnapshot.child("nombre").getValue(String.class);
+                    if (nombre != null) {
+                        tvNombreUsuarioInforme.setText(nombre);
+                    } else {
+                        tvNombreUsuarioInforme.setText("Nombre no disponible");
+                    }
+                    //Obtener los datos personales
+                    DataSnapshot capturaDatosPersonalesSnapshot = capturaSnapshot.child("datosPersonales");
+                    if (capturaDatosPersonalesSnapshot.exists()) {
+                        // Rellenar los campos comunes
+                        String eleccion = capturaDatosPersonalesSnapshot.child("eleccion").getValue(String.class);
+                        String ingresoBruto = capturaDatosPersonalesSnapshot.child("ingresoBruto").getValue(String.class);
+                        String edad = capturaDatosPersonalesSnapshot.child("edad").getValue(String.class);
+                        String personasACargo = capturaDatosPersonalesSnapshot.child("personasACargo").getValue(String.class);
+                        Boolean vivienda = capturaDatosPersonalesSnapshot.child("vivienda").getValue(Boolean.class);
+
+                        // Para tvIngresoPregComunes
+                        if (ingresoBruto != null) {
+                            tvIngresoPregComunes.setText(ingresoBruto);
+                        } else {
+                            tvIngresoPregComunes.setText("");
+                        }
+
+                        //Lo mismo que antes pero con operadores ternarios
+                        tvEdadPregComunes.setText(edad != null ? edad : "");
+                        tvPersonasACargoPregComunes.setText(personasACargo != null ? personasACargo : "");
+                        if (vivienda != null) {
+                            // Si 'vivienda' es true
+                            tvViviendaPropiedadAd.setText(vivienda ? "Sí" : "No");
+                        } else {
+                            // Si 'vivienda' es false
+                            tvViviendaPropiedadAd.setText("");
+                        }
+                        //Situación actual
+                        if (eleccion != null) {
+                            spinner_situacion.setText(eleccion);
+                            vistaEspecializada(eleccion, capturaDatosPersonalesSnapshot);
+                        } else {
+                            spinner_situacion.setText("Situación no definida.");
+                            vistaEspecializada(null, null);
+                        }
+                    } else {
+                        Toast.makeText(informacionAdicional.this, "No se encontraron datos personales ", Toast.LENGTH_SHORT).show();
+                        vistaEspecializada(null, null);
+                    }
+                } else {
+                    Toast.makeText(informacionAdicional.this, "Usuario no encontrado en la base de datos.", Toast.LENGTH_SHORT).show();
+                    tvNombreUsuarioInforme.setText("Usuario no encontrado");
+                    tvCorreoUsuarioInforme.setText("Correo no encontrado");
+                    // Ocultar todos los layouts si no hay datos
+                    vistaEspecializada(null, null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(informacionAdicional.this, "Error al cargar los datos.", Toast.LENGTH_SHORT).show();
+                tvNombreUsuarioInforme.setText("Error de carga");
+                tvCorreoUsuarioInforme.setText("Error de carga");
+                vistaEspecializada(null, null);
             }
         });
     }
 
-    private void vistaEspecializada(String situacionSelecionada) {
+    private void vistaEspecializada(String situacionSelecionada, DataSnapshot capturaDatosPersonalesSnapshot) {
         // Escondemos vistas especializadas
         layoutAsalariadoPerfilar.setVisibility(View.GONE);
         layoutAutonomoPerfilar.setVisibility(View.GONE);
@@ -172,161 +231,73 @@ public class informacionAdicional extends AppCompatActivity {
         layoutEstudiantePerfilar.setVisibility(View.GONE);
         layoutJubiladoPerfilar.setVisibility(View.GONE);
 
-        // Enseñar layout en función de la seleción
+        if (situacionSelecionada == null || capturaDatosPersonalesSnapshot == null) {
+            // Si no hay situación seleccionada o datos, ocultamos todo
+            return;
+        }
+
+        // Enseñar layout en función de la seleción y rellenar los datos
         switch (situacionSelecionada) {
             case "Asalariado":
                 layoutAsalariadoPerfilar.setVisibility(View.VISIBLE);
+                spinner_contrato.setText(capturaDatosPersonalesSnapshot.child("tipoContrato").getValue(String.class));
+                Boolean familiaNumerosa = capturaDatosPersonalesSnapshot.child("familiaNumerosa").getValue(Boolean.class);
+                if (familiaNumerosa != null) {
+                    tvFamiliaNumerosaAd.setText(familiaNumerosa ? "Sí" : "No");
+                } else {
+                    tvFamiliaNumerosaAd.setText("");
+                }
+                tvEdadHijosAsala.setText(capturaDatosPersonalesSnapshot.child("edadesHijos").getValue(String.class));
+                tvgastosEscolaresAsala.setText(capturaDatosPersonalesSnapshot.child("gastosEscolares").getValue(String.class));
                 break;
             case "Autónomo":
                 layoutAutonomoPerfilar.setVisibility(View.VISIBLE);
+                tvDate.setText(capturaDatosPersonalesSnapshot.child("fechaAlta").getValue(String.class));
+                tvactividadEconomica.setText(capturaDatosPersonalesSnapshot.child("actividad").getValue(String.class));
+                tvgastosDeducibles.setText(capturaDatosPersonalesSnapshot.child("gastosDeducibles").getValue(String.class));
+                tvivaSoportado.setText(capturaDatosPersonalesSnapshot.child("ivaSoportado").getValue(String.class));
+                tvivaRepercutido.setText(capturaDatosPersonalesSnapshot.child("ivaRepercutido").getValue(String.class));
+                Boolean vehiculo = capturaDatosPersonalesSnapshot.child("vehiculo").getValue(Boolean.class);
+                if (vehiculo != null) {
+                    tvCocheAutonomoAd.setText(vehiculo ? "Sí" : "No");
+                } else {
+                    tvCocheAutonomoAd.setText("");
+                }
                 break;
             case "Empresario":
                 layoutEmpresarioPerfilar.setVisibility(View.VISIBLE);
+                spinnerTipoempresa.setText(capturaDatosPersonalesSnapshot.child("tipoContrato").getValue(String.class));
+                tvingreso.setText(capturaDatosPersonalesSnapshot.child("facturacionEmpresa").getValue(String.class));
+                tvsueldoAdmin.setText(capturaDatosPersonalesSnapshot.child("sueldoAdministrador").getValue(String.class));
+                tvempleadosNum.setText(capturaDatosPersonalesSnapshot.child("empleados").getValue(String.class));
+                tvgastosDeduciblesEmp.setText(capturaDatosPersonalesSnapshot.child("gastosDeduciblesEmpresa").getValue(String.class));
                 break;
             case "Estudiante":
                 layoutEstudiantePerfilar.setVisibility(View.VISIBLE);
+                spiner_estudios.setText(capturaDatosPersonalesSnapshot.child("tipoEstudios").getValue(String.class));
+                Boolean trabajaParcial = capturaDatosPersonalesSnapshot.child("trabaja").getValue(Boolean.class);
+                tvestudiosBeca.setText(capturaDatosPersonalesSnapshot.child("becaCantidad").getValue(String.class));
+                if (trabajaParcial != null) {
+                    tvTrabajaParcialEstudianteAd.setText(trabajaParcial ? "Sí" : "No");
+                } else {
+                    tvTrabajaParcialEstudianteAd.setText("");
+                }
+
                 break;
             case "Jubilado":
                 layoutJubiladoPerfilar.setVisibility(View.VISIBLE);
+                tvcobroPension.setText(capturaDatosPersonalesSnapshot.child("pensionAnual").getValue(String.class));
+                tvgastosMedicos.setText(capturaDatosPersonalesSnapshot.child("gastosMedicos").getValue(String.class));
+                Boolean rgsegundaVivienda = capturaDatosPersonalesSnapshot.child("segundaVivienda").getValue(Boolean.class);
+                if (rgsegundaVivienda != null) {
+                    tvSegundaViviendaAd.setText(rgsegundaVivienda ? "Sí" : "No");
+                } else {
+                    tvSegundaViviendaAd.setText("");
+                }
+                break;
+            default:
+                // No hacer nada o mostrar un mensaje si la situación no se reconoce
                 break;
         }
-    }
-    public void registrarDatosComunesYEspecificos(FirebaseUser usuarioActual){
-        //Preguntas comunes
-        String eleccion = spinner_situacion.getSelectedItem().toString();
-        String ingresoBruto = etIngresoPregComunes.getText().toString();
-        String edad = etEdadPregComunes.getText().toString();
-        String personaACargo = etPersonasACargoPregComunes.getText().toString();
-        boolean vivienda = viviendaPregComunes.isChecked();
-
-        // Validación de los campos
-        if (edad.isEmpty() || ingresoBruto.isEmpty() || eleccion.isEmpty() || personaACargo.isEmpty()) {
-            Toast.makeText(informacionAdicional.this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        //Asalariado
-        String tipoContrato = spinner_contrato.getSelectedItem().toString();
-        boolean familiaNumerosa = familiaNumAsala.isChecked();
-        String edadesHijos = etEdadHijosAsala.getText().toString();
-        String gastosEscolares = gastosEscolaresAsala.getText().toString();
-
-        //Autónomo
-        String fecha = editTextDate.getText().toString();
-        String actividad = actividadEconomica.getText().toString();
-        String gastos = gastosDeducibles.getText().toString();
-        String ivaSop = ivaSoportado.getText().toString();
-        String ivaRep = ivaRepercutido.getText().toString();
-        boolean coche = radio_coche_si.isChecked();
-
-        //Empresario
-        String tipoEmpresa = spinnerTipoempresa.getSelectedItem().toString();
-        String facturacionEmpresa = edit_ingreso.getText().toString();
-        String sueldoJefe = sueldoAdmin.getText().toString();
-        String numeroEmpleados = empleadosNum.getText().toString();
-        String gastosDeduciblesEmpresa = gastosDeduciblesEmp.getText().toString();
-
-        if (facturacionEmpresa.isEmpty() || sueldoJefe.isEmpty()|| numeroEmpleados.isEmpty()) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Estudiante
-        boolean parcial = radio_estudiante_si.isChecked();
-        String cantidadBeca = edit_estudiosBeca.getText().toString();
-        String estudio = spiner_estudios.getSelectedItem().toString();
-
-        if (cantidadBeca.isEmpty() || estudio.isEmpty()) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Jubilado
-        boolean cobroPensionario = radio_jubilado_si.isChecked();
-        String segundaVivienda = cobroPension.getText().toString();
-        String gastoMedico = gastosMedicos.getText().toString();
-
-        if (gastoMedico.isEmpty() || segundaVivienda.isEmpty()) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Mandar datos al Firebase
-        if (usuarioActual != null) { //registro fue exitoso y el usuario está disponible.
-            // Crear un HashMap para almacenar los datos del usuario
-            HashMap<String, Object> datosUsuario = new HashMap<>();
-            datosUsuario.put("eleccion", eleccion);
-            datosUsuario.put("ingresoBruto", ingresoBruto);
-            datosUsuario.put("edad", edad);
-            datosUsuario.put("personasACargo", personaACargo);
-            datosUsuario.put("vivienda", vivienda);
-            //Asalariado
-            datosUsuario.put("tipoContrato", tipoContrato);
-            datosUsuario.put("familiaNumerosa", familiaNumerosa);
-            datosUsuario.put("edadesHijos", edadesHijos);
-            datosUsuario.put("gastosEscolares", gastosEscolares);
-            //Autonomo
-            datosUsuario.put("fechaAlta", fecha);
-            datosUsuario.put("actividad", actividad);
-            datosUsuario.put("gastosDeducibles", gastos);
-            datosUsuario.put("ivaSoportado", ivaSop);
-            datosUsuario.put("ivaRepercutido", ivaRep);
-            datosUsuario.put("vehiculo", coche);
-            //Empresario
-            datosUsuario.put("tipoContrato", tipoEmpresa);
-            datosUsuario.put("sueldoAdministrador", sueldoJefe);
-            datosUsuario.put("facturacionEmpresa", facturacionEmpresa);
-            datosUsuario.put("empleados", numeroEmpleados);
-            datosUsuario.put("gastosDeduciblesEmpresa", gastosDeduciblesEmpresa);
-            //Estudiante
-            datosUsuario.put("tipoEstudios", estudio);
-            datosUsuario.put("trabaja", parcial);
-            datosUsuario.put("becaCantidad", cantidadBeca);
-           //Jubilado
-            datosUsuario.put("segundaVivienda", segundaVivienda);
-            datosUsuario.put("pensionAnual", cobroPensionario);
-            datosUsuario.put("gastosMedicos", gastoMedico);
-
-            //Obtener el email del usuario logueado
-            String emailUsuario = usuarioActual.getEmail();
-            if (emailUsuario == null || emailUsuario.isEmpty()) {
-                Toast.makeText(this, "Error: El correo del usuario no está disponible.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (fecha.isEmpty() || actividad.isEmpty() || gastos.isEmpty() || ivaSop.isEmpty() || ivaRep.isEmpty()) {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (emailUsuario == null || emailUsuario.isEmpty()) {
-                Toast.makeText(this, "Error: El correo del usuario no está disponible.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (emailUsuario == null || emailUsuario.isEmpty()) {
-                Toast.makeText(this, "Error: El correo del usuario no está disponible.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (emailUsuario == null || emailUsuario.isEmpty()) {
-                Toast.makeText(this, "Error: El correo del usuario no está disponible.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            // Convertir el email en clave válida para Firebase (reemplaza caracteres especiales)
-            String emailKey = emailUsuario.replace(".", "_").replace("@", "_");
-
-            // Guardar los datos en la base de datos Firebase
-            nodoUsuario.child(emailKey).child("datosPersonales").setValue(datosUsuario).addOnCompleteListener(dbTask ->{
-
-                if (dbTask.isSuccessful()) { //Escritura
-                    Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
-                    //Redirigir al main
-                    Intent intentAlLogin = new Intent(informacionAdicional.this, Login.class);
-                    startActivity(intentAlLogin);
-                    finish();
-                } else {
-                    Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }else{
-            Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
-        }
-        Toast.makeText(this, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
     }
 }

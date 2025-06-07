@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
+import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,9 @@ public class AutonomoPerfilar extends AppCompatActivity {
     EditText editTextDate, actividadEconomica, gastosDeducibles, ivaSoportado, ivaRepercutido;
     RadioButton radio_coche_si;
     Button bt_enviarAutonomo;
+    private String ingresoBruto, edad, personasACargo;
+    private Boolean vivienda;
+
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -50,23 +54,22 @@ public class AutonomoPerfilar extends AppCompatActivity {
 
         //Recuperar datos del SharePreference
         SharedPreferences sharedPreferences = getSharedPreferences("impuestos", Context.MODE_PRIVATE);
-        String eleccion = sharedPreferences.getString("situacion", "");
-        String ingresoBruto = sharedPreferences.getString("ingresoBruto", "");
-        String edad = sharedPreferences.getString("edad", "");
-        String personasACargo = sharedPreferences.getString("personasACargo", "");
-        Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
+        ingresoBruto = sharedPreferences.getString("ingresoBruto", "");
+        edad = sharedPreferences.getString("edad", "");
+        personasACargo = sharedPreferences.getString("personasACargo", "");
+        vivienda = sharedPreferences.getBoolean("vivienda", false);
 
         bt_enviarAutonomo.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {
-                mandarDatosAutonomo(usuarioActual, eleccion, ingresoBruto, edad, personasACargo, vivienda);
+                mandarDatosAutonomo(usuarioActual);
             }else{
                 Toast.makeText(this, "No hay usuario autentificado.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void mandarDatosAutonomo (FirebaseUser usuarioActual, String eleccion, String ingresoBruto, String edad, String personasACargo, Boolean vivienda){
+    public void mandarDatosAutonomo (FirebaseUser usuarioActual){
         String fecha = editTextDate.getText().toString();
         String actividad = actividadEconomica.getText().toString();
         String gastos = gastosDeducibles.getText().toString();
@@ -82,7 +85,7 @@ public class AutonomoPerfilar extends AppCompatActivity {
         if (usuarioActual != null) { //registro fue exitoso y el usuario está disponible.
             // Crear un HashMap para almacenar los datos del usuario
             HashMap<String, Object> datosUsuario = new HashMap<>();
-            datosUsuario.put("eleccion", eleccion);
+            datosUsuario.put("eleccion", "Autónomo");
             datosUsuario.put("ingresoBruto", ingresoBruto);
             datosUsuario.put("edad", edad);
             datosUsuario.put("personasACargo", personasACargo);
@@ -111,8 +114,9 @@ public class AutonomoPerfilar extends AppCompatActivity {
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(AutonomoPerfilar.this, Login.class);
-                    startActivity(intentAlLogin);
+                    Intent intentAlPerfil = new Intent(AutonomoPerfilar.this, MainActivity.class);
+                    intentAlPerfil.putExtra("selected_tab", "perfil");
+                    startActivity(intentAlPerfil);
                     finish();
                 } else {
                     Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();
