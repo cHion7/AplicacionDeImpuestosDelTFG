@@ -71,19 +71,14 @@ public class informacionAdicional extends AppCompatActivity {
         // Inicializar TextViews para Nombre y Correo
         tvNombreUsuarioInforme = findViewById(R.id.tvNombreDocumento);
         tvCorreoUsuarioInforme = findViewById(R.id.tvCorreoDocumento);
+        btVolverAtrasInformacion = findViewById(R.id.ibVolverInformacion);
+
 
         //Preguntas comunes
         tvIngresoPregComunes = findViewById(R.id.etIngresosComAd);
         tvEdadPregComunes = findViewById(R.id.etEdadComAd);
         tvPersonasACargoPregComunes = findViewById(R.id.etPersonasACargoComAd);
-        //rbviviendaPregComunesSi = findViewById(R.id.radio_vivienda_siAd);
-        //rbviviendaPregComunesNo = findViewById(R.id.radio_vivienda_noAd);
         spinner_situacion = findViewById(R.id.spinner_situacionAd);
-
-        List<String> valorSpinnerSituacion = List.of("Autónomo", "Asalariado", "Empresario", "Estudiante", "Jubilado");
-        /*ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, valorSpinnerSituacion);
-        spinner_situacion.setAdapter(arraySituacion);
-        spinner_situacion.setSelection(3);*/
 
         //LinearLayout
         layoutAsalariadoPerfilar = findViewById(R.id.layout_asalariado_perfilarAd);
@@ -94,17 +89,10 @@ public class informacionAdicional extends AppCompatActivity {
 
         //Asalariado
         spinner_contrato = findViewById(R.id.spinner_contratoAd);
-        //rbfamiliaNumAsala_si = findViewById(R.id.radio_familia_siAd);
-        //rbfamiliaNumAsala_no = findViewById(R.id.radio_familia_noAd);
         tvFamiliaNumerosaAd = findViewById(R.id.tvFamiliaNumerosaAd);
         tvEdadHijosAsala = findViewById(R.id.etEdadHijosAd);
         tvgastosEscolaresAsala = findViewById(R.id.etGastosEscolaresAd);
         tvViviendaPropiedadAd = findViewById(R.id.tvViviendaPropiedadAd);
-
-        List<String> spinnerValues = List.of("Parcial", "Indefinido", "Estacional");
-        /*ArrayAdapter<String> arraySituacionContrato = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValues);
-        spinner_contrato.setAdapter(arraySituacionContrato);
-        spinner_contrato.setSelection(0);*/
 
         //Autónomo
         tvDate = findViewById(R.id.etDadoAltaSSAutonoAd);
@@ -113,9 +101,6 @@ public class informacionAdicional extends AppCompatActivity {
         tvivaSoportado = findViewById(R.id.etIvaSoportadoAutonoAd);
         tvivaRepercutido = findViewById(R.id.etIvaRepercutidoAutonoAd);
         tvCocheAutonomoAd = findViewById(R.id.tvCocheAutonomoAd);
-
-        //rbradio_coche_si = findViewById(R.id.radio_coche_siAd);
-        //rbradio_coche_no = findViewById(R.id.radio_coche_noAd);
 
         //Empresario
         spinnerTipoempresa = findViewById(R.id.spinnerTipoEmpresaAd);

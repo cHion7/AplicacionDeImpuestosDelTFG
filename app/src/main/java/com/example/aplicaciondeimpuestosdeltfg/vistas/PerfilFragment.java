@@ -296,6 +296,7 @@ public class PerfilFragment extends Fragment {
     // Cargar los datos del usuario desde Firebase y los muestra en la interfaz
     private void cargarDatosUsuario(){
         String emailUsuario = usuarioActual.getEmail();
+        String nombreUsuario = usuarioActual.getDisplayName();
         //Si el email no está vacío
         if (emailUsuario != null) {
             String usuarioClave = emailUsuario.replace("@", "_").replace(".", "_");
