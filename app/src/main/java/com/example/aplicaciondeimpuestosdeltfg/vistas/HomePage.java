@@ -211,6 +211,10 @@ public class HomePage extends Fragment {
                 try {
                     Double saldo = snapshot.child("saldoInicial").getValue(Double.class);
                     Long fechaInicio = snapshot.child("tiempoSaldoInicial").getValue(Long.class);
+                    if (fechaInicio == null){
+                        tvSaldo.setText(String.format("%.2f €", 0));
+                        tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.naranja));
+                    }
 
 
                     if (saldo == null || fechaInicio == null) {
@@ -255,6 +259,9 @@ public class HomePage extends Fragment {
                         return;
                     }
 
+                    if(saldoActual = null){
+
+                    }
                     tvSaldo.setText(String.format("%.2f €", saldoActual));
 
                     if (saldoActual < 0) {
