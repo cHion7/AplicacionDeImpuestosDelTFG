@@ -33,7 +33,7 @@ public class preguntasComunes extends AppCompatActivity {
         etEdadPregComunes = findViewById(R.id.etEdadCom);
         etPersonasACargoPregComunes = findViewById(R.id.etPersonasACargoCom);
         viviendaPregComunes = findViewById(R.id.radio_vivienda_si);
-        spinner_situacion = findViewById(R.id.spinner_situacion);
+        spinner_situacion = findViewById(R.id.spinner_situacionPreguntasCom);
         btEnviarCom = findViewById(R.id.btEnviarCom);
 
         List<String> valorSpinnerSituacion = List.of("Autónomo", "Asalariado", "Empresario", "Estudiante", "Jubilado");

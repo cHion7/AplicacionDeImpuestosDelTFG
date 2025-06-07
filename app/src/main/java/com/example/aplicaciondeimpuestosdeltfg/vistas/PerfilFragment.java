@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aplicaciondeimpuestosdeltfg.CambiarContrasena;
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
 //import com.example.aplicaciondeimpuestosdeltfg.VerImpuestos;
@@ -167,7 +168,7 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        //Imagen botón
+        //Imagen botón ver todo
         btVerTodoPerfil.setOnClickListener(v ->{
             Intent irADatosImpuestos = new Intent(getActivity(), informacionAdicional.class);
             startActivity(irADatosImpuestos);
@@ -187,7 +188,8 @@ public class PerfilFragment extends Fragment {
 
         //Botón cambiar contraseña
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
-            cambiarContrasena();
+            Intent irACambiarContrasena = new Intent(requireContext(), CambiarContrasena.class);
+            startActivity(irACambiarContrasena);
         });
 
         //Botón Preguntas Impuestos
@@ -203,7 +205,7 @@ public class PerfilFragment extends Fragment {
         return view;
     }
 
-    //Cambiar Contraseña
+    /*//Cambiar Contraseña
     public void cambiarContrasena(){
         if(usuarioActual == null) {
             Toast.makeText(getActivity(), "No hay usuario autenticado para cambiar la contraseña.", Toast.LENGTH_SHORT).show();
@@ -281,7 +283,7 @@ public class PerfilFragment extends Fragment {
            dialog.cancel();
         });
         alerta.show();
-    }
+    }*/
 
     //Cerrar Sesión
     public void cerrarSesion() {

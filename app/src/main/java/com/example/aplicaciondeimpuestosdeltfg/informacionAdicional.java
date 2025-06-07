@@ -18,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity;
 import com.example.aplicaciondeimpuestosdeltfg.vistas.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -126,8 +127,10 @@ public class informacionAdicional extends AppCompatActivity {
 
         //Botón de volver atrás
         btVolverAtrasInformacion.setOnClickListener(v ->{
-            Intent intentAlPerfil = new Intent(this, PerfilFragment.class);
+            Intent intentAlPerfil = new Intent(informacionAdicional.this, MainActivity.class);
+            intentAlPerfil.putExtra("selected_tab", "perfil");
             startActivity(intentAlPerfil);
+            finish();
         });
 
         FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
@@ -263,33 +266,34 @@ public class informacionAdicional extends AppCompatActivity {
                 break;
             case "Empresario":
                 layoutEmpresarioPerfilar.setVisibility(View.VISIBLE);
-                spinnerTipoempresa.setText(capturaDatosPersonalesSnapshot.child("tipoEmpresa").getValue(String.class));
-                tvingreso.setText(capturaDatosPersonalesSnapshot.child("facturacionAnual").getValue(String.class));
+                spinnerTipoempresa.setText(capturaDatosPersonalesSnapshot.child("tipoContrato").getValue(String.class));
+                tvingreso.setText(capturaDatosPersonalesSnapshot.child("facturacionEmpresa").getValue(String.class));
                 tvsueldoAdmin.setText(capturaDatosPersonalesSnapshot.child("sueldoAdministrador").getValue(String.class));
-                tvempleadosNum.setText(capturaDatosPersonalesSnapshot.child("numeroEmpleados").getValue(String.class));
+                tvempleadosNum.setText(capturaDatosPersonalesSnapshot.child("empleados").getValue(String.class));
                 tvgastosDeduciblesEmp.setText(capturaDatosPersonalesSnapshot.child("gastosDeduciblesEmpresa").getValue(String.class));
                 break;
             case "Estudiante":
                 layoutEstudiantePerfilar.setVisibility(View.VISIBLE);
                 spiner_estudios.setText(capturaDatosPersonalesSnapshot.child("tipoEstudios").getValue(String.class));
-                Boolean trabajaParcial = capturaDatosPersonalesSnapshot.child("trabajaTiempoParcial").getValue(Boolean.class);
+                Boolean trabajaParcial = capturaDatosPersonalesSnapshot.child("trabaja").getValue(Boolean.class);
+                tvestudiosBeca.setText(capturaDatosPersonalesSnapshot.child("becaCantidad").getValue(String.class));
                 if (trabajaParcial != null) {
                     tvTrabajaParcialEstudianteAd.setText(trabajaParcial ? "Sí" : "No");
                 } else {
                     tvTrabajaParcialEstudianteAd.setText("");
                 }
-                tvestudiosBeca.setText(capturaDatosPersonalesSnapshot.child("cantidadBecaAnual").getValue(String.class));
+
                 break;
             case "Jubilado":
                 layoutJubiladoPerfilar.setVisibility(View.VISIBLE);
                 tvcobroPension.setText(capturaDatosPersonalesSnapshot.child("pensionAnual").getValue(String.class));
+                tvgastosMedicos.setText(capturaDatosPersonalesSnapshot.child("gastosMedicos").getValue(String.class));
                 Boolean rgsegundaVivienda = capturaDatosPersonalesSnapshot.child("segundaVivienda").getValue(Boolean.class);
                 if (rgsegundaVivienda != null) {
                     tvSegundaViviendaAd.setText(rgsegundaVivienda ? "Sí" : "No");
                 } else {
                     tvSegundaViviendaAd.setText("");
                 }
-                tvgastosMedicos.setText(capturaDatosPersonalesSnapshot.child("gastosMedicos").getValue(String.class));
                 break;
             default:
                 // No hacer nada o mostrar un mensaje si la situación no se reconoce

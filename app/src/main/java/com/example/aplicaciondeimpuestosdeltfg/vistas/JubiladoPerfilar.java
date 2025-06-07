@@ -62,11 +62,11 @@ public class JubiladoPerfilar extends AppCompatActivity {
         });
     }
     public void mandarDatosJubilados(FirebaseUser usuarioActual, String eleccion, String ingresoBruto, String edad, String personasACargo, Boolean vivienda){
-        boolean cobroPensionario = radio_jubilado_si.isChecked();
-        String segundaVivienda = cobroPension.getText().toString();
+        Boolean segundaVivienda = radio_jubilado_si.isChecked();
+        String cobroPensionario = cobroPension.getText().toString();
         String gastoMedico = gastosMedicos.getText().toString();
 
-        if (gastoMedico.isEmpty() || segundaVivienda.isEmpty()) {
+        if (gastoMedico.isEmpty() || cobroPensionario.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }

@@ -33,12 +33,12 @@
         <activity
             android:name=".informacionAdicional"
             android:exported="false" />
-        <activity
+        <!--<activity
             android:name=".VerImpuestos"
             android:exported="false" />
         <activity
             android:name=".verImpuestos"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".CambiarContrasena"
             android:exported="false" />

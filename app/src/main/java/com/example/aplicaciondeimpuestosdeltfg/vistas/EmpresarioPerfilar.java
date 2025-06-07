@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
+import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -93,6 +94,7 @@ public class EmpresarioPerfilar extends AppCompatActivity {
             datosUsuario.put("edad", edad);
             datosUsuario.put("personasACargo", personasACargo);
             datosUsuario.put("vivienda", vivienda);
+
             datosUsuario.put("tipoContrato", tipoEmpresa);
             datosUsuario.put("sueldoAdministrador", sueldoJefe);
             datosUsuario.put("facturacionEmpresa", facturacionEmpresa);
@@ -114,8 +116,9 @@ public class EmpresarioPerfilar extends AppCompatActivity {
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(EmpresarioPerfilar.this, PerfilFragment.class);
-                    startActivity(intentAlLogin);
+                    Intent intentAlPerfil = new Intent(EmpresarioPerfilar.this, MainActivity.class);
+                    intentAlPerfil.putExtra("selected_tab", "perfil");
+                    startActivity(intentAlPerfil);
                     finish();
                 } else {
                     Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();

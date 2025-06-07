@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
+import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -113,8 +114,9 @@ public class AutonomoPerfilar extends AppCompatActivity {
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(AutonomoPerfilar.this, PerfilFragment.class);
-                    startActivity(intentAlLogin);
+                    Intent intentAlPerfil = new Intent(AutonomoPerfilar.this, MainActivity.class);
+                    intentAlPerfil.putExtra("selected_tab", "perfil");
+                    startActivity(intentAlPerfil);
                     finish();
                 } else {
                     Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();

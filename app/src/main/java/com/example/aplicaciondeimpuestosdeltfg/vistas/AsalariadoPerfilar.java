@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
+import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -99,18 +100,17 @@ public class AsalariadoPerfilar extends AppCompatActivity {
                 Toast.makeText(this, "Error: El correo del usuario no está disponible.", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             // Convertir el email en clave válida para Firebase (reemplaza caracteres especiales)
             String emailKey = emailUsuario.replace(".", "_").replace("@", "_");
 
             // Guardar los datos en la base de datos Firebase
             nodoUsuario.child(emailKey).child("datosPersonales").setValue(datosUsuario).addOnCompleteListener(dbTask ->{
-
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(AsalariadoPerfilar.this, PerfilFragment.class);
-                    startActivity(intentAlLogin);
+                    Intent intentAlPerfil = new Intent(AsalariadoPerfilar.this, MainActivity.class);
+                    intentAlPerfil.putExtra("selected_tab", "perfil");
+                    startActivity(intentAlPerfil);
                     finish();
                 } else {
                     Toast.makeText(this, "Error al guardar datos en la base de datos.", Toast.LENGTH_SHORT).show();
@@ -131,7 +131,6 @@ public class AsalariadoPerfilar extends AppCompatActivity {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         DatabaseReference referencia = FirebaseDatabase.getInstance().getReference("Usuarios").child(mAuth.getCurrentUser().getUid()).child("datosPersonales");
-
 
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("Usuarios")

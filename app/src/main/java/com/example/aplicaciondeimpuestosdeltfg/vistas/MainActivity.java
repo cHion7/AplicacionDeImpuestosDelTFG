@@ -16,15 +16,14 @@ public class MainActivity extends AppCompatActivity {
    HomePage homeFragment = new HomePage();
    PerfilFragment perfilFragment = new PerfilFragment();
    CalculatorFragment calculatorFragment = new CalculatorFragment();
-
+   String seleted_tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Asegúrate que este layout tenga el BottomNavigationView y el FrameLayout con los IDs correctos
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Cargar el fragmento inicial (Home) directamente
+        // Cargar el fragmento inicial (Principal) directamente
         getSupportFragmentManager().beginTransaction().replace(R.id.mainPageFragmentContainer,homeFragment).commit();
         bottomNavigationView.setSelectedItemId(R.id.principal);
 
@@ -52,5 +51,19 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        //Navegar por fragments
+        seleted_tab = getIntent().getStringExtra("selected_tab");
+        if (seleted_tab != null && seleted_tab.equals("perfil")) {
+            bottomNavigationView.setSelectedItemId(R.id.perfil);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainPageFragmentContainer, perfilFragment)
+                    .commit();
+        } else if (seleted_tab != null && seleted_tab.equals("principal")){
+            bottomNavigationView.setSelectedItemId(R.id.principal);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainPageFragmentContainer, homeFragment)
+                    .commit();
+        }
     }
 }

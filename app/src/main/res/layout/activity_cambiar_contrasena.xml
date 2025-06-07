@@ -2,42 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainCambiarContrasena"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:padding="24dp"
-    tools:context=".CambiarContrasena"> <TextView
-    android:id="@+id/tvTituloCambiarContrasena"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Cambiar Contraseña"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    android:layout_marginTop="48dp"
-    android:layout_marginBottom="16dp" />
+    tools:context=".CambiarContrasena">
+
+    <TextView
+        android:id="@+id/tvTituloCambiarContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="16dp"
+        android:text="Cambiar Contraseña"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvInstruccionesCambiarContrasena"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:text="Por favor, introduce tu contraseña actual y luego la nueva contraseña que deseas usar."
-        android:textSize="16sp"
         android:textAlignment="center"
-        android:layout_marginBottom="32dp" />
+        android:textSize="16sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilContrasenaActual"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:hint="Contraseña Actual"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:endIconMode="password_toggle"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
-        android:layout_marginBottom="16dp">
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etContrasenaActual"
@@ -48,16 +51,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilNuevaContrasena"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:hint="Nueva Contraseña"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:endIconMode="password_toggle"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
-        android:layout_marginBottom="16dp">
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNuevaContrasena"
@@ -68,16 +71,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilConfirmarContrasena"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:hint="Confirmar Nueva Contraseña"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:endIconMode="password_toggle"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
-        android:layout_marginBottom="32dp">
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etConfirmarContrasena"
@@ -90,9 +93,9 @@
         android:id="@+id/btnCambiarContrasena"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="14dp"
         android:text="Guardar Nueva Contraseña"
         android:textColor="@color/white"
-        android:paddingVertical="14dp"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -100,11 +103,11 @@
         android:id="@+id/tvVolverPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar y volver al Perfil"
-        android:textSize="15sp"
         android:layout_marginTop="24dp"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:text="Cancelar y volver al Perfil"
+        android:textSize="15sp" />
 
 </LinearLayout>
