@@ -1,8 +1,10 @@
 package com.example.aplicaciondeimpuestosdeltfg;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +34,6 @@ public class informacionAdicional extends AppCompatActivity {
 
     TextView tvIngresoPregComunes, tvEdadPregComunes, tvPersonasACargoPregComunes, spinner_situacion;
     TextView tvViviendaPropiedadAd;
-    Button btEnviarCom;
 
     CardView layoutAsalariadoPerfilar, layoutAutonomoPerfilar,
             layoutEmpresarioPerfilar, layoutEstudiantePerfilar, layoutJubiladoPerfilar;
@@ -49,6 +51,8 @@ public class informacionAdicional extends AppCompatActivity {
 
     TextView tvcobroPension, tvgastosMedicos;
     TextView tvSegundaViviendaAd;
+    ImageButton btVolverAtrasInformacion;
+    Button btEnviarCom;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -120,52 +124,27 @@ public class informacionAdicional extends AppCompatActivity {
         tvempleadosNum = findViewById(R.id.etNumeroEmpleadosAd);
         tvgastosDeduciblesEmp = findViewById(R.id.etGastosDeduciblesEmpresarioAd);
 
-        List<String> spinnerValuesEmpresa = List.of("S.A", "S.L", "Otro");
-        /*ArrayAdapter<String> arraySituacionEmpresa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValuesEmpresa);
-        spinnerTipoempresa.setAdapter(arraySituacionEmpresa);
-        spinnerTipoempresa.setSelection(0);*/
-
         //Estudiante
         spiner_estudios = findViewById(R.id.spinner_estudiosAd);
-        //rbradio_estudiante_si = findViewById(R.id.radio_trabajaParcial_siAd);
-        //rbradio_estudiante_no = findViewById(R.id.radio_trabajaParcial_noAdf);
         tvestudiosBeca = findViewById(R.id.etRecibirBecaEstudianteAd);
         tvTrabajaParcialEstudianteAd = findViewById(R.id.tvTrabajaParcialEstudianteAd);
-
-        List<String> spinnerValuesEstudios = List.of("Universidad", "FP", "Bachiller");
-        /*ArrayAdapter<String> arraySituacionEstudios = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValuesEstudios);
-        spiner_estudios.setAdapter(arraySituacionEstudios);
-        spiner_estudios.setSelection(0);*/
 
         //Jubilados
         tvcobroPension = findViewById(R.id.etPensionAnualJubiladoAd);
         tvgastosMedicos = findViewById(R.id.etgastosMedicosJubiladoAd);
         tvSegundaViviendaAd = findViewById(R.id.tvSegViviendalJubiladoAd);
 
-        //rgsegundaVivienda_si = findViewById(R.id.rbVivienda2_siAd);
-        //rgsegundaVivienda_no = findViewById(R.id.rbVivienda2_noAd);
-
         //Iniciamos Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app/");
         nodoUsuario = database.getReference("Usuarios");
 
-        /*//Situación
-        spinner_situacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String situacionSelecionada = parent.getItemAtPosition(position).toString();
-                vistaEspecializada(situacionSelecionada);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+        //Botón de volver atrás
+        btVolverAtrasInformacion.setOnClickListener(v ->{
+            Intent intentAlPerfil = new Intent(this, PerfilFragment.class);
+            startActivity(intentAlPerfil);
         });
-        vistaEspecializada(spinner_situacion.getSelectedItem().toString());*/
-        //Botón
-        /*btEnviarCom.setOnClickListener(v -> {
-        });*/
+
         FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
         if (usuarioActual != null) {
             obtenerDatos(usuarioActual);

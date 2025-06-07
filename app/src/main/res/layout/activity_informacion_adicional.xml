@@ -9,6 +9,34 @@
     android:background="#F8F8F8"
     tools:context=".informacionAdicional">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginVertical="25dp"
+            android:text="DETALLES DEL INFORME"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/ibVolverInformacion"
+            android:layout_width="36dp"
+            android:layout_height="35dp"
+            android:layout_gravity="left"
+            android:layout_marginVertical="25dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/atras" />
+    </androidx.cardview.widget.CardView>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:text="DETALLES DEL INFORME"
+                        android:text="DATOS PERSONALES"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -137,6 +165,7 @@
                             android:text="Edad: "
                             android:textStyle="bold"
                             android:textAppearance="?attr/textAppearanceBody1" />
+
                         <TextView
                             android:id="@+id/etEdadComAd"
                             android:layout_width="0dp"
@@ -213,12 +242,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="INFORMACIÓN ESPECÍFICA SEGÚN TU SITUACIÓN"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/black"
                 android:layout_marginBottom="16dp"
-                android:textAlignment="center"/>
+                android:text="INFORMACIÓN ESPECÍFICA SEGÚN SU SITUACIÓN"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/layout_asalariado_perfilarAd"
@@ -786,6 +815,15 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btCerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#3730A3"
+                android:paddingVertical="14dp"
+                android:text="Cerrar Sesión" />
 
             <Button
                 android:id="@+id/btGenerarImpuestos"

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class PerfilFragment extends Fragment {
     private TextInputEditText etNombreApellidoPerfil, etUsuarioPerfil, etSaldoInicialPerfil;
     private Button btCambiarContrasenaPerfil, btCerrarSesion, btAnadriImpuestosPerfil, btModificarDatos;
     private TextView btVerTodoPerfil;
+    private ImageButton btCerrarSesionPerfil;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -62,6 +64,7 @@ public class PerfilFragment extends Fragment {
         btModificarDatos = view.findViewById(R.id.btModificarDatosPerfil);
         btCambiarContrasenaPerfil = view.findViewById(R.id.btCambiarContrasenaPerf);
         btAnadriImpuestosPerfil = view.findViewById(R.id.anadirImpuestos);
+        btCerrarSesionPerfil = view.findViewById(R.id.ibCerrarSesionPerfil);
         btCerrarSesion = view.findViewById(R.id.btCerrarSesion);
 
         //Cargar datos del usuario si está autenticado
@@ -88,6 +91,7 @@ public class PerfilFragment extends Fragment {
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
             cambiarContrasena();
         });
+
         //Botón Preguntas Impuestos
         btAnadriImpuestosPerfil.setOnClickListener(v -> {
             Intent intentUsuarios = new Intent(getActivity(), preguntasComunes.class);
@@ -95,7 +99,7 @@ public class PerfilFragment extends Fragment {
         });
 
         //Botón de cerrar sessión
-        btCerrarSesion.setOnClickListener(v -> {
+        btCerrarSesionPerfil.setOnClickListener(v -> {
             cerrarSesion();
         });
         return view;

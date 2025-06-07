@@ -22,11 +22,11 @@
                 android:id="@+id/titleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cuestionario de Afinación"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:gravity="center"
-                android:paddingBottom="16dp" />
+                android:paddingBottom="16dp"
+                android:text="INFORMACIÓN ESPECÍFICA - EMPRESARIO"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="?attr/colorPrimary"
-                android:text="2 de 2"
+                android:text="Guardar datos"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

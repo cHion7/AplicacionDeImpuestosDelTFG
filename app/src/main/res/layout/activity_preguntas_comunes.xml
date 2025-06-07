@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="16dp"
-            android:text="Información de usuario"
+            android:text="INFORMACIÓN GENERAL DE INGRESOS"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:backgroundTint="?attr/colorPrimary"
-            android:text="1 de 2"
+            android:text="Siguiente"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

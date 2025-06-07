@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="16dp"
-                android:text="Información de Usuario - Asalariado"
+                android:text="INFORMACIÓN ESPECÍFICA - ASALARIADOS"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="?attr/colorPrimary"
-                android:text="2 de 2"
+                android:text="Guardar datos"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
