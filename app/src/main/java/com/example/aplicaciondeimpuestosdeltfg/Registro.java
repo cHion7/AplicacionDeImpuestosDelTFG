@@ -93,13 +93,23 @@ public class Registro extends AppCompatActivity {
         String nombre = etNombreReg.getText().toString().trim();
         String correo = etUsuarioReg.getText().toString().trim();
         String contrasena = etContrasenaReg.getText().toString().trim();
-        String saldoInicial = etSaldoInicial.getText().toString().trim();
+        String saldoInicialStr = etSaldoInicial.getText().toString().trim();
+        Double saldoInicial;
+        long currentTimeMillis;
 
         //Validaciones de campo
         if(nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty()){
             Toast.makeText(Registro.this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (saldoInicialStr.isEmpty()) {
+            currentTimeMillis = 0;
+            saldoInicial= 0.0;
+        }else {
+            saldoInicial = Double.parseDouble(saldoInicialStr);
+            currentTimeMillis = System.currentTimeMillis();
+        }
+
         //Validación del email
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
             Toast.makeText(Registro.this, "Por favor, ingresa un email válido.", Toast.LENGTH_SHORT).show();
@@ -123,6 +133,7 @@ public class Registro extends AppCompatActivity {
                         datosUsuario.put("correo", correo);
                         datosUsuario.put("nombre", nombre);
                         datosUsuario.put("saldoInicial", saldoInicial);
+                        datosUsuario.put("tiempoSaldoInicial", currentTimeMillis);
 
                         //Convertir el email en clave válida para el Firebase (reemplazar carácteres especiales)
                         String emailKey = correo.replace(".", "_").replace("@", "_");

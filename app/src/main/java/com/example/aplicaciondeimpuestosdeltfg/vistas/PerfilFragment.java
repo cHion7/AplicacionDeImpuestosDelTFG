@@ -356,7 +356,7 @@ public class PerfilFragment extends Fragment {
                             comprobarImagenGoogle();
                         }
                     } else {
-                        Toast.makeText(getActivity(), "No se encontraron datos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "No se encontraron cambios en los datos", Toast.LENGTH_SHORT).show();
                     }
                 }
 
