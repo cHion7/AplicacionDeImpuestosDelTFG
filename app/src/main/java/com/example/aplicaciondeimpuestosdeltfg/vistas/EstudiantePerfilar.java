@@ -83,7 +83,7 @@ public class EstudiantePerfilar extends AppCompatActivity {
         if (usuarioActual != null) { //registro fue exitoso y el usuario está disponible.
             // Crear un HashMap para almacenar los datos del usuario
             HashMap<String, Object> datosUsuario = new HashMap<>();
-            datosUsuario.put("eleccion", eleccion);
+            datosUsuario.put("eleccion", "Estudiante");
             datosUsuario.put("ingresoBruto", ingresoBruto);
             datosUsuario.put("edad", edad);
             datosUsuario.put("personasACargo", personasACargo);
@@ -107,7 +107,7 @@ public class EstudiantePerfilar extends AppCompatActivity {
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(EstudiantePerfilar.this, Login.class);
+                    Intent intentAlLogin = new Intent(EstudiantePerfilar.this, PerfilFragment.class);
                     startActivity(intentAlLogin);
                     finish();
                 } else {

@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class JubiladoPerfilar extends AppCompatActivity {
     RadioButton radio_jubilado_si;
@@ -35,7 +34,7 @@ public class JubiladoPerfilar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_jubilado_perfilar);
-        radio_jubilado_si = findViewById(R.id.radio_vivienda2_si);
+        radio_jubilado_si = findViewById(R.id.rbVivienda2_sijubilado);
         cobroPension = findViewById(R.id.etcobroPension);
         gastosMedicos = findViewById(R.id.etgastosMedicos);
         btn_enviarJubilado = findViewById(R.id.btEnviarJubilado);
@@ -74,7 +73,7 @@ public class JubiladoPerfilar extends AppCompatActivity {
         if (usuarioActual != null) { //registro fue exitoso y el usuario está disponible.
             // Crear un HashMap para almacenar los datos del usuario
             HashMap<String, Object> datosUsuario = new HashMap<>();
-            datosUsuario.put("eleccion", eleccion);
+            datosUsuario.put("eleccion", "Jubilado");
             datosUsuario.put("ingresoBruto", ingresoBruto);
             datosUsuario.put("edad", edad);
             datosUsuario.put("personasACargo", personasACargo);
@@ -100,7 +99,7 @@ public class JubiladoPerfilar extends AppCompatActivity {
                 if (dbTask.isSuccessful()) { //Escritura
                     Toast.makeText(this, "Datos guardados corectamente.", Toast.LENGTH_LONG).show();
                     //Redirigir al main
-                    Intent intentAlLogin = new Intent(JubiladoPerfilar.this, Login.class);
+                    Intent intentAlLogin = new Intent(JubiladoPerfilar.this, PerfilFragment.class);
                     startActivity(intentAlLogin);
                     finish();
                 } else {

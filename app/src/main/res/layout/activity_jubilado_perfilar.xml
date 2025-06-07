@@ -60,13 +60,13 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/radio_vivienda2_si"
+                    android:id="@+id/rbVivienda2_sijubilado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sí" />
 
                 <RadioButton
-                    android:id="@+id/radio_vivienda2_no"
+                    android:id="@+id/rbVivienda2_nojubilado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No" />

@@ -13,13 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
 //import com.example.aplicaciondeimpuestosdeltfg.VerImpuestos;
+import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -35,7 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 public class PerfilFragment extends Fragment {
     private TextInputEditText etNombreApellidoPerfil, etUsuarioPerfil, etSaldoInicialPerfil;
     private Button btCambiarContrasenaPerfil, btCerrarSesion, btAnadriImpuestosPerfil, btModificarDatos;
-    private ImageButton btAjustesPerfil;
+    private TextView btVerTodoPerfil;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -56,6 +57,7 @@ public class PerfilFragment extends Fragment {
         etNombreApellidoPerfil = view.findViewById(R.id.etNombreApPerf);
         etUsuarioPerfil = view.findViewById(R.id.etCorreoPerf);
         etUsuarioPerfil.setEnabled(false);
+        btVerTodoPerfil = view.findViewById(R.id.tvVerTodoDatosPerfil);
         etSaldoInicialPerfil = view.findViewById(R.id.etSaldoInicialPerf);
         btModificarDatos = view.findViewById(R.id.btModificarDatosPerfil);
         btCambiarContrasenaPerfil = view.findViewById(R.id.btCambiarContrasenaPerf);
@@ -75,13 +77,13 @@ public class PerfilFragment extends Fragment {
                 modificarDatosUsuario();
             }
         });
-/*
+
         //Imagen botón
-        btAjustesPerfil.setOnClickListener(v ->{
-            Intent irADatosImpuestos = new Intent(getActivity(), VerImpuestos.class);
+        btVerTodoPerfil.setOnClickListener(v ->{
+            Intent irADatosImpuestos = new Intent(getActivity(), informacionAdicional.class);
             startActivity(irADatosImpuestos);
         });
-*/
+
         //Botón cambiar contraseña
         btCambiarContrasenaPerfil.setOnClickListener(v -> {
             cambiarContrasena();

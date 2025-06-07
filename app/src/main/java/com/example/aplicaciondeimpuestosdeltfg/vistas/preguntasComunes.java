@@ -41,11 +41,6 @@ public class preguntasComunes extends AppCompatActivity {
         spinner_situacion.setAdapter(arraySituacion);
         spinner_situacion.setSelection(3);
 
-        /*List<String> spinnerValuesDiscapacidad = List.of("Ninguna", "Leve", "Moderada", "Grave");
-        ArrayAdapter<String> adapterDiscapacidad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValuesDiscapacidad);
-        spinner_discapacidad.setAdapter(adapterDiscapacidad);
-        spinner_discapacidad.setSelection(0);*/
-
         //Botón siguente página
         btEnviarCom.setOnClickListener(v -> {
             registrarPreguntasComunes();

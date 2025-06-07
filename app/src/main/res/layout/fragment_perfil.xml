@@ -19,7 +19,7 @@
             app:cardElevation="10dp">
 
             <ImageButton
-                android:id="@+id/ibBackListaEventos2"
+                android:id="@+id/ibCerrarSesionPerfil"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="right"
@@ -140,7 +140,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/tvVerTodoDatosPerfil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="25dp"
