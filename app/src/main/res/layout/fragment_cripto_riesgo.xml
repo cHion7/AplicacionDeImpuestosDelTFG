@@ -10,7 +10,8 @@
     <!-- Contenido principal -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,11 +22,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical"
                 android:background="#FFFFFF"
-                android:elevation="2dp">
+                android:elevation="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/boton_abrir_menu"
@@ -41,40 +42,40 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Pago de impuesto por cripto"
+                    android:textColor="#3730A3"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#222222" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Sección "Tu situación" -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
                 android:background="#FFFFFF"
                 android:elevation="2dp"
-                android:padding="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginHorizontal="16dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
                     android:text="1) Tu situación"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:textColor="#333333"
-                    android:paddingBottom="8dp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
                     android:text="¿Cómo has ganado dinero?"
-                    android:textSize="16sp"
                     android:textColor="#333333"
-                    android:paddingBottom="8dp" />
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -120,43 +121,43 @@
                     android:id="@+id/tvDescripcionTextoListaEventos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Cuánto dinero has ganado?"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
                     android:paddingTop="12dp"
-                    android:paddingBottom="8dp" />
+                    android:paddingBottom="8dp"
+                    android:text="¿Cuánto dinero has ganado?"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/dineroGanado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:elevation="2dp"
                     android:hint="Dinero ganado €"
                     android:inputType="number"
-                    android:background="@android:color/white"
-                    android:padding="12dp"
-                    android:elevation="2dp" />
+                    android:padding="12dp" />
             </LinearLayout>
 
             <!-- Sección "Tus impuestos y beneficios" -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:background="#FFFFFF"
                 android:elevation="2dp"
-                android:padding="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/tvTituloIngresos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="12dp"
                     android:text="2) Tus impuestos y beneficios"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:textColor="#333333"
-                    android:paddingBottom="12dp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <!-- Resultado filas -->
                 <LinearLayout
@@ -171,8 +172,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="(+) Tus ganancias de criptomonedas"
-                        android:textSize="16sp"
-                        android:textColor="#333333" />
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/ganaciaCripto"
@@ -181,8 +182,8 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="0"
-                        android:textSize="16sp"
-                        android:textColor="#004D40" />
+                        android:textColor="#004D40"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -197,8 +198,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="(-) Tus impuestos de IRPF"
-                        android:textSize="16sp"
-                        android:textColor="#333333" />
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/impuestosCripto"
@@ -207,8 +208,8 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="0"
-                        android:textSize="16sp"
-                        android:textColor="#D32F2F" />
+                        android:textColor="#D32F2F"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -223,8 +224,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="(=) Después de impuestos"
-                        android:textSize="16sp"
-                        android:textColor="#333333" />
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/totalGanado"
@@ -233,8 +234,8 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="0"
-                        android:textSize="16sp"
-                        android:textColor="#004D40" />
+                        android:textColor="#004D40"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
