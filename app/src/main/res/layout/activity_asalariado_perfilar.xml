@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:backgroundTint="?attr/colorPrimary"
+                    android:backgroundTint="#3730A3"
                     android:text="Guardar datos"
                     android:textColor="@android:color/white" />
             </LinearLayout>
