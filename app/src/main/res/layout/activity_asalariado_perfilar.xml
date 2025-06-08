@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> origin/Hui9
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     android:background="@drawable/background"
-=======
     android:foregroundGravity="right"
     android:orientation="vertical"
->>>>>>> origin/Hui9
     tools:context=".vistas.AsalariadoPerfilar">
 
     <LinearLayout
@@ -21,8 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-<<<<<<< HEAD
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="72dp"
