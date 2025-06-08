@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class EmpresarioPerfilar extends AppCompatActivity {
     Spinner spinnerTipoempresa;
     EditText edit_ingreso, sueldoAdmin, empleadosNum, gastosDeduciblesEmp;
     Button btn_enviarEmpresario;
+    ImageButton ibvolEmpresario;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -45,7 +47,8 @@ public class EmpresarioPerfilar extends AppCompatActivity {
         sueldoAdmin = findViewById(R.id.etsueldoAdmin);
         empleadosNum = findViewById(R.id.etnumeroEmpleados);
         gastosDeduciblesEmp = findViewById(R.id.etGastosDeduciblesEmpresario);
-        btn_enviarEmpresario = findViewById(R.id.btEnviarCom);
+        ibvolEmpresario = findViewById(R.id.ibBackEmpresario);
+        btn_enviarEmpresario = findViewById(R.id.btEnviarEmpresario);
 
         //Iniciamos Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -65,6 +68,13 @@ public class EmpresarioPerfilar extends AppCompatActivity {
         String personasACargo = sharedPreferences.getString("personasACargo", "");
         Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
 
+        //Botón volver
+        ibvolEmpresario.setOnClickListener(v ->{
+            Intent volverAPregComunes = new Intent(EmpresarioPerfilar.this, preguntasComunes.class);
+            startActivity(volverAPregComunes);
+        });
+
+        //Botón enviar datos
         btn_enviarEmpresario.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {

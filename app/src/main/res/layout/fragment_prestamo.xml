@@ -34,8 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Pago de impuesto por cripto"
-                android:textColor="#222222"
+                android:text="Simulador de Préstamos"
+                android:textColor="#3730A3"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -1,10 +1,11 @@
 package com.example.aplicaciondeimpuestosdeltfg;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -24,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class CambiarContrasena extends AppCompatActivity {
     private EditText edtContrasenaActual, edtNuevaContrasena, edtConfirmarContrasena;
     private Button btnCambiarContrasena;
-
+    private TextView tvVolverPerfilContrasena;
     // Firebase instances
     private FirebaseAuth mAuth;
     private FirebaseUser usuarioActual;
@@ -34,7 +36,7 @@ public class CambiarContrasena extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cambiar_contrasena);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainCambiarContrasena), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.scrollViewCambiarContrasena), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -46,8 +48,18 @@ public class CambiarContrasena extends AppCompatActivity {
         edtContrasenaActual = findViewById(R.id.etContrasenaActual);
         edtNuevaContrasena = findViewById(R.id.etNuevaContrasena);
         edtConfirmarContrasena = findViewById(R.id.etConfirmarContrasena);
+        tvVolverPerfilContrasena = findViewById(R.id.tvVolverPerfilContrase);
         btnCambiarContrasena = findViewById(R.id.btnCambiarContrasena);
 
+        //TextView Volver atrás
+        tvVolverPerfilContrasena.setOnClickListener(v -> {
+            Intent intentAlPerfil = new Intent(CambiarContrasena.this, MainActivity.class);
+            intentAlPerfil.putExtra("selected_tab", "perfil");
+            startActivity(intentAlPerfil);
+            finish();
+        });
+
+        //Botón cambiar contraseña
         btnCambiarContrasena.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +67,7 @@ public class CambiarContrasena extends AppCompatActivity {
                 String nuevaContrasena = edtNuevaContrasena.getText().toString().trim();
                 String confirmarContrasena = edtConfirmarContrasena.getText().toString().trim();
 
-                if (TextUtils.isEmpty(contrasenaActual) || TextUtils.isEmpty(nuevaContrasena) || TextUtils.isEmpty(confirmarContrasena)) {
+                if (contrasenaActual.isEmpty()|| nuevaContrasena.isEmpty() || confirmarContrasena.isEmpty()) {
                     Toast.makeText(CambiarContrasena.this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -89,12 +101,12 @@ public class CambiarContrasena extends AppCompatActivity {
                                                             Toast.makeText(CambiarContrasena.this, "Contraseña cambiada correctamente.", Toast.LENGTH_SHORT).show();
                                                             finish(); // Close the activity
                                                         } else {
-                                                            Toast.makeText(CambiarContrasena.this, "Error al cambiar la contraseña: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(CambiarContrasena.this, "Error al cambiar la contraseña", Toast.LENGTH_LONG).show();
                                                         }
                                                     }
                                                 });
                                     } else {
-                                        Toast.makeText(CambiarContrasena.this, "Error de autenticación. Verifica tu contraseña actual: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CambiarContrasena.this, "Error de autenticación. Verifica tu contraseña actual", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
@@ -105,4 +117,5 @@ public class CambiarContrasena extends AppCompatActivity {
             }
         });
     }
+
 }

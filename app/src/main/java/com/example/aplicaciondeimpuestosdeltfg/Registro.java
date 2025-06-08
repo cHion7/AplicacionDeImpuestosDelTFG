@@ -41,7 +41,7 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registro);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sesion), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sesionRegistro), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -93,13 +93,23 @@ public class Registro extends AppCompatActivity {
         String nombre = etNombreReg.getText().toString().trim();
         String correo = etUsuarioReg.getText().toString().trim();
         String contrasena = etContrasenaReg.getText().toString().trim();
-        String saldoInicial = etSaldoInicial.getText().toString().trim();
+        String saldoInicialStr = etSaldoInicial.getText().toString().trim();
+        Double saldoInicial;
+        long currentTimeMillis;
 
         //Validaciones de campo
         if(nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty()){
             Toast.makeText(Registro.this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (saldoInicialStr.isEmpty()) {
+            currentTimeMillis = 0;
+            saldoInicial= 0.0;
+        }else {
+            saldoInicial = Double.parseDouble(saldoInicialStr);
+            currentTimeMillis = System.currentTimeMillis();
+        }
+
         //Validación del email
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
             Toast.makeText(Registro.this, "Por favor, ingresa un email válido.", Toast.LENGTH_SHORT).show();
@@ -123,6 +133,7 @@ public class Registro extends AppCompatActivity {
                         datosUsuario.put("correo", correo);
                         datosUsuario.put("nombre", nombre);
                         datosUsuario.put("saldoInicial", saldoInicial);
+                        datosUsuario.put("tiempoSaldoInicial", currentTimeMillis);
 
                         //Convertir el email en clave válida para el Firebase (reemplazar carácteres especiales)
                         String emailKey = correo.replace(".", "_").replace("@", "_");
@@ -146,16 +157,9 @@ public class Registro extends AppCompatActivity {
                     Toast.makeText(this, "El correo introducido ya existe.", Toast.LENGTH_SHORT).show();
                 }
             });
-
-
-        /*// Guardamos los datos en SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("registro_usuario", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("correo", correo);
-        editor.putString("password", contrasena);
-        editor.apply(); // Guardo los cambios*/
     }
 
+    //Nivel de seguridad
     public void comprobarNivelSeguridadContrasena(String contrasena){
         //Valores Predeterminado
         int puntos = 0;
@@ -175,13 +179,13 @@ public class Registro extends AppCompatActivity {
 
             // Asigna el texto y color según la fuerza acumulada
             if (puntos < 2) {
-                textoMostrado = "Débil";
+                textoMostrado = "Nivel de seguridad de la contraseña débil. Por favor, añade carácteres especiales, mayúsculas o números.";
                 color = getResources().getColor(R.color.rojo, null);
             } else if (puntos < 4) {
-                textoMostrado = "Media";
+                textoMostrado = "Nivel de seguridad de la contraseña media. Por favor, añade carácteres especiales, mayúsculas o números.";
                 color = getResources().getColor(R.color.naranja, null);
             } else {
-                textoMostrado = "Fuerte";
+                textoMostrado = "Nivel de seguridad de la contraseña fuerte";
                 color = getResources().getColor(R.color.verde, null);
             }
         }

@@ -215,6 +215,17 @@
                             android:textSize="12sp" />
 
                         <Button
+                            android:id="@+id/btGuardarDatosPerfil"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#3730A3"
+                            android:paddingVertical="18dp"
+                            android:text="Guardar datos"
+                            android:textSize="12sp" />
+
+                        <Button
                             android:id="@+id/btCambiarContrasenaPerf"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"

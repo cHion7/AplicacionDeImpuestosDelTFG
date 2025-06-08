@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class AsalariadoPerfilar extends AppCompatActivity {
     RadioButton familiaNumAsala;
     EditText etEdadHijosAsala, gastosEscolaresAsala;
     Button btEnviarAsala;
+    ImageButton ibvolAsalariado;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -44,7 +46,8 @@ public class AsalariadoPerfilar extends AppCompatActivity {
         familiaNumAsala = findViewById(R.id.radio_familia_si);
         etEdadHijosAsala = findViewById(R.id.edadHijos);
         gastosEscolaresAsala = findViewById(R.id.gastosEscolares);
-        btEnviarAsala = findViewById(R.id.btEnviarCom);
+        ibvolAsalariado = findViewById(R.id.ibvolverAsalariado);
+        btEnviarAsala = findViewById(R.id.btEnviarAsalariados);
 
         List<String> spinnerValues = List.of("Parcial", "Indefinido", "Estacional");
         ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerValues);
@@ -63,6 +66,12 @@ public class AsalariadoPerfilar extends AppCompatActivity {
         String edad = sharedPreferences.getString("edad", "");
         String personasACargo = sharedPreferences.getString("personasACargo", "");
         Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
+
+        //Botón volver
+        ibvolAsalariado.setOnClickListener(v ->{
+            Intent volverAPregComunes = new Intent(AsalariadoPerfilar.this, preguntasComunes.class);
+            startActivity(volverAPregComunes);
+        });
 
         // Botón enviar datos
         btEnviarAsala.setOnClickListener(v -> {
@@ -120,43 +129,5 @@ public class AsalariadoPerfilar extends AppCompatActivity {
             Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(this, "Usuario registrado exitosamente.", Toast.LENGTH_SHORT).show();
-
-        /*boolean trabaja = getIntent().getBooleanExtra("trabaja", false);
-        String hijos = getIntent().getStringExtra("hijos");
-        String ingreso = getIntent().getStringExtra("ingreso");
-        String situacion = getIntent().getStringExtra("situacion");
-        boolean viviendaExtra = getIntent().getBooleanExtra("viviendaExtra", false);
-        String discapacidad = getIntent().getStringExtra("discapacidad");
-
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        DatabaseReference referencia = FirebaseDatabase.getInstance().getReference("Usuarios").child(mAuth.getCurrentUser().getUid()).child("datosPersonales");
-
-        DatabaseReference ref = FirebaseDatabase.getInstance()
-                .getReference("Usuarios")
-                .child((mAuth.getCurrentUser()).getUid())
-                .child("datosPersonales");
-
-        Map<String, Object> datosUsuario = new HashMap<>();
-        datosUsuario.put("familia", familia);
-        datosUsuario.put("hijos", hijosEdades);
-        datosUsuario.put("gastos", gastos);
-        datosUsuario.put("contrato", contrato);
-
-        datosUsuario.put("trabaja", trabaja);
-        datosUsuario.put("hijos", hijos);
-        datosUsuario.put("ingreso", ingreso);
-        datosUsuario.put("situacion", situacion);
-        datosUsuario.put("viviendaExtra", viviendaExtra);
-        datosUsuario.put("discapacidad", discapacidad);
-
-        ref.setValue(datosUsuario).addOnCompleteListener(dbTask -> {
-            if (dbTask.isSuccessful()) {
-                Toast.makeText(this, "Datos guardados correctamente.", Toast.LENGTH_LONG).show();
-                finish();
-            } else {
-                Toast.makeText(this, "Error al guardar los datos.", Toast.LENGTH_SHORT).show();
-            }
-        });*/
     };
 }

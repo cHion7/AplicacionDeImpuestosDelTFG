@@ -216,7 +216,6 @@ public class HomePage extends Fragment {
                         tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.naranja));
                     }
 
-
                     if (saldo == null || fechaInicio == null) {
                         Log.e("SaldoDebug", "Datos faltantes: saldoInicial o tiempoSaldoInicial es null.");
                         return;
