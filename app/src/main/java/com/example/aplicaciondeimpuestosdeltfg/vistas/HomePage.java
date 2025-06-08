@@ -258,6 +258,12 @@ public class HomePage extends Fragment {
                         return;
                     }
 
+<<<<<<< HEAD
+=======
+                   /* if(saldoActual = null){
+
+                    }*/
+>>>>>>> origin/Hui9
                     tvSaldo.setText(String.format("%.2f €", saldoActual));
 
                     if (saldoActual < 0) {
