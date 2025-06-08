@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class EstudiantePerfilar extends AppCompatActivity {
     RadioButton radio_estudiante_si;
     EditText edit_estudiosBeca;
     Button btn_enviarEstudiante;
+    ImageButton ibvolEstudiante;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -43,6 +45,7 @@ public class EstudiantePerfilar extends AppCompatActivity {
         spiner_estudios = findViewById(R.id.spinner_estudios);
         radio_estudiante_si = findViewById(R.id.radio_trabajaParcial_si);
         edit_estudiosBeca = findViewById(R.id.etRecibirBecaEstudiante);
+        ibvolEstudiante= findViewById(R.id.ibVolverEstudiante);
         btn_enviarEstudiante = findViewById(R.id.btEniviarEstudiante);
 
         //Iniciamos Firebase
@@ -63,6 +66,13 @@ public class EstudiantePerfilar extends AppCompatActivity {
         String personasACargo = sharedPreferences.getString("personasACargo", "");
         Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
 
+        //Botón volver
+        ibvolEstudiante.setOnClickListener(v ->{
+            Intent volverAPregComunes = new Intent(EstudiantePerfilar.this, preguntasComunes.class);
+            startActivity(volverAPregComunes);
+        });
+
+        //Botón enviar
         btn_enviarEstudiante.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {

@@ -124,7 +124,7 @@
                 android:contextClickable="false"
                 android:focusable="true"
                 android:padding="8dp"
-                android:text="Cancelar y volver al Perfil"
+                android:text="Cancelar y volver al perfil"
                 android:textColor="#3730A3"
                 android:textSize="15sp" />
         </LinearLayout>

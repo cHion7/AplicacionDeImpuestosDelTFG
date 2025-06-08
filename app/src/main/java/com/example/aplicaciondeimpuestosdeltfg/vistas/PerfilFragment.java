@@ -218,86 +218,6 @@ public class PerfilFragment extends Fragment {
         return view;
     }
 
-    /*//Cambiar Contraseña
-    public void cambiarContrasena(){
-        if(usuarioActual == null) {
-            Toast.makeText(getActivity(), "No hay usuario autenticado para cambiar la contraseña.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
-        alerta.setTitle("Cambiar Contraseña");
-        alerta.setMessage("Por favor, introduce tus contraseñas");
-
-        // Creamos un EditText (dentro de LinearLayout porque sino no contiene todos) para que el usuario escriba la nueva contraseña
-        LinearLayout layoutContenedor = new LinearLayout(getActivity());
-        layoutContenedor.setOrientation(LinearLayout.VERTICAL);
-
-        EditText inputContrasenaActual = new EditText(getActivity());
-        EditText inputNuevaContrasena = new EditText(getActivity());
-        EditText inputConfirmarContrasena = new EditText(getActivity());
-
-        inputContrasenaActual.setHint("Contraseña actual");
-        inputNuevaContrasena.setHint("Nueva contraseña");
-        inputConfirmarContrasena.setHint("Nueva contraseña");
-        inputContrasenaActual.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        inputNuevaContrasena.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        inputConfirmarContrasena.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-
-        //Añadir datos a la alerta
-        layoutContenedor.addView(inputContrasenaActual);
-        layoutContenedor.addView(inputNuevaContrasena);
-        layoutContenedor.addView(inputConfirmarContrasena);
-        alerta.setView(layoutContenedor);
-
-        alerta.setPositiveButton("Guardar", (dialog, which) -> {
-            String contrasenaActual = inputContrasenaActual.getText().toString().trim();
-            String nuevaContrasena = inputNuevaContrasena.getText().toString().trim();
-            String confirmarContrasena = inputConfirmarContrasena.getText().toString();
-
-            if (contrasenaActual.isEmpty() || nuevaContrasena.isEmpty() || confirmarContrasena.isEmpty()) {
-                Toast.makeText(getActivity(), "La campos de contraseñas no puede estar vacía.", Toast.LENGTH_SHORT).show();
-                return; // Salimos del método si la contraseña está vacía
-            }
-
-            if (nuevaContrasena.length() <= 6) {
-                Toast.makeText(getActivity(), "La contraeña debe tener al menos 6 carácteres.", Toast.LENGTH_SHORT).show();
-                return; // Salimos del método si la contraseña es demasiado corta
-            }
-            if (!nuevaContrasena.equals(confirmarContrasena)) {
-                Toast.makeText(getActivity(), "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Reautenticar al usuario
-            AuthCredential credencial = EmailAuthProvider.getCredential(usuarioActual.getEmail(), contrasenaActual);
-
-            //Auntenticamos la contraseña en Firebase
-            usuarioActual.reauthenticate(credencial)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Contraseña actual verificada.", Toast.LENGTH_SHORT).show();
-                        //Intentamos actualizar la contraseña en Firebase
-                        usuarioActual.updatePassword(nuevaContrasena)
-                                .addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        Toast.makeText(getActivity(), "Contraseña actualizada correctamente.", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(getActivity(), "Error al cambiar la contraseña.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }else{
-                        Toast.makeText(getActivity(), "Error al verificar la contraseña actual.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        });
-
-        //Botón de cancelar
-        alerta.setNegativeButton("Cancelar", (dialog, which) -> {
-           dialog.cancel();
-        });
-        alerta.show();
-    }*/
-
     //Cerrar Sesión
     public void cerrarSesion() {
         Toast.makeText(getActivity(), "Cerrando sesión...", Toast.LENGTH_SHORT).show();
@@ -312,12 +232,7 @@ public class PerfilFragment extends Fragment {
     private void cargarDatosUsuario(){
         String emailUsuario = usuarioActual.getEmail();
         String nombreUsuario = usuarioActual.getDisplayName();
-        /*//Coge datos de FirebaseUser
-        if (emailUsuario != null) {
-            etUsuarioPerfil.setText(emailUsuario);
-        }else if(nombreUsuario != null){
-            etNombreApellidoPerfil.setText(nombreUsuario);
-        }*/
+
         //Si el email no está vacío -> cargar datos Realtime Database
         if (emailUsuario != null) {
             String usuarioClave = emailUsuario.replace("@", "_").replace(".", "_");

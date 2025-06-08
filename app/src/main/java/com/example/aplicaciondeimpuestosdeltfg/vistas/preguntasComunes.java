@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
+import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class preguntasComunes extends AppCompatActivity {
     EditText etIngresoPregComunes, etEdadPregComunes, etPersonasACargoPregComunes;
     RadioButton viviendaPregComunes;
     Spinner spinner_situacion;
+    ImageButton ibVolPregComunes;
     Button btEnviarCom;
 
     @Override
@@ -34,12 +37,22 @@ public class preguntasComunes extends AppCompatActivity {
         etPersonasACargoPregComunes = findViewById(R.id.etPersonasACargoCom);
         viviendaPregComunes = findViewById(R.id.radio_vivienda_si);
         spinner_situacion = findViewById(R.id.spinner_situacionPreguntasCom);
+        ibVolPregComunes= findViewById(R.id.ibvolverPreguntasComunes);
         btEnviarCom = findViewById(R.id.btEnviarCom);
 
         List<String> valorSpinnerSituacion = List.of("Autónomo", "Asalariado", "Empresario", "Estudiante", "Jubilado");
         ArrayAdapter<String> arraySituacion = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, valorSpinnerSituacion);
         spinner_situacion.setAdapter(arraySituacion);
         spinner_situacion.setSelection(3);
+
+        //Botón volver
+        //Botón de volver atrás
+        ibVolPregComunes.setOnClickListener(v ->{
+            Intent intentAlPerfil = new Intent(preguntasComunes.this, MainActivity.class);
+            intentAlPerfil.putExtra("selected_tab", "perfil");
+            startActivity(intentAlPerfil);
+            finish();
+        });
 
         //Botón siguente página
         btEnviarCom.setOnClickListener(v -> {
@@ -88,14 +101,5 @@ public class preguntasComunes extends AppCompatActivity {
         Toast.makeText(this, "Ya queda poco", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
-
-        /*// Puedes enviar los datos con un Intent:
-        intent.putExtra("trabaja", trabaja);
-        intent.putExtra("hijos", numHijos);
-        intent.putExtra("ingreso", ingreso);
-        intent.putExtra("situacion", situacion);
-        intent.putExtra("viviendaExtra", tieneViviendaExtra);
-        intent.putExtra("discapacidad", discapacidad);
-        */
     }
 }

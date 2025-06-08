@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class JubiladoPerfilar extends AppCompatActivity {
     RadioButton radio_jubilado_si;
     EditText cobroPension, gastosMedicos;
     Button btn_enviarJubilado;
+    ImageButton ibvolJubilado;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference nodoUsuario;
@@ -37,6 +39,7 @@ public class JubiladoPerfilar extends AppCompatActivity {
         radio_jubilado_si = findViewById(R.id.rbVivienda2_sijubilado);
         cobroPension = findViewById(R.id.etcobroPension);
         gastosMedicos = findViewById(R.id.etgastosMedicos);
+        ibvolJubilado = findViewById(R.id.ibvolverJubilado);
         btn_enviarJubilado = findViewById(R.id.btEnviarJubilado);
 
         //Iniciamos Firebase
@@ -52,6 +55,13 @@ public class JubiladoPerfilar extends AppCompatActivity {
         String personasACargo = sharedPreferences.getString("personasACargo", "");
         Boolean vivienda = sharedPreferences.getBoolean("vivienda", false);
 
+        //Botón volver
+        ibvolJubilado.setOnClickListener(v ->{
+            Intent volverAPregComunes = new Intent(JubiladoPerfilar.this, preguntasComunes.class);
+            startActivity(volverAPregComunes);
+        });
+
+        //Botón enviar
         btn_enviarJubilado.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class AutonomoPerfilar extends AppCompatActivity {
     Button bt_enviarAutonomo;
     private String ingresoBruto, edad, personasACargo;
     private Boolean vivienda;
+    ImageButton ibvolAutonomo;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -45,7 +47,8 @@ public class AutonomoPerfilar extends AppCompatActivity {
         ivaSoportado = findViewById(R.id.ivaSoportadoAutono);
         ivaRepercutido = findViewById(R.id.ivaRepercutidoAutono);
         radio_coche_si = findViewById(R.id.radio_coche_si);
-        bt_enviarAutonomo = findViewById(R.id.btn_enviarAutonomo);
+        ibvolAutonomo = findViewById(R.id.ibVolverAutonomo);
+        bt_enviarAutonomo = findViewById(R.id.btenviarAutonomo);
 
         //Iniciamos Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -59,6 +62,13 @@ public class AutonomoPerfilar extends AppCompatActivity {
         personasACargo = sharedPreferences.getString("personasACargo", "");
         vivienda = sharedPreferences.getBoolean("vivienda", false);
 
+        //Botón volver
+        ibvolAutonomo.setOnClickListener(v ->{
+            Intent volverAPregComunes = new Intent(AutonomoPerfilar.this, preguntasComunes.class);
+            startActivity(volverAPregComunes);
+        });
+
+        //Botón enciar datos
         bt_enviarAutonomo.setOnClickListener(v -> {
             FirebaseUser usuarioActual = firebaseAuth.getCurrentUser();
             if (usuarioActual != null) {
