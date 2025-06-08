@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> origin/Hui9
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollViewCambiarContrasena"
@@ -14,7 +10,6 @@
     android:padding="24dp"
     tools:context=".CambiarContrasena">
 
-<<<<<<< HEAD
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="675dp"
@@ -136,8 +131,6 @@
 
     </androidx.cardview.widget.CardView>
 
-</FrameLayout>
-=======
     <LinearLayout
         android:id="@+id/mainCambiarContrasena"
         android:layout_width="match_parent"
@@ -235,7 +228,6 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
-
                 <Button
                     android:id="@+id/btnCambiarContrasena"
                     android:layout_width="match_parent"
@@ -245,7 +237,6 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tvVolverPerfilContrase"
                     android:layout_width="wrap_content"
@@ -258,10 +249,7 @@
                     android:text="Cancelar y volver al Perfil"
                     android:textSize="15sp" />
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
-
     </LinearLayout>
-
 </ScrollView>
->>>>>>> origin/Hui9
+

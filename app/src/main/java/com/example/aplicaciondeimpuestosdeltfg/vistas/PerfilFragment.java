@@ -226,16 +226,7 @@ public class  PerfilFragment extends Fragment {
     private void cargarDatosUsuario(){
         String emailUsuario = usuarioActual.getEmail();
         String nombreUsuario = usuarioActual.getDisplayName();
-<<<<<<< HEAD
 
-=======
-        /*//Coge datos de FirebaseUser
-        if (emailUsuario != null) {
-            etUsuarioPerfil.setText(emailUsuario);
-        }else if(nombreUsuario != null){
-            etNombreApellidoPerfil.setText(nombreUsuario);
-        }*/
->>>>>>> origin/Hui9
         //Si el email no está vacío -> cargar datos Realtime Database
         if (emailUsuario != null) {
             String usuarioClave = emailUsuario.replace("@", "_").replace(".", "_");
