@@ -42,7 +42,7 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
     private String eleccion;
     private LinearLayout llIRPFAutonomo, llIVAAutonomo, llIRPFAsalariado, llIRPFEstudiante, llIRPFJubilado, llISEmpresario, llIRPFEmpresario, llRetenEmpresario;
     private TextView tvIRPFAutonomo, tvIRPFAutonomoDate, tvIVAAutonomo, tvIVAAutonomoDate, tvIRPFAsalariado, tvIRPFAsalariadoDate, tvIRPFEstudiante, tvIRPFEstudianteDate, tvIRPFJubilado, tvIRPFJubiladoDate, tvISEmpresario, tvISEmpresarioDate, tvIRPFEmpresario, tvIRPFEmpresarioDate, tvRetenEmpresario, tvRetenEmpresarioDate, tvCerrar;
-    private CardView cvIRPFAutonomo, cvIVAAutonomo;
+    private CardView cvIRPFAutonomo, cvIVAAutonomo, cvIRPFAsalariado, cvIRPFEstudiante, cvIRPFJubilado, cvISEmpresario, cvIRPFEmpresario, cvRetencionesEmpresario;
     private DatabaseReference ref;
     //Variables que vamos a utilizar en diferentes perfiles
     private Double ingresoBruto;
@@ -95,6 +95,10 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
 
         cvIRPFAutonomo.setVisibility(View.GONE);
         cvIVAAutonomo.setVisibility(View.GONE);
+        cvIRPFJubilado.setVisibility(View.GONE);
+        cvISEmpresario.setVisibility(View.GONE);
+        cvIRPFEmpresario.setVisibility(View.GONE);
+        cvRetencionesEmpresario.setVisibility(View.GONE);
         // Ocultar todos los LinearLayouts
         llIRPFAutonomo.setVisibility(View.GONE);
         llIVAAutonomo.setVisibility(View.GONE);
@@ -187,6 +191,36 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
                 break;
 
             case "empresario":
+
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String facturacionEmpresaString = snapshot.child("facturacionEmpresa").getValue(String.class);
+                            String ingresoBrutoString = snapshot.child("ingresoBruto").getValue(String.class);
+                            String empleadosString = snapshot.child("empleados").getValue(String.class);
+
+                            Log.d("Firebase", "Valor de 'ingresoBruto': " + ingresoBruto);
+                            Double facturacionEmpresa = Double.parseDouble(facturacionEmpresaString);
+                            ingresoBruto = Double.parseDouble(ingresoBrutoString);
+                            int empleados = Integer.parseInt(empleadosString);
+
+                            double impuestoSociedades = ingresoBruto * 0.25;
+                            double retencionesTrabajadores = facturacionEmpresa * 0.05; // estimación mensual de IRPF retenido
+                            double segurosSociales = empleados * 300 * 12;
+
+                            tvISEmpresario.setText("Estimación: " + impuestoSociedades);
+                            tvIRPFEmpresario.setText("Estimación: " + segurosSociales);
+                            tvRetenEmpresario.setText("Estimación: " + retencionesTrabajadores);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Error al leer datos: " + error.getMessage());
+                    }
+                });
+
                 llISEmpresario.setVisibility(View.VISIBLE);
                 llIRPFEmpresario.setVisibility(View.VISIBLE);
                 llRetenEmpresario.setVisibility(View.VISIBLE);
@@ -194,8 +228,9 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
                 tvISEmpresario.setVisibility(View.VISIBLE);
                 tvISEmpresario.setText("Impuesto de Sociedades (modelo 200)");
                 tvISEmpresarioDate.setVisibility(View.VISIBLE);
+
                 tvIRPFEmpresario.setVisibility(View.VISIBLE);
-                tvIRPFEmpresario.setText("Renta personal si cobra sueldo como administrador");
+                tvIRPFEmpresario.setText("Seguridad social de los empleados");
                 tvIRPFEmpresarioDate.setVisibility(View.VISIBLE);
                 tvRetenEmpresario.setVisibility(View.VISIBLE);
                 tvRetenEmpresario.setText("Retenciones IRPF a empleados (modelo 111)");
@@ -240,6 +275,10 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
         tvCerrar = view.findViewById(R.id.tvCerrarSetImpuestos);
 
         //Cardviews necesarios para la visibilidad de la tarjeta
+        cvIRPFJubilado = view.findViewById(R.id.cvIRPFJubilado);
+        cvISEmpresario = view.findViewById(R.id.cvISEmpresario);
+        cvIRPFEmpresario = view.findViewById(R.id.cvIRPFEmpresario);
+        cvRetencionesEmpresario = view.findViewById(R.id.cvRetencionesEmpresario);
         cvIRPFAutonomo = view.findViewById(R.id.cvIRPFAutonomo);
         cvIVAAutonomo = view.findViewById(R.id.cvIVAAutonomo);
         //Layouts necesarios para definir la visibilidad
