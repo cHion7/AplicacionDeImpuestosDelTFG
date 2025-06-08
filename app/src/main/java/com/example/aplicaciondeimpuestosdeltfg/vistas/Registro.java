@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Registro extends AppCompatActivity {
@@ -91,7 +92,7 @@ public class Registro extends AppCompatActivity {
         String contrasena = etContrasenaReg.getText().toString().trim();
         String saldoInicialStr = etSaldoInicial.getText().toString().trim();
         Double saldoInicial;
-        long currentTimeMillis;
+        long fechaInicioDelDia;
 
         //Validaciones de campo
         if(nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty()){
@@ -99,11 +100,22 @@ public class Registro extends AppCompatActivity {
             return;
         }
         if (saldoInicialStr.isEmpty()) {
-            currentTimeMillis = 0;
+            fechaInicioDelDia = 0;
             saldoInicial= 0.0;
         }else {
             saldoInicial = Double.parseDouble(saldoInicialStr);
-            currentTimeMillis = System.currentTimeMillis();
+            long currentTimeMillis = System.currentTimeMillis();
+            long fechaOriginal = currentTimeMillis;
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(fechaOriginal);
+
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            fechaInicioDelDia = calendar.getTimeInMillis();
         }
 
         //Validación del email
@@ -129,7 +141,7 @@ public class Registro extends AppCompatActivity {
                         datosUsuario.put("correo", correo);
                         datosUsuario.put("nombre", nombre);
                         datosUsuario.put("saldoInicial", saldoInicial);
-                        datosUsuario.put("tiempoSaldoInicial", currentTimeMillis);
+                        datosUsuario.put("tiempoSaldoInicial", fechaInicioDelDia);
 
                         //Convertir el email en clave válida para el Firebase (reemplazar carácteres especiales)
                         String emailKey = correo.replace(".", "_").replace("@", "_");
@@ -179,9 +191,6 @@ public class Registro extends AppCompatActivity {
                 color = getResources().getColor(R.color.rojo, null);
             } else if (puntos < 4) {
                 textoMostrado = "Nivel de seguridad de la contraseña media. Por favor, añade carácteres especiales, mayúsculas o números.";
-                color = getResources().getColor(R.color.naranja, null);
-            } else {
-                textoMostrado = "Nivel de seguridad de la contraseña fuerte";
                 color = getResources().getColor(R.color.verde, null);
             }
         }

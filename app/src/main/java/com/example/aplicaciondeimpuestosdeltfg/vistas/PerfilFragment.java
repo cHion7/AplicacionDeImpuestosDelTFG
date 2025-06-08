@@ -287,11 +287,9 @@ public class  PerfilFragment extends Fragment {
         // Suponiendo que tienes un timestamp en milisegundos
         long fechaOriginal = currentTimeMillis;
 
-// Crear Calendar e inicializar con la fecha original
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(fechaOriginal);
 
-// Ajustar a inicio del día (00:00:00.000)
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);

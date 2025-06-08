@@ -190,36 +190,10 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
                 tvIRPFJubiladoDate.setVisibility(View.VISIBLE);
                 break;
 
-            case "empresario":
-
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            String facturacionEmpresaString = snapshot.child("facturacionEmpresa").getValue(String.class);
-                            String ingresoBrutoString = snapshot.child("ingresoBruto").getValue(String.class);
-                            String empleadosString = snapshot.child("empleados").getValue(String.class);
-
-                            Log.d("Firebase", "Valor de 'ingresoBruto': " + ingresoBruto);
-                            Double facturacionEmpresa = Double.parseDouble(facturacionEmpresaString);
-                            ingresoBruto = Double.parseDouble(ingresoBrutoString);
-                            int empleados = Integer.parseInt(empleadosString);
-
-                            double impuestoSociedades = ingresoBruto * 0.25;
-                            double retencionesTrabajadores = facturacionEmpresa * 0.05; // estimación mensual de IRPF retenido
-                            double segurosSociales = empleados * 300 * 12;
-
-                            tvISEmpresario.setText("Estimación: " + impuestoSociedades);
-                            tvIRPFEmpresario.setText("Estimación: " + segurosSociales);
-                            tvRetenEmpresario.setText("Estimación: " + retencionesTrabajadores);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("Firebase", "Error al leer datos: " + error.getMessage());
-                    }
-                });
+            case "Empresario":
+                cvRetencionesEmpresario.setVisibility(View.VISIBLE);
+                cvIRPFEmpresario.setVisibility(View.VISIBLE);
+                cvISEmpresario.setVisibility(View.VISIBLE);
 
                 llISEmpresario.setVisibility(View.VISIBLE);
                 llIRPFEmpresario.setVisibility(View.VISIBLE);
@@ -235,6 +209,35 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
                 tvRetenEmpresario.setVisibility(View.VISIBLE);
                 tvRetenEmpresario.setText("Retenciones IRPF a empleados (modelo 111)");
                 tvRetenEmpresarioDate.setVisibility(View.VISIBLE);
+
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String facturacionEmpresaString = snapshot.child("facturacionEmpresa").getValue(String.class);
+                            String ingresoBrutoString = snapshot.child("ingresoBruto").getValue(String.class);
+                            String empleadosString = snapshot.child("empleados").getValue(String.class);
+
+                            Log.d("Firebase", "Valor de 'ingresoBruto': " + ingresoBruto);
+                            Double facturacionEmpresa = Double.parseDouble(facturacionEmpresaString);
+                            ingresoBruto = Double.parseDouble(ingresoBrutoString);
+                            int empleados = Integer.parseInt(empleadosString);
+                            Log.d("Firebase", "Valor de 'ingresoBruto': " + ingresoBruto);
+                            double impuestoSociedades = ingresoBruto * 0.25;
+                            double retencionesTrabajadores = facturacionEmpresa * 0.05; // estimación mensual de IRPF retenido
+                            double segurosSociales = empleados * 300 * 12;
+
+                            tvISEmpresarioDate.setText("Estimación: " + impuestoSociedades);
+                            tvIRPFEmpresarioDate.setText("Estimación: " + segurosSociales);
+                            tvRetenEmpresarioDate.setText("Estimación: " + retencionesTrabajadores);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Error al leer datos: " + error.getMessage());
+                    }
+                });
                 break;
         }
     }
