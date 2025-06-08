@@ -263,6 +263,8 @@ public class HomePage extends Fragment {
 
                     if (saldoActual < 0) {
                         tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.rojo)); // negativo
+                    } else if (saldoActual == 0){
+                        tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.naranja)); // 0
                     } else {
                         tvSaldo.setTextColor(ContextCompat.getColor(getContext(), R.color.verde)); // positivo
                     }

@@ -19,7 +19,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tvGuardarAddEvento2"
+                android:id="@+id/tvCerrarSetImpuestos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
@@ -27,11 +27,12 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="right"
-                android:text="Guardar"
+                android:text="Cerrar"
                 android:textColor="#3F51B5"
                 android:textSize="20dp" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvIRPFAutonomo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -62,11 +63,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvIVAAutonomo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -97,7 +100,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -133,7 +137,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -170,7 +175,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -207,7 +213,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -244,7 +251,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -281,7 +289,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -317,7 +326,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="Selecciona una fecha" />
+                        android:text="Selecciona una fecha"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

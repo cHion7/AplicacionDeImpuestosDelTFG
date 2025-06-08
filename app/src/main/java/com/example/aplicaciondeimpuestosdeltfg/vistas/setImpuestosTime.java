@@ -3,6 +3,7 @@ package com.example.aplicaciondeimpuestosdeltfg.vistas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -40,8 +41,11 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
     private FirebaseUser user;
     private String eleccion;
     private LinearLayout llIRPFAutonomo, llIVAAutonomo, llIRPFAsalariado, llIRPFEstudiante, llIRPFJubilado, llISEmpresario, llIRPFEmpresario, llRetenEmpresario;
-    private TextView tvIRPFAutonomo, tvIRPFAutonomoDate, tvIVAAutonomo, tvIVAAutonomoDate, tvIRPFAsalariado, tvIRPFAsalariadoDate, tvIRPFEstudiante, tvIRPFEstudianteDate, tvIRPFJubilado, tvIRPFJubiladoDate, tvISEmpresario, tvISEmpresarioDate, tvIRPFEmpresario, tvIRPFEmpresarioDate, tvRetenEmpresario, tvRetenEmpresarioDate;
-
+    private TextView tvIRPFAutonomo, tvIRPFAutonomoDate, tvIVAAutonomo, tvIVAAutonomoDate, tvIRPFAsalariado, tvIRPFAsalariadoDate, tvIRPFEstudiante, tvIRPFEstudianteDate, tvIRPFJubilado, tvIRPFJubiladoDate, tvISEmpresario, tvISEmpresarioDate, tvIRPFEmpresario, tvIRPFEmpresarioDate, tvRetenEmpresario, tvRetenEmpresarioDate, tvCerrar;
+    private CardView cvIRPFAutonomo, cvIVAAutonomo;
+    private DatabaseReference ref;
+    //Variables que vamos a utilizar en diferentes perfiles
+    private Double ingresoBruto;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -73,6 +77,10 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
         return fragment;
     }
 
+    public static setImpuestosTime newInstance() {
+        return new setImpuestosTime();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +92,9 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
 
 
     private void establecerVisibilidad() {
+
+        cvIRPFAutonomo.setVisibility(View.GONE);
+        cvIVAAutonomo.setVisibility(View.GONE);
         // Ocultar todos los LinearLayouts
         llIRPFAutonomo.setVisibility(View.GONE);
         llIVAAutonomo.setVisibility(View.GONE);
@@ -115,19 +126,40 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
         if (eleccion == null) return;
 
         switch (eleccion) {
-            case "autonomo":
-
+            case "Autónomo":
+                cvIRPFAutonomo.setVisibility(View.VISIBLE);
+                cvIVAAutonomo.setVisibility(View.VISIBLE);
                 llIRPFAutonomo.setVisibility(View.VISIBLE);
                 llIVAAutonomo.setVisibility(View.VISIBLE);
 
+                //Calculo del IRPF Anual estimado
                 tvIRPFAutonomo.setVisibility(View.VISIBLE);
-                tvIRPFAutonomo.setText("IRPF (modelo 130)");
+                tvIRPFAutonomo.setText("IRPF Anual (modelo 130)");
                 tvIRPFAutonomoDate.setVisibility(View.VISIBLE);
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String ingresoBrutoString = snapshot.child("ingresoBruto").getValue(String.class);
+                            Log.d("Firebase", "Valor de 'ingresoBruto': " + ingresoBruto);
+                            ingresoBruto = Double.parseDouble(ingresoBrutoString);
+                            Double irpfAnualEstimado = ingresoBruto * 0.15;
+                            tvIRPFAutonomoDate.setText("Estimación: " + irpfAnualEstimado);
+                            Double ivaAnualEstimado = ingresoBruto * 0.21;
+                            tvIVAAutonomoDate.setText("Estimación: " + ivaAnualEstimado);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Error al leer datos: " + error.getMessage());
+                    }
+                });
+
 
                 tvIVAAutonomo.setVisibility(View.VISIBLE);
-                tvIVAAutonomo.setText("IVA (modelo 303, 390)");
+                tvIVAAutonomo.setText("IVA Anual (modelo 303, 390)");
                 tvIVAAutonomoDate.setVisibility(View.VISIBLE);
-
                 break;
 
             case "asalariado":
@@ -202,6 +234,14 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_impuestos_time, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        tvCerrar = view.findViewById(R.id.tvCerrarSetImpuestos);
+
+        //Cardviews necesarios para la visibilidad de la tarjeta
+        cvIRPFAutonomo = view.findViewById(R.id.cvIRPFAutonomo);
+        cvIVAAutonomo = view.findViewById(R.id.cvIVAAutonomo);
         //Layouts necesarios para definir la visibilidad
         llIRPFAutonomo = view.findViewById(R.id.llIRPFAutonomo);
         llIVAAutonomo = view.findViewById(R.id.llIVAAutonomo);
@@ -240,7 +280,7 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
         DatabaseReference usuariosReferencia = db.getReference().child("Usuarios");
         String emailUser = user.getEmail();
         String userPath = emailUser.replace("@", "_").replace(".", "_");
-        DatabaseReference ref = usuariosReferencia.child(userPath);
+        ref = usuariosReferencia.child(userPath).child("datosPersonales");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -248,6 +288,7 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
                 if (snapshot.exists()) {
                     eleccion = snapshot.child("eleccion").getValue(String.class);
                     Log.d("Firebase", "Valor de 'eleccion': " + eleccion);
+                    establecerVisibilidad();
                 }
             }
 
@@ -257,7 +298,13 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
             }
         });
 
-        establecerVisibilidad();
+        tvCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
         return view;
     }
 
@@ -273,7 +320,7 @@ public class setImpuestosTime extends BottomSheetDialogFragment {
 
                 // Obtener la altura de la pantalla y calcular la altura deseada del BottomSheet
                 int alturaPantalla = getResources().getDisplayMetrics().heightPixels;
-                int alturaDeseada = (int) (alturaPantalla * 0.95);
+                int alturaDeseada = (int) (alturaPantalla * 0.50);
 
                 // Establecer la altura y el comportamiento del BottomSheet
                 view.getLayoutParams().height = alturaDeseada;

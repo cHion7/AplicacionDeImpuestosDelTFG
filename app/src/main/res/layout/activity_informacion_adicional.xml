@@ -814,6 +814,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <Button
@@ -826,6 +827,13 @@
                 android:text="Generar Impuestos"
                 android:textColor="@android:color/white"
                 app:cornerRadius="8dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="364dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Estimación del coste de ciertos impuestos en base a tu información personal" />
 
         </LinearLayout>
     </ScrollView>
