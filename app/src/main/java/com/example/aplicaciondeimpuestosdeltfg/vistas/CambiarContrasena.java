@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity;
+import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;

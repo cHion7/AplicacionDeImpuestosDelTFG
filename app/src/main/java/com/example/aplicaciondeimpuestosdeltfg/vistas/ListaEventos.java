@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.os.Bundle;
 
@@ -13,10 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.Evento;
 import com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter;
-import com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter;
-import com.example.aplicaciondeimpuestosdeltfg.vistas.HomePage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

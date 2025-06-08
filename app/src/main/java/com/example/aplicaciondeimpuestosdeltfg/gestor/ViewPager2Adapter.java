@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.aplicaciondeimpuestosdeltfg.ListaEventos;
+import com.example.aplicaciondeimpuestosdeltfg.vistas.ListaEventos;
 import com.example.aplicaciondeimpuestosdeltfg.R;
 
 import java.text.SimpleDateFormat;

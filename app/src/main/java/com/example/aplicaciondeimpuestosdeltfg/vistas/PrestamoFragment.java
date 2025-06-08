@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +16,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment;
-import com.example.aplicaciondeimpuestosdeltfg.vistas.linearGraphic;
+import com.example.aplicaciondeimpuestosdeltfg.R;
 
 import java.util.Locale;
 

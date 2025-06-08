@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aplicaciondeimpuestosdeltfg.R;
-import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 
 import java.util.List;
 

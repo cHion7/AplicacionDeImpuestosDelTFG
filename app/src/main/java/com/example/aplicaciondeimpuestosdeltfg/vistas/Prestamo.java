@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 public class Prestamo {
     private int mes;

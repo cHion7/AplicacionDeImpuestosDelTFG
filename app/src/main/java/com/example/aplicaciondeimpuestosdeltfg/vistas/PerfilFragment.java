@@ -27,10 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.aplicaciondeimpuestosdeltfg.CambiarContrasena;
-import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
-import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

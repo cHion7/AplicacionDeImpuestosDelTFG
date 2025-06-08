@@ -1,6 +1,5 @@
 package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -11,23 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.aplicaciondeimpuestosdeltfg.CriptoRiesgoFragment;
-import com.example.aplicaciondeimpuestosdeltfg.PrestamoFragment;
 import com.example.aplicaciondeimpuestosdeltfg.R;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieEntry;
 
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CalculatorFragment extends Fragment {
     private float precio = 0;

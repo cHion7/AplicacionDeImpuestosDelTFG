@@ -15,9 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.aplicaciondeimpuestosdeltfg.Login;
 import com.example.aplicaciondeimpuestosdeltfg.R;
-import com.example.aplicaciondeimpuestosdeltfg.informacionAdicional;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

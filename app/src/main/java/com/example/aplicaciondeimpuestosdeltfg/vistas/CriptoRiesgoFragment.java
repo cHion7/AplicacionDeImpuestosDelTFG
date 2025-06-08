@@ -1,4 +1,4 @@
-package com.example.aplicaciondeimpuestosdeltfg;
+package com.example.aplicaciondeimpuestosdeltfg.vistas;
 
 import android.os.Bundle;
 
@@ -17,9 +17,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment;
-
-import java.util.Locale;
+import com.example.aplicaciondeimpuestosdeltfg.R;
 
 
 public class CriptoRiesgoFragment extends Fragment {

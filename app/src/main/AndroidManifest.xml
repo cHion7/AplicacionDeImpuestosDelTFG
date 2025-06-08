@@ -31,7 +31,7 @@
             android:name=".pruebaVerTodo"
             android:exported="false" />
         <activity
-            android:name=".informacionAdicional"
+            android:name=".vistas.informacionAdicional"
             android:exported="false" />
         <!--<activity
             android:name=".VerImpuestos"
@@ -40,10 +40,10 @@
             android:name=".verImpuestos"
             android:exported="false" />-->
         <activity
-            android:name=".CambiarContrasena"
+            android:name=".vistas.CambiarContrasena"
             android:exported="false" />
         <activity
-            android:name=".RecuperarContrasena"
+            android:name=".vistas.RecuperarContrasena"
             android:exported="false" />
         <activity
             android:name=".vistas.JubiladoPerfilar"
@@ -65,7 +65,7 @@
             android:exported="false"
             android:theme="@style/Theme.AplicacionDeImpuestosDelTFG" />
         <activity
-            android:name=".tablaPrestamo"
+            android:name=".vistas.tablaPrestamo"
             android:exported="false" />
         <activity
             android:name=".vistas.linearGraphic"
@@ -80,13 +80,13 @@
             android:name=".Registro1"
             android:exported="false" />
         <activity
-            android:name=".Registro"
+            android:name=".vistas.Registro"
             android:exported="false" />
         <activity
             android:name=".vistas.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".vistas.Login"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

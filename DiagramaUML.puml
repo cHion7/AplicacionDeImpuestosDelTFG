@@ -1,0 +1,506 @@
+@startuml
+class com.example.aplicaciondeimpuestosdeltfg.informacionAdicional {
+~ TextView tvNombreUsuarioInforme
+~ TextView tvIngresoPregComunes
+~ TextView tvViviendaPropiedadAd
+~ CardView layoutAsalariadoPerfilar
+~ TextView tvDate
+~ TextView tvCocheAutonomoAd
+~ TextView tvFamiliaNumerosaAd
+~ TextView tvEdadHijosAsala
+~ TextView tvingreso
+~ TextView tvTrabajaParcialEstudianteAd
+~ TextView tvestudiosBeca
+~ TextView tvcobroPension
+~ TextView tvSegundaViviendaAd
+~ ImageButton btVolverAtrasInformacion
+~ Button btEnviarCom
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void obtenerDatos(FirebaseUser)
+- void vistaEspecializada(String,DataSnapshot)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.RecuperarContrasena {
+- TextInputEditText etEmailRecuperar
+- Button btnRecuperarContrasena
+- TextView tvVolverLogin
+- FirebaseAuth mAuth
+# void onCreate(Bundle)
+- void vertificarYenviarCorreoRestablecimiento()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.Registro {
+- TextInputEditText etNombreReg
+- TextView btVolverLoginReg
+- Button btRegistrarseReg
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void registrarse()
++ void comprobarNivelSeguridadContrasena(String)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.EstudiantePerfilar {
+~ Spinner spiner_estudios
+~ RadioButton radio_estudiante_si
+~ EditText edit_estudiosBeca
+~ Button btn_enviarEstudiante
+~ ImageButton ibvolEstudiante
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void mandarDatosEstudiantes(FirebaseUser,String,String,String,String,Boolean)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.PrestamoFragment {
+- float capital
+- float plazo
+- float interes
+- CheckBox impuestoPosterior
+~ TextView mensualidadText
+~ TextView mensualidadPosteriorText
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void cargarFragment(Fragment)
+- void actualizarValoresPrestamo()
+- double calcularCuota(double,double,int)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.CriptoRiesgoFragment {
+- RadioButton ventaCripto
+- RadioButton cambioCripto
+- RadioButton regaloCripto
+- RadioButton mineriaCripto
+- RadioButton prestarCripto
+- EditText dineroGanado
+~ TextView ganaciaCripto
+~ TextView impuestosCripto
+~ TextView totalGanado
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void cargarFragment(Fragment)
+- void actualizarValoresCriptomonedas()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.AutonomoPerfilar {
+~ EditText editTextDate
+~ RadioButton radio_coche_si
+~ Button bt_enviarAutonomo
+- String ingresoBruto
+- Boolean vivienda
+~ ImageButton ibvolAutonomo
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void mandarDatosAutonomo(FirebaseUser)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.Prestamo {
+- int mes
+- double tipoInteres
+- double cuota
+- double amortizado
+- double intereses
+- double capitalPendiente
++ int getNumMeses()
++ double getTipoInteres()
++ double getCuota()
++ double getAmortizacion()
++ double getIntereses()
++ double getCapitalPendiente()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.JubiladoPerfilar {
+~ RadioButton radio_jubilado_si
+~ EditText cobroPension
+~ Button btn_enviarJubilado
+~ ImageButton ibvolJubilado
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void mandarDatosJubilados(FirebaseUser,String,String,String,Boolean)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.tablaPrestamo {
+~ TableLayout tlTabla
+# void onCreate(Bundle)
+- void agregarFila(String,String,String,String,String,boolean)
+- TextView crearCelda(String,boolean)
++ ArrayList<Prestamo> creacionArrays(float,float,float,float,float,boolean)
+- double calcularCuota(double,double,int)
+- double calcularCapitalPendiente(double,double,int,double)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.MultipleEventsDecorator {
+- HashSet<CalendarDay> multipleEventsDays
+- int[] colores
++ boolean shouldDecorate(CalendarDay)
++ void decorate(DayViewFacade)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.CalendarManager {
++ Calendar getCalendar(int,int,int)
+}
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment {
+- float precio
+- float ahorro
+- float plazo
+- float impuesto
+- DrawerLayout drawerLayout
+- TextView cuotaMensual
+~ PieChart pieChart
+~ ArrayList<String> valoresX
+~ ArrayList<PieEntry> valoresY
+~ ArrayList<Integer> colores
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void cargarFragment(Fragment)
+- void actualizarValores()
+- void creacionDeGrafica(float,float,double)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.preguntasComunes {
+~ EditText etIngresoPregComunes
+~ RadioButton viviendaPregComunes
+~ Spinner spinner_situacion
+~ ImageButton ibVolPregComunes
+~ Button btEnviarCom
+# void onCreate(Bundle)
++ void registrarPreguntasComunes()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.MultiDotSpan {
+- int radius
+- int[] colors
++ void drawBackground(Canvas,Paint,int,int,int,int,int,CharSequence,int,int,int)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter {
+- List<String> listaMeses
+- List<Evento> listaEventos
+- List<Evento> eventosDelMes
+- Map<String,Integer> MES_NUMEROS
+- Map<String,List<Evento>> gastosPorCategoria
+- Map<String,List<Evento>> cobrosPorCategoria
+- FragmentManager fragmentManager
++ MesViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(MesViewHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter$MesViewHolder {
+~ TextView tituloMes
+~ TextView tituloGastos
+~ TextView tituloIngresos
+~ CardView cvGastos
+~ CardView cvIngresos
+~ TextView gastos
+~ TextView ingresos
+~ TextView seeAllGastos
+~ TextView seeAllIngresos
+}
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.Evento {
+- String dinero
+- String cobroOGasto
+- String categoria
+- long fechaMillis
+- String titulo
+- String descripcion
+- String key
++ String getTitulo()
++ void setTitulo(String)
++ String getDescripcion()
++ void setDescripcion(String)
++ String getCategoria()
++ void setCategoria(String)
++ String getCobroOGasto()
++ void setCobroOGasto(String)
++ String getDinero()
++ void setDinero(String)
++ long getFechaMillis()
++ void setFechaMillis(long)
++ String getKey()
++ void setKey(String)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.linearGraphic {
+- LineChart lineChart
+- List<String> xValues
+# void onCreate(Bundle)
+- void configureChart()
+- void calcularDatosPrestamo(float,float,float,float,float,boolean,List<Entry>,List<Entry>)
+- double calcularCuota(double,double,int)
+- double calcularCapitalPendiente(double,double,int,double)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity {
+~ BottomNavigationView bottomNavigationView
+~ HomePage homeFragment
+~ PerfilFragment perfilFragment
+~ CalculatorFragment calculatorFragment
+~ String seleted_tab
+# void onCreate(Bundle)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.Login {
+- TextInputEditText etUsuarioLogin
+- Button btIniciarSesionlogin
+- TextView tvRegistrarseLogin
+- FirebaseAuth firebaseAuth
+- GoogleSignInClient mGoogleSignInClient
+- SignInButton googleSignInButton
+- ActivityResultLauncher<Intent> signInResultLauncher
+# void onCreate(Bundle)
+- void signInWithEmail()
+- void signInWithGoogle()
+- void firebaseAuthWithGoogle(GoogleSignInAccount)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter {
+- List<Evento> listaEventos
+- FirebaseDatabase db
+- FirebaseAuth mAuth
+- FirebaseUser user
++ EventoViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(EventoViewHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter$EventoViewHolder {
+~ TextView titulo
+}
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.PerfilFragment {
+- {static} int REQUEST_PERMISSION
+- {static} int CAMERA_REQUEST_CODE
+- TextInputEditText etNombreApellidoPerfil
+- Button btCambiarContrasenaPerfil
+- TextView btVerTodoPerfil
+- ImageView ivFotoPerfil
+- ImageButton btCerrarSesionPerfil
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+- FirebaseUser usuarioActual
+- ActivityResultLauncher<Intent> cameraLauncher
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} PerfilFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void cerrarSesion()
+- void cargarDatosUsuario()
++ void guardarDatos()
+- void abrirCamera()
+- void comprobarImagenGoogle()
+- void subirImagenAFirebase(Bitmap)
+- String convertirImagenBase64(Bitmap)
+- Bitmap convertirBase64AImagen(String)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.setImpuestosTime {
+- FirebaseDatabase db
+- FirebaseAuth mAuth
+- FirebaseUser user
+- String eleccion
+- LinearLayout llIRPFAutonomo
+- TextView tvIRPFAutonomo
+- CardView cvIRPFAutonomo
+- DatabaseReference ref
+- Double ingresoBruto
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} setImpuestosTime newInstance(String,String)
++ {static} setImpuestosTime newInstance()
++ void onCreate(Bundle)
+- void establecerVisibilidad()
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.AddEvent {
+- int anioSeleccionado
+- int mesSeleccionado
+- int diaSeleccionado
+- TextView datePicker
+- TextView guardar
+- TextView cancelar
+- RadioGroup radioGroup
+- Spinner spinner
+- TextView titulo
+- TextView descripcion
+- TextView dinero
+- Switch repetir
+- String cobroOGasto
+- Map<Integer,String> mesNombre
+- List<String> categoriasGastos
+- List<String> categoriasCobros
+- CalendarManager calendarManager
+- FirebaseDatabase db
+- FirebaseAuth mAuth
+- FirebaseUser user
+- String mParam1
+- String mParam2
++ {static} AddEvent newInstance(String,String)
++ {static} AddEvent newInstance()
++ void onCreate(Bundle)
++ void subirEventoNube(Evento)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onStart()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.EmpresarioPerfilar {
+~ Spinner spinnerTipoempresa
+~ EditText edit_ingreso
+~ Button btn_enviarEmpresario
+~ ImageButton ibvolEmpresario
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void mandarDatosEmpresario(FirebaseUser,String,String,String,String,Boolean)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.gestor.EventDecorator {
+- int color
+- HashSet<CalendarDay> dates
++ boolean shouldDecorate(CalendarDay)
++ void decorate(DayViewFacade)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.HomePage {
+- MaterialCalendarView calendarView
+- ViewPager2 viewPager2
+- ViewPager2Adapter adapter
+- ImageButton addEventos
+- List<Evento> listaEventos
+- List<String> meses
+- CalendarManager calendarManager
+- TextView tvSaldo
+- FirebaseDatabase db
+- FirebaseAuth mAuth
+- FirebaseUser user
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} HomePage newInstance(String,String)
++ void onCreate(Bundle)
++ void calendarConfiguration()
++ void cargarEventos()
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void calcularSaldoActual()
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.ListaEventos {
+- FirebaseDatabase db
+- FirebaseAuth mAuth
+- FirebaseUser user
+- RecyclerView recyclerView
+- ImageButton atras
+- List<Evento> listaEventos
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} ListaEventos newInstance(String,String)
++ void onCreate(Bundle)
+- void cogerDatos()
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.CambiarContrasena {
+- EditText edtContrasenaActual
+- Button btnCambiarContrasena
+- TextView tvVolverPerfilContrasena
+- FirebaseAuth mAuth
+- FirebaseUser usuarioActual
+# void onCreate(Bundle)
+}
+
+
+class com.example.aplicaciondeimpuestosdeltfg.vistas.AsalariadoPerfilar {
+~ Spinner spinner_contrato
+~ RadioButton familiaNumAsala
+~ EditText etEdadHijosAsala
+~ Button btEnviarAsala
+~ ImageButton ibvolAsalariado
+- FirebaseAuth firebaseAuth
+- FirebaseDatabase database
+- DatabaseReference nodoUsuario
+# void onCreate(Bundle)
++ void mandarDatosAsalariado(FirebaseUser,String,String,String,String,Boolean)
+}
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.informacionAdicional
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.RecuperarContrasena
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.Registro
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.EstudiantePerfilar
+androidx.fragment.app.Fragment <|-- com.example.aplicaciondeimpuestosdeltfg.PrestamoFragment
+androidx.fragment.app.Fragment <|-- com.example.aplicaciondeimpuestosdeltfg.CriptoRiesgoFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.AutonomoPerfilar
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.JubiladoPerfilar
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.tablaPrestamo
+com.prolificinteractive.materialcalendarview.DayViewDecorator <|.. com.example.aplicaciondeimpuestosdeltfg.gestor.MultipleEventsDecorator
+androidx.fragment.app.Fragment <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.CalculatorFragment
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.preguntasComunes
+android.text.style.LineBackgroundSpan <|.. com.example.aplicaciondeimpuestosdeltfg.gestor.MultiDotSpan
+com.example.aplicaciondeimpuestosdeltfg.gestor.Adapter <|-- com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter
+com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter +.. com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter$MesViewHolder
+com.example.aplicaciondeimpuestosdeltfg.gestor.ViewHolder <|-- com.example.aplicaciondeimpuestosdeltfg.gestor.ViewPager2Adapter$MesViewHolder
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.linearGraphic
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.Login
+com.example.aplicaciondeimpuestosdeltfg.gestor.Adapter <|-- com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter
+com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter +.. com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter$EventoViewHolder
+com.example.aplicaciondeimpuestosdeltfg.gestor.ViewHolder <|-- com.example.aplicaciondeimpuestosdeltfg.gestor.ListaEventosAdapter$EventoViewHolder
+androidx.fragment.app.Fragment <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.PerfilFragment
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.setImpuestosTime
+com.google.android.material.bottomsheet.BottomSheetDialogFragment <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.AddEvent
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.EmpresarioPerfilar
+com.prolificinteractive.materialcalendarview.DayViewDecorator <|.. com.example.aplicaciondeimpuestosdeltfg.gestor.EventDecorator
+androidx.fragment.app.Fragment <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.HomePage
+androidx.fragment.app.Fragment <|-- com.example.aplicaciondeimpuestosdeltfg.ListaEventos
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.CambiarContrasena
+androidx.appcompat.app.AppCompatActivity <|-- com.example.aplicaciondeimpuestosdeltfg.vistas.AsalariadoPerfilar
+@enduml
