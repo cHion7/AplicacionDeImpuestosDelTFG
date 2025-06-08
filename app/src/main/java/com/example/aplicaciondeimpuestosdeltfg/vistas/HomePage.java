@@ -259,9 +259,6 @@ public class HomePage extends Fragment {
                         return;
                     }
 
-                    if(saldoActual = null){
-
-                    }
                     tvSaldo.setText(String.format("%.2f €", saldoActual));
 
                     if (saldoActual < 0) {

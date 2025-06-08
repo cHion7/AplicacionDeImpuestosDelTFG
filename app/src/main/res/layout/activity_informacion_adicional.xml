@@ -817,15 +817,6 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/btCerrarSesion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#3730A3"
-                android:paddingVertical="14dp"
-                android:text="Cerrar Sesión" />
-
-            <Button
                 android:id="@+id/btGenerarImpuestos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

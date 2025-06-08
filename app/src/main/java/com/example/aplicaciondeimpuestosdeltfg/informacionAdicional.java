@@ -53,7 +53,7 @@ public class informacionAdicional extends AppCompatActivity {
     TextView tvcobroPension, tvgastosMedicos;
     TextView tvSegundaViviendaAd;
     ImageButton btVolverAtrasInformacion;
-    Button btEnviarCom;
+    Button btEnviarCom, btGenerarImpuestos;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
@@ -73,6 +73,8 @@ public class informacionAdicional extends AppCompatActivity {
         tvNombreUsuarioInforme = findViewById(R.id.tvNombreDocumento);
         tvCorreoUsuarioInforme = findViewById(R.id.tvCorreoDocumento);
         btVolverAtrasInformacion = findViewById(R.id.ibVolverInformacion);
+        btGenerarImpuestos = findViewById(R.id.btGenerarImpuestos);
+
 
 
         //Preguntas comunes

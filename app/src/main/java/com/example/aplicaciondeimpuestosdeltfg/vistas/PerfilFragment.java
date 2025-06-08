@@ -50,7 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 
 
-public class PerfilFragment extends Fragment {
+public class  PerfilFragment extends Fragment {
     // Constantes para manejo de permisos y cámara
     private static final int REQUEST_PERMISSION = 1;
     private static final int CAMERA_REQUEST_CODE = 100;
