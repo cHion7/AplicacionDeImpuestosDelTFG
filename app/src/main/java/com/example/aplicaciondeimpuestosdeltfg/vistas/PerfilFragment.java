@@ -41,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
 
 
 public class  PerfilFragment extends Fragment {
@@ -286,7 +287,22 @@ public class  PerfilFragment extends Fragment {
         refNombre.setValue(etNombreApellidoPerfil.getText().toString());
         refSaldoInicial.setValue(Double.parseDouble(etSaldoInicialPerfil.getText().toString()));
         long currentTimeMillis = System.currentTimeMillis();
-        refTiempoSaldoInicial.setValue(currentTimeMillis);
+        // Suponiendo que tienes un timestamp en milisegundos
+        long fechaOriginal = currentTimeMillis;
+
+// Crear Calendar e inicializar con la fecha original
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(fechaOriginal);
+
+// Ajustar a inicio del día (00:00:00.000)
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        long fechaInicioDelDia = calendar.getTimeInMillis();
+        Log.d("PerfilFragment", "Timestamp a guardar: " + fechaInicioDelDia);
+        refTiempoSaldoInicial.setValue(fechaInicioDelDia);
         Toast.makeText(getActivity(), "Perfil actualizado.", Toast.LENGTH_SHORT).show();
     }
 
